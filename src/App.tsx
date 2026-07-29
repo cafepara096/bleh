@@ -2,6 +2,7 @@ import { Routes, Route } from 'react-router-dom'
 import { Layout } from './components/Layout'
 import { HomePage } from './pages/HomePage'
 import { CharactersPage } from './pages/CharactersPage'
+import { ItemsPage } from './pages/ItemsPage'
 import { PlaceholderPage } from './pages/PlaceholderPage'
 
 export default function App() {
@@ -10,6 +11,7 @@ export default function App() {
       <Route path="/" element={<Layout />}>
         <Route index element={<HomePage />} />
         <Route path="characters" element={<CharactersPage />} />
+        <Route path="items" element={<ItemsPage />} />
         <Route
           path="spells"
           element={
@@ -25,15 +27,6 @@ export default function App() {
             <PlaceholderPage
               title="Monstruos"
               description="Bestiario completo con estadísticas y acciones editables."
-            />
-          }
-        />
-        <Route
-          path="items"
-          element={
-            <PlaceholderPage
-              title="Objetos"
-              description="Armas, armaduras y objetos mágicos personalizables."
             />
           }
         />
