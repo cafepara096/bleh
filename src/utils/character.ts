@@ -1,4 +1,4 @@
-import type { AbilityScore, AbilityScores, Character, SkillId } from '../types/dnd';
+import type { AbilityScore, Character, SkillId } from '../types/dnd';
 import { SKILLS } from '../types/dnd';
 
 export function getModifier(score: number): number {
