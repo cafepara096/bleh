@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import type { Character, InventoryItem } from '../../types/dnd';
-import { Plus, Trash2, Package } from 'lucide-react';
+import { useItems } from '../../hooks/useItems';
+import { ItemPicker } from '../content/ItemPicker';
+import { Plus, Trash2, Package, BookOpen } from 'lucide-react';
 
 interface Props {
   character: Character;
@@ -8,10 +10,17 @@ interface Props {
 }
 
 export function InventoryPanel({ character, onUpdate }: Props) {
-  const [showAdd, setShowAdd] = useState(false);
+  const { items } = useItems();
+  const [showPicker, setShowPicker] = useState(false);
+  const [showManual, setShowManual] = useState(false);
   const [newItem, setNewItem] = useState({ name: '', quantity: 1, description: '' });
 
-  const addItem = () => {
+  const addFromCatalog = (item: InventoryItem) => {
+    onUpdate([...character.inventory, item]);
+    // keep picker open so they can add multiple
+  };
+
+  const addManual = () => {
     if (!newItem.name.trim()) return;
     const item: InventoryItem = {
       id: crypto.randomUUID(),
@@ -22,7 +31,7 @@ export function InventoryPanel({ character, onUpdate }: Props) {
     };
     onUpdate([...character.inventory, item]);
     setNewItem({ name: '', quantity: 1, description: '' });
-    setShowAdd(false);
+    setShowManual(false);
   };
 
   const removeItem = (id: string) => {
@@ -54,15 +63,23 @@ export function InventoryPanel({ character, onUpdate }: Props) {
           <Package className="w-5 h-5" />
           <h3 className="font-bold text-lg">Inventario</h3>
         </div>
-        <button
-          onClick={() => setShowAdd(!showAdd)}
-          className="flex items-center gap-1 px-2 py-1 bg-ink-800 text-parchment-50 rounded text-sm hover:bg-ink-700"
-        >
-          <Plus className="w-4 h-4" /> Añadir
-        </button>
+        <div className="flex gap-2">
+          <button
+            onClick={() => setShowPicker(true)}
+            className="flex items-center gap-1 px-2 py-1 bg-crimson-600 text-white rounded text-sm hover:bg-crimson-700"
+          >
+            <BookOpen className="w-4 h-4" /> Catálogo
+          </button>
+          <button
+            onClick={() => setShowManual(!showManual)}
+            className="flex items-center gap-1 px-2 py-1 bg-ink-800 text-parchment-50 rounded text-sm hover:bg-ink-700"
+          >
+            <Plus className="w-4 h-4" /> Manual
+          </button>
+        </div>
       </div>
 
-      {showAdd && (
+      {showManual && (
         <div className="mb-3 p-3 bg-parchment-200 rounded border border-ink-300 space-y-2">
           <input
             type="text"
@@ -91,13 +108,13 @@ export function InventoryPanel({ character, onUpdate }: Props) {
           </div>
           <div className="flex gap-2">
             <button
-              onClick={addItem}
+              onClick={addManual}
               className="px-3 py-1 bg-green-700 text-white rounded text-sm hover:bg-green-600"
             >
               Guardar
             </button>
             <button
-              onClick={() => setShowAdd(false)}
+              onClick={() => setShowManual(false)}
               className="px-3 py-1 bg-ink-300 rounded text-sm hover:bg-ink-400"
             >
               Cancelar
@@ -108,7 +125,10 @@ export function InventoryPanel({ character, onUpdate }: Props) {
 
       <div className="space-y-2 max-h-64 overflow-y-auto">
         {character.inventory.length === 0 && (
-          <p className="text-ink-500 text-sm italic">Sin objetos</p>
+          <p className="text-ink-500 text-sm italic">
+            Sin objetos. Usa <strong>Catálogo</strong> para elegir del compendio o{' '}
+            <strong>Manual</strong> para escribir uno libre.
+          </p>
         )}
         {character.inventory.map((item) => (
           <div
@@ -127,7 +147,7 @@ export function InventoryPanel({ character, onUpdate }: Props) {
               title="Equipar / Desequipar"
             />
             <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 flex-wrap">
                 <span className="font-medium truncate">{item.name}</span>
                 {item.damage && (
                   <span className="text-xs bg-red-100 text-red-800 px-1 rounded">
@@ -136,7 +156,7 @@ export function InventoryPanel({ character, onUpdate }: Props) {
                 )}
               </div>
               {item.description && (
-                <p className="text-xs text-ink-600 mt-0.5">{item.description}</p>
+                <p className="text-xs text-ink-600 mt-0.5 line-clamp-2">{item.description}</p>
               )}
             </div>
             <div className="flex items-center gap-1 flex-shrink-0">
@@ -167,6 +187,14 @@ export function InventoryPanel({ character, onUpdate }: Props) {
           </div>
         ))}
       </div>
+
+      {showPicker && (
+        <ItemPicker
+          items={items}
+          onSelect={addFromCatalog}
+          onClose={() => setShowPicker(false)}
+        />
+      )}
     </div>
   );
 }
