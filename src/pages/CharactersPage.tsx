@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react';
 import { useCharacters } from '../hooks/useCharacters';
 import { CharacterSheet } from '../components/character/CharacterSheet';
+import { CharacterWizard } from '../components/character/CharacterWizard';
 import type { Character } from '../types/dnd';
 import {
   Plus,
@@ -26,6 +27,7 @@ export function CharactersPage() {
   } = useCharacters();
 
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [showWizard, setShowWizard] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const selected = characters.find((c) => c.id === selectedId);
@@ -62,11 +64,21 @@ export function CharactersPage() {
   };
 
   const handleCreate = () => {
-    const name = prompt('Nombre del personaje:');
-    if (name === null) return;
-    const char = createCharacter(name || undefined);
-    setSelectedId(char.id);
+    setShowWizard(true);
   };
+
+  if (showWizard) {
+    return (
+      <CharacterWizard
+        onCancel={() => setShowWizard(false)}
+        onComplete={(char) => {
+          saveCharacter(char);
+          setShowWizard(false);
+          setSelectedId(char.id);
+        }}
+      />
+    );
+  }
 
   return (
     <div className="max-w-5xl mx-auto">
@@ -111,7 +123,7 @@ export function CharactersPage() {
             onClick={handleCreate}
             className="px-4 py-2 bg-crimson-600 text-white rounded-lg hover:bg-crimson-700"
           >
-            Crear el primero
+            Crear con asistente
           </button>
         </div>
       ) : (
