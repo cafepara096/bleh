@@ -20,7 +20,6 @@ export function CharactersPage() {
     loading,
     saveCharacter,
     deleteCharacter,
-    createCharacter,
     exportCharacter,
     exportAll,
     importCharacter,

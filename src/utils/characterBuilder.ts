@@ -190,10 +190,7 @@ export function buildCharacterFromWizard(opts: {
     features: [...raceTraits, ...classFeats],
     inventory,
     spellcastingAbility: opts.classData.spellcasting?.ability,
-    cantripsKnown: opts.classData.spellcasting?.starterSpellIds?.filter((id) => {
-      // cantrips roughly - we don't know level here; keep all starters as known for simplicity
-      return true;
-    }) || [],
+    cantripsKnown: opts.classData.spellcasting?.starterSpellIds || [],
     spells: (opts.classData.spellcasting?.starterSpellIds || []).map((spellId) => ({
       spellId,
       prepared: true,
