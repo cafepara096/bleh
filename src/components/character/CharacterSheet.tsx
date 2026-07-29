@@ -2,7 +2,6 @@ import { useState, useCallback } from 'react';
 import type { Character, AbilityScore, SkillId } from '../../types/dnd';
 import { ABILITY_LABELS } from '../../types/dnd';
 import {
-  getModifier,
   formatModifier,
   calculateSavingThrow,
   calculateInitiative,
