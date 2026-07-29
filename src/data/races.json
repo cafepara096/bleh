@@ -1,0 +1,131 @@
+[
+  {
+    "id": "human",
+    "name": "Humano",
+    "description": "Los humanos son la raza más adaptable y ambiciosa. Su diversidad cultural y su impulso los llevan a todos los rincones del mundo.",
+    "size": "Mediano",
+    "speed": 30,
+    "abilityScoreIncrease": "+1 a todas las puntuaciones de característica",
+    "languages": ["Común", "Un idioma adicional a tu elección"],
+    "traits": [
+      {"id": "human-asi", "name": "Aumento de características", "description": "Tu puntuación de característica en todas las características aumenta en 1.", "level": 1, "source": "race"}
+    ]
+  },
+  {
+    "id": "elf",
+    "name": "Elfo",
+    "description": "Los elfos son un pueblo mágico de gracia sobrenatural, viviendo en el mundo pero no del todo parte de él.",
+    "size": "Mediano",
+    "speed": 30,
+    "abilityScoreIncrease": "+2 Destreza",
+    "languages": ["Común", "Élfico"],
+    "traits": [
+      {"id": "elf-asi", "name": "Aumento de características", "description": "Tu puntuación de Destreza aumenta en 2.", "level": 1, "source": "race"},
+      {"id": "elf-darkvision", "name": "Visión en la oscuridad", "description": "Puedes ver en luz tenue a 60 feet como si fuera luz brillante, y en oscuridad como si fuera luz tenue.", "level": 1, "source": "race"},
+      {"id": "elf-keen", "name": "Sentidos agudos", "description": "Tienes competencia en la habilidad de Percepción.", "level": 1, "source": "race"},
+      {"id": "elf-fey", "name": "Ancestría feérica", "description": "Tienes ventaja en las tiradas de salvación contra ser hechizado, y la magia no puede provocarte el sueño.", "level": 1, "source": "race"},
+      {"id": "elf-trance", "name": "Trance", "description": "Los elfos no necesitan dormir. Meditan profundamente durante 4 horas al día.", "level": 1, "source": "race"}
+    ]
+  },
+  {
+    "id": "dwarf",
+    "name": "Enano",
+    "description": "Orgullosos y tenaces, los enanos son conocidos como hábiles guerreros, mineros y artesanos de las montañas.",
+    "size": "Mediano",
+    "speed": 25,
+    "abilityScoreIncrease": "+2 Constitución",
+    "languages": ["Común", "Énano"],
+    "traits": [
+      {"id": "dwarf-asi", "name": "Aumento de características", "description": "Tu puntuación de Constitución aumenta en 2.", "level": 1, "source": "race"},
+      {"id": "dwarf-darkvision", "name": "Visión en la oscuridad", "description": "Puedes ver en luz tenue a 60 feet como si fuera luz brillante, y en oscuridad como si fuera luz tenue.", "level": 1, "source": "race"},
+      {"id": "dwarf-resilience", "name": "Resiliencia enana", "description": "Tienes ventaja en las tiradas de salvación contra veneno, y tienes resistencia al daño de veneno.", "level": 1, "source": "race"},
+      {"id": "dwarf-combat", "name": "Entrenamiento de combate enano", "description": "Competencia con hacha de batalla, hacha de mano, martillo ligero y martillo de guerra.", "level": 1, "source": "race"},
+      {"id": "dwarf-speed", "name": "Velocidad", "description": "Velocidad base 25 feet. No se reduce por armadura pesada.", "level": 1, "source": "race"}
+    ]
+  },
+  {
+    "id": "halfling",
+    "name": "Mediano",
+    "description": "Los medianos son un pueblo afable, astuto y a menudo subestimado.",
+    "size": "Pequeño",
+    "speed": 25,
+    "abilityScoreIncrease": "+2 Destreza",
+    "languages": ["Común", "Mediano"],
+    "traits": [
+      {"id": "halfling-lucky", "name": "Afortunado", "description": "Cuando sacas un 1 en un d20 de ataque, prueba o salvación, puedes volver a tirar y usar el nuevo resultado.", "level": 1, "source": "race"},
+      {"id": "halfling-brave", "name": "Valiente", "description": "Tienes ventaja en las tiradas de salvación contra ser asustado.", "level": 1, "source": "race"},
+      {"id": "halfling-nimble", "name": "Agilidad mediana", "description": "Puedes moverte a través del espacio de cualquier criatura de tamaño mayor que el tuyo.", "level": 1, "source": "race"}
+    ]
+  },
+  {
+    "id": "dragonborn",
+    "name": "Dracónido",
+    "description": "Nacidos de dragones; su aliento y resistencia reflejan su herencia dracónica.",
+    "size": "Mediano",
+    "speed": 30,
+    "abilityScoreIncrease": "+2 Fuerza, +1 Carisma",
+    "languages": ["Común", "Dracónico"],
+    "traits": [
+      {"id": "dragonborn-ancestry", "name": "Ancestría dracónica", "description": "Elige un tipo de dragón. Determina el daño de tu arma de aliento y tu resistencia.", "level": 1, "source": "race"},
+      {"id": "dragonborn-breath", "name": "Arma de aliento", "description": "Acción: exhalar energía destructiva. CD = 8 + Con + competencia. 1/descanso corto o largo.", "level": 1, "source": "race"},
+      {"id": "dragonborn-resist", "name": "Resistencia al daño", "description": "Resistencia al tipo de daño de tu ancestría dracónica.", "level": 1, "source": "race"}
+    ]
+  },
+  {
+    "id": "gnome",
+    "name": "Gnomo",
+    "description": "Pueblo diminuto con afinidad por la ilusión y la vida bajo tierra o en bosques encantados.",
+    "size": "Pequeño",
+    "speed": 25,
+    "abilityScoreIncrease": "+2 Inteligencia",
+    "languages": ["Común", "Gnomo"],
+    "traits": [
+      {"id": "gnome-darkvision", "name": "Visión en la oscuridad", "description": "Luz tenue a 60 feet como brillante; oscuridad como tenue.", "level": 1, "source": "race"},
+      {"id": "gnome-cunning", "name": "Astucia gnoma", "description": "Ventaja en salvaciones de Inteligencia, Sabiduría y Carisma contra magia.", "level": 1, "source": "race"}
+    ]
+  },
+  {
+    "id": "half-elf",
+    "name": "Semielfo",
+    "description": "Combinan lo mejor de humanos y elfos, caminando entre dos mundos.",
+    "size": "Mediano",
+    "speed": 30,
+    "abilityScoreIncrease": "+2 Carisma, +1 a dos características a tu elección",
+    "languages": ["Común", "Élfico", "Un idioma adicional"],
+    "traits": [
+      {"id": "halfelf-darkvision", "name": "Visión en la oscuridad", "description": "Luz tenue a 60 feet como brillante; oscuridad como tenue.", "level": 1, "source": "race"},
+      {"id": "halfelf-fey", "name": "Ancestría feérica", "description": "Ventaja vs hechizado; la magia no puede provocarte el sueño.", "level": 1, "source": "race"},
+      {"id": "halfelf-skill", "name": "Versatilidad de habilidad", "description": "Competencia en dos habilidades a tu elección.", "level": 1, "source": "race"}
+    ]
+  },
+  {
+    "id": "half-orc",
+    "name": "Semiorco",
+    "description": "Heredan la fuerza orca y la ambición humana.",
+    "size": "Mediano",
+    "speed": 30,
+    "abilityScoreIncrease": "+2 Fuerza, +1 Constitución",
+    "languages": ["Común", "Orco"],
+    "traits": [
+      {"id": "halforc-darkvision", "name": "Visión en la oscuridad", "description": "Luz tenue a 60 feet como brillante; oscuridad como tenue.", "level": 1, "source": "race"},
+      {"id": "halforc-menacing", "name": "Amenazante", "description": "Competencia en Intimidación.", "level": 1, "source": "race"},
+      {"id": "halforc-relentless", "name": "Resistencia implacable", "description": "Si te reducen a 0 PG pero no te matan, puedes quedar a 1 PG. 1/descanso largo.", "level": 1, "source": "race"},
+      {"id": "halforc-savage", "name": "Ataques salvajes", "description": "En un crítico cuerpo a cuerpo, tira un dado de daño del arma extra.", "level": 1, "source": "race"}
+    ]
+  },
+  {
+    "id": "tiefling",
+    "name": "Tiefling",
+    "description": "Herederos de un pacto infernal; legado reflejado en apariencia y magia innata.",
+    "size": "Mediano",
+    "speed": 30,
+    "abilityScoreIncrease": "+2 Carisma, +1 Inteligencia",
+    "languages": ["Común", "Infernal"],
+    "spellIds": ["thaumaturgy"],
+    "traits": [
+      {"id": "tiefling-darkvision", "name": "Visión en la oscuridad", "description": "Luz tenue a 60 feet como brillante; oscuridad como tenue.", "level": 1, "source": "race"},
+      {"id": "tiefling-hellish", "name": "Resistencia infernal", "description": "Resistencia al daño de fuego.", "level": 1, "source": "race"},
+      {"id": "tiefling-legacy", "name": "Legado infernal", "description": "Conoces Taumaturgia. Niv. 3: Reprensión infernal 1/descanso largo. Niv. 5: Oscuridad 1/descanso largo. Carisma es tu característica de lanzamiento.", "level": 1, "source": "race", "spellId": "thaumaturgy"}
+    ]
+  }
+]
