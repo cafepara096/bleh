@@ -1,12 +1,14 @@
 import { NavLink, Outlet } from 'react-router-dom';
-import { Users, BookOpen, Swords, Scroll, Home } from 'lucide-react';
+import { Users, BookOpen, Swords, Scroll, Home, Shield, Crown } from 'lucide-react';
 
 const navItems = [
   { to: '/', label: 'Inicio', icon: Home },
   { to: '/characters', label: 'Personajes', icon: Users },
+  { to: '/races', label: 'Razas', icon: Crown },
+  { to: '/classes', label: 'Clases', icon: Shield },
   { to: '/spells', label: 'Conjuros', icon: BookOpen },
-  { to: '/monsters', label: 'Monstruos', icon: Swords },
   { to: '/items', label: 'Objetos', icon: Scroll },
+  { to: '/monsters', label: 'Monstruos', icon: Swords },
 ];
 
 export function Layout() {

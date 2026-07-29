@@ -1,0 +1,538 @@
+[
+  {
+    "id": "barbarian",
+    "name": "Barbaro",
+    "description": "Guerreros que canalizan la furia interior.",
+    "hitDie": "d12",
+    "primaryAbility": "Fuerza",
+    "savingThrows": [
+      "Fuerza",
+      "Constitucion"
+    ],
+    "armorProficiencies": "Armadura ligera, media, escudos",
+    "weaponProficiencies": "Armas simples y marciales",
+    "skillChoices": "Elige 2 habilidades",
+    "features": [
+      {
+        "id": "barb-rage",
+        "name": "Furia",
+        "description": "Entras en furia: ventaja Fue, dano extra, resistencia.",
+        "level": 1,
+        "source": "class"
+      },
+      {
+        "id": "barb-defense",
+        "name": "Defensa sin armadura",
+        "description": "CA = 10+Des+Con sin armadura.",
+        "level": 1,
+        "source": "class"
+      },
+      {
+        "id": "barb-path",
+        "name": "Camino primigenio",
+        "description": "Eliges subclase.",
+        "level": 3,
+        "source": "class"
+      },
+      {
+        "id": "barb-extra",
+        "name": "Ataque extra",
+        "description": "Atacas dos veces.",
+        "level": 5,
+        "source": "class"
+      }
+    ]
+  },
+  {
+    "id": "bard",
+    "name": "Bardo",
+    "description": "Magia a traves del arte e inspiracion.",
+    "hitDie": "d8",
+    "primaryAbility": "Carisma",
+    "savingThrows": [
+      "Destreza",
+      "Carisma"
+    ],
+    "armorProficiencies": "Armadura ligera",
+    "weaponProficiencies": "Armas simples, estoques, espadas",
+    "skillChoices": "Elige 3 habilidades",
+    "spellcasting": {
+      "ability": "cha",
+      "type": "full",
+      "starterSpellIds": [
+        "vicious-mockery"
+      ]
+    },
+    "features": [
+      {
+        "id": "bard-cast",
+        "name": "Lanzamiento de conjuros",
+        "description": "Carisma. 2 trucos, 4 conjuros nivel 1.",
+        "level": 1,
+        "source": "class"
+      },
+      {
+        "id": "bard-insp",
+        "name": "Inspiracion bardica",
+        "description": "Das d6 de inspiracion a un aliado.",
+        "level": 1,
+        "source": "class"
+      },
+      {
+        "id": "bard-college",
+        "name": "Colegio bardico",
+        "description": "Eliges subclase.",
+        "level": 3,
+        "source": "class"
+      }
+    ]
+  },
+  {
+    "id": "cleric",
+    "name": "Clerigo",
+    "description": "Poder divino canalizado.",
+    "hitDie": "d8",
+    "primaryAbility": "Sabiduria",
+    "savingThrows": [
+      "Sabiduria",
+      "Carisma"
+    ],
+    "armorProficiencies": "Armadura ligera, media, escudos",
+    "weaponProficiencies": "Armas simples",
+    "skillChoices": "Elige 2 habilidades",
+    "spellcasting": {
+      "ability": "wis",
+      "type": "full",
+      "starterSpellIds": [
+        "sacred-flame",
+        "guidance"
+      ]
+    },
+    "features": [
+      {
+        "id": "cleric-cast",
+        "name": "Lanzamiento de conjuros",
+        "description": "Sabiduria. Preparas conjuros.",
+        "level": 1,
+        "source": "class"
+      },
+      {
+        "id": "cleric-domain",
+        "name": "Dominio divino",
+        "description": "Eliges subclase.",
+        "level": 1,
+        "source": "class"
+      },
+      {
+        "id": "cleric-channel",
+        "name": "Canalizar divinidad",
+        "description": "Energia divina.",
+        "level": 2,
+        "source": "class"
+      }
+    ]
+  },
+  {
+    "id": "druid",
+    "name": "Druida",
+    "description": "Guardianes de la naturaleza.",
+    "hitDie": "d8",
+    "primaryAbility": "Sabiduria",
+    "savingThrows": [
+      "Inteligencia",
+      "Sabiduria"
+    ],
+    "armorProficiencies": "Ligera, media, escudos no metalicos",
+    "weaponProficiencies": "Armas druida",
+    "skillChoices": "Elige 2 habilidades",
+    "spellcasting": {
+      "ability": "wis",
+      "type": "full"
+    },
+    "features": [
+      {
+        "id": "druid-cast",
+        "name": "Lanzamiento de conjuros",
+        "description": "Sabiduria.",
+        "level": 1,
+        "source": "class"
+      },
+      {
+        "id": "druid-wild",
+        "name": "Forma salvaje",
+        "description": "Forma de bestia.",
+        "level": 2,
+        "source": "class"
+      },
+      {
+        "id": "druid-circle",
+        "name": "Circulo druidico",
+        "description": "Eliges subclase.",
+        "level": 2,
+        "source": "class"
+      }
+    ]
+  },
+  {
+    "id": "fighter",
+    "name": "Guerrero",
+    "description": "Maestros del combate marcial.",
+    "hitDie": "d10",
+    "primaryAbility": "Fuerza o Destreza",
+    "savingThrows": [
+      "Fuerza",
+      "Constitucion"
+    ],
+    "armorProficiencies": "Todas, escudos",
+    "weaponProficiencies": "Simples y marciales",
+    "skillChoices": "Elige 2 habilidades",
+    "features": [
+      {
+        "id": "fighter-style",
+        "name": "Estilo de combate",
+        "description": "Adoptas un estilo.",
+        "level": 1,
+        "source": "class"
+      },
+      {
+        "id": "fighter-second",
+        "name": "Segundo aliento",
+        "description": "1d10+nivel PG.",
+        "level": 1,
+        "source": "class"
+      },
+      {
+        "id": "fighter-surge",
+        "name": "Oleada de accion",
+        "description": "Accion adicional.",
+        "level": 2,
+        "source": "class"
+      },
+      {
+        "id": "fighter-archetype",
+        "name": "Arquetipo marcial",
+        "description": "Eliges subclase.",
+        "level": 3,
+        "source": "class"
+      },
+      {
+        "id": "fighter-extra",
+        "name": "Ataque extra",
+        "description": "Atacas dos veces.",
+        "level": 5,
+        "source": "class"
+      }
+    ]
+  },
+  {
+    "id": "monk",
+    "name": "Monje",
+    "description": "Artes marciales y ki.",
+    "hitDie": "d8",
+    "primaryAbility": "Destreza y Sabiduria",
+    "savingThrows": [
+      "Fuerza",
+      "Destreza"
+    ],
+    "armorProficiencies": "Ninguna",
+    "weaponProficiencies": "Simples, espadas cortas",
+    "skillChoices": "Elige 2 habilidades",
+    "features": [
+      {
+        "id": "monk-defense",
+        "name": "Defensa sin armadura",
+        "description": "CA=10+Des+Sab.",
+        "level": 1,
+        "source": "class"
+      },
+      {
+        "id": "monk-arts",
+        "name": "Artes marciales",
+        "description": "Des en ataques sin arma.",
+        "level": 1,
+        "source": "class"
+      },
+      {
+        "id": "monk-ki",
+        "name": "Ki",
+        "description": "Puntos de ki = nivel.",
+        "level": 2,
+        "source": "class"
+      },
+      {
+        "id": "monk-tradition",
+        "name": "Tradicion monastica",
+        "description": "Eliges subclase.",
+        "level": 3,
+        "source": "class"
+      }
+    ]
+  },
+  {
+    "id": "paladin",
+    "name": "Paladin",
+    "description": "Guerreros de juramento sagrado.",
+    "hitDie": "d10",
+    "primaryAbility": "Fuerza y Carisma",
+    "savingThrows": [
+      "Sabiduria",
+      "Carisma"
+    ],
+    "armorProficiencies": "Todas, escudos",
+    "weaponProficiencies": "Simples y marciales",
+    "skillChoices": "Elige 2 habilidades",
+    "spellcasting": {
+      "ability": "cha",
+      "type": "half"
+    },
+    "features": [
+      {
+        "id": "pal-sense",
+        "name": "Sentido divino",
+        "description": "Detectas celestiales, infernales, no muertos.",
+        "level": 1,
+        "source": "class"
+      },
+      {
+        "id": "pal-hands",
+        "name": "Imposicion de manos",
+        "description": "Curacion = nivel x 5.",
+        "level": 1,
+        "source": "class"
+      },
+      {
+        "id": "pal-smite",
+        "name": "Castigo divino",
+        "description": "Dano radiante extra al impactar.",
+        "level": 2,
+        "source": "class"
+      },
+      {
+        "id": "pal-oath",
+        "name": "Juramento sagrado",
+        "description": "Eliges subclase.",
+        "level": 3,
+        "source": "class"
+      }
+    ]
+  },
+  {
+    "id": "ranger",
+    "name": "Explorador",
+    "description": "Guerreros de los paramos.",
+    "hitDie": "d10",
+    "primaryAbility": "Destreza y Sabiduria",
+    "savingThrows": [
+      "Fuerza",
+      "Destreza"
+    ],
+    "armorProficiencies": "Ligera, media, escudos",
+    "weaponProficiencies": "Simples y marciales",
+    "skillChoices": "Elige 3 habilidades",
+    "spellcasting": {
+      "ability": "wis",
+      "type": "half"
+    },
+    "features": [
+      {
+        "id": "ranger-enemy",
+        "name": "Enemigo predilecto",
+        "description": "Ventaja vs tu enemigo.",
+        "level": 1,
+        "source": "class"
+      },
+      {
+        "id": "ranger-explorer",
+        "name": "Explorador natural",
+        "description": "Terreno predilecto.",
+        "level": 1,
+        "source": "class"
+      },
+      {
+        "id": "ranger-archetype",
+        "name": "Arquetipo",
+        "description": "Eliges subclase.",
+        "level": 3,
+        "source": "class"
+      }
+    ]
+  },
+  {
+    "id": "rogue",
+    "name": "Picaro",
+    "description": "Sigilo y ataques precisos.",
+    "hitDie": "d8",
+    "primaryAbility": "Destreza",
+    "savingThrows": [
+      "Destreza",
+      "Inteligencia"
+    ],
+    "armorProficiencies": "Ligera",
+    "weaponProficiencies": "Simples, estoques, espadas cortas",
+    "toolProficiencies": "Herramientas de ladron",
+    "skillChoices": "Elige 4 habilidades",
+    "features": [
+      {
+        "id": "rogue-expertise",
+        "name": "Pericia",
+        "description": "Duplicas competencia en 2 habilidades.",
+        "level": 1,
+        "source": "class"
+      },
+      {
+        "id": "rogue-sneak",
+        "name": "Ataque furtivo",
+        "description": "Dano extra con ventaja o aliado cerca.",
+        "level": 1,
+        "source": "class"
+      },
+      {
+        "id": "rogue-cunning",
+        "name": "Accion astuta",
+        "description": "Dash, Disengage o Hide como accion adicional.",
+        "level": 2,
+        "source": "class"
+      },
+      {
+        "id": "rogue-archetype",
+        "name": "Arquetipo",
+        "description": "Eliges subclase.",
+        "level": 3,
+        "source": "class"
+      }
+    ]
+  },
+  {
+    "id": "sorcerer",
+    "name": "Hechicero",
+    "description": "Magia innata.",
+    "hitDie": "d6",
+    "primaryAbility": "Carisma",
+    "savingThrows": [
+      "Constitucion",
+      "Carisma"
+    ],
+    "armorProficiencies": "Ninguna",
+    "weaponProficiencies": "Dagas, dardos, hondas, bastones",
+    "skillChoices": "Elige 2 habilidades",
+    "spellcasting": {
+      "ability": "cha",
+      "type": "full",
+      "starterSpellIds": [
+        "fire-bolt"
+      ]
+    },
+    "features": [
+      {
+        "id": "sorc-cast",
+        "name": "Lanzamiento de conjuros",
+        "description": "Carisma.",
+        "level": 1,
+        "source": "class"
+      },
+      {
+        "id": "sorc-origin",
+        "name": "Origen",
+        "description": "Eliges subclase.",
+        "level": 1,
+        "source": "class"
+      },
+      {
+        "id": "sorc-points",
+        "name": "Fuente de magia",
+        "description": "Puntos de hechiceria y metamagia.",
+        "level": 2,
+        "source": "class"
+      }
+    ]
+  },
+  {
+    "id": "warlock",
+    "name": "Brujo",
+    "description": "Pacto con un ser de otro mundo.",
+    "hitDie": "d8",
+    "primaryAbility": "Carisma",
+    "savingThrows": [
+      "Sabiduria",
+      "Carisma"
+    ],
+    "armorProficiencies": "Ligera",
+    "weaponProficiencies": "Simples",
+    "skillChoices": "Elige 2 habilidades",
+    "spellcasting": {
+      "ability": "cha",
+      "type": "pact",
+      "starterSpellIds": [
+        "chill-touch"
+      ]
+    },
+    "features": [
+      {
+        "id": "warlock-patron",
+        "name": "Patron",
+        "description": "Eliges subclase.",
+        "level": 1,
+        "source": "class"
+      },
+      {
+        "id": "warlock-cast",
+        "name": "Magia de pacto",
+        "description": "Espacios se recuperan con descanso corto.",
+        "level": 1,
+        "source": "class"
+      },
+      {
+        "id": "warlock-invocations",
+        "name": "Invocaciones",
+        "description": "Habilidades magicas permanentes.",
+        "level": 2,
+        "source": "class"
+      }
+    ]
+  },
+  {
+    "id": "wizard",
+    "name": "Mago",
+    "description": "Estudio y libro de conjuros.",
+    "hitDie": "d6",
+    "primaryAbility": "Inteligencia",
+    "savingThrows": [
+      "Inteligencia",
+      "Sabiduria"
+    ],
+    "armorProficiencies": "Ninguna",
+    "weaponProficiencies": "Dagas, dardos, hondas, bastones",
+    "skillChoices": "Elige 2 habilidades",
+    "spellcasting": {
+      "ability": "int",
+      "type": "full",
+      "starterSpellIds": [
+        "fire-bolt",
+        "mage-hand"
+      ]
+    },
+    "features": [
+      {
+        "id": "wizard-cast",
+        "name": "Lanzamiento de conjuros",
+        "description": "Libro de conjuros. Inteligencia.",
+        "level": 1,
+        "source": "class"
+      },
+      {
+        "id": "wizard-recovery",
+        "name": "Recuperacion arcana",
+        "description": "Recuperas espacios tras descanso corto.",
+        "level": 1,
+        "source": "class"
+      },
+      {
+        "id": "wizard-tradition",
+        "name": "Tradicion arcana",
+        "description": "Eliges subclase.",
+        "level": 2,
+        "source": "class"
+      }
+    ]
+  }
+]

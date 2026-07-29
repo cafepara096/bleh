@@ -4,6 +4,8 @@ import { HomePage } from './pages/HomePage'
 import { CharactersPage } from './pages/CharactersPage'
 import { ItemsPage } from './pages/ItemsPage'
 import { SpellsPage } from './pages/SpellsPage'
+import { RacesPage } from './pages/RacesPage'
+import { ClassesPage } from './pages/ClassesPage'
 import { PlaceholderPage } from './pages/PlaceholderPage'
 
 export default function App() {
@@ -14,6 +16,8 @@ export default function App() {
         <Route path="characters" element={<CharactersPage />} />
         <Route path="items" element={<ItemsPage />} />
         <Route path="spells" element={<SpellsPage />} />
+        <Route path="races" element={<RacesPage />} />
+        <Route path="classes" element={<ClassesPage />} />
         <Route
           path="monsters"
           element={

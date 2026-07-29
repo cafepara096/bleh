@@ -212,4 +212,56 @@ export interface Item {
   homebrew?: boolean;
 }
 
-export type ContentType = 'spell' | 'monster' | 'item' | 'character';
+
+// ===== Class & Race (structured for future character sheet linking) =====
+
+export interface FeatureEntry {
+  id: string;
+  name: string;
+  description: string;
+  /** Level at which this feature is gained (1 for racial traits) */
+  level: number;
+  /** Optional link to a spell id from the spells catalog */
+  spellId?: string;
+  source?: string;
+}
+
+export interface RaceData {
+  id: string;
+  name: string;
+  description: string;
+  size: string;
+  speed: number; // feet
+  abilityScoreIncrease: string;
+  languages: string[];
+  traits: FeatureEntry[];
+  /** Optional spell ids granted by the race */
+  spellIds?: string[];
+  homebrew?: boolean;
+}
+
+export interface ClassData {
+  id: string;
+  name: string;
+  description: string;
+  hitDie: string; // e.g. "d10"
+  primaryAbility: string;
+  savingThrows: string[];
+  armorProficiencies: string;
+  weaponProficiencies: string;
+  toolProficiencies?: string;
+  skillChoices: string;
+  /** Features keyed by level */
+  features: FeatureEntry[];
+  /** Spellcasting info if any */
+  spellcasting?: {
+    ability: AbilityScore;
+    type: 'full' | 'half' | 'third' | 'pact';
+    /** Cantrip/spell ids often known at level 1 (optional seeds) */
+    starterSpellIds?: string[];
+  };
+  subclasses?: { id: string; name: string; description: string; features: FeatureEntry[] }[];
+  homebrew?: boolean;
+}
+
+export type ContentType = 'spell' | 'monster' | 'item' | 'character' | 'race' | 'class';
