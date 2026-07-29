@@ -33,8 +33,7 @@ export function LevelUpModal({ character, onConfirm, onClose }: Props) {
   const [hpMode, setHpMode] = useState<'avg' | 'roll'>('avg');
   const [rolledHp, setRolledHp] = useState(avgHp);
   const [asi, setAsi] = useState<Partial<AbilityScores>>({});
-  const [asiBudget, setAsiBudget] = useState(2); // +2 total or two +1
-  const [pickSubclass, setPickSubclass] = useState(false);
+  const asiBudget = 2; // +2 total or two +1
   const [subclassId, setSubclassId] = useState(character.subclassId || '');
 
   const needsAsi = isAsiLevel(newLevel);
