@@ -1,0 +1,133 @@
+{
+  "barbarian": {
+    "choices": [],
+    "fixed": [
+      {"name": "Hacha Grande", "quantity": 1, "damage": "1d12", "damageType": "cortante", "equipped": true},
+      {"name": "Hacha de Mano", "quantity": 2, "damage": "1d6", "damageType": "cortante"},
+      {"name": "Equipo de explorador", "quantity": 1, "description": "Mochila, saco de dormir, cubiertos, yesquero, 10 antorchas, 10 días de raciones, odre, 50 feet de cuerda de cáñamo."}
+    ],
+    "gold": 0
+  },
+  "bard": {
+    "choices": [],
+    "fixed": [
+      {"name": "Estoque", "quantity": 1, "damage": "1d8", "damageType": "perforante", "equipped": true},
+      {"name": "Instrumento musical", "quantity": 1, "description": "Laúd u otro instrumento."},
+      {"name": "Armadura de cuero", "quantity": 1, "description": "CA 11 + Des", "equipped": true},
+      {"name": "Daga", "quantity": 1, "damage": "1d4", "damageType": "perforante"},
+      {"name": "Equipo de artista", "quantity": 1, "description": "Mochila, saco de dormir, disfraces, velas, raciones, odre."}
+    ],
+    "gold": 0
+  },
+  "cleric": {
+    "choices": [],
+    "fixed": [
+      {"name": "Maza", "quantity": 1, "damage": "1d6", "damageType": "contundente", "equipped": true},
+      {"name": "Cota de escamas", "quantity": 1, "description": "CA 14 + Des (máx 2)", "equipped": true},
+      {"name": "Escudo", "quantity": 1, "description": "+2 CA", "equipped": true},
+      {"name": "Símbolo sagrado", "quantity": 1},
+      {"name": "Equipo de sacerdote", "quantity": 1, "description": "Mochila, manta, velas, limosnero, incienso, raciones, odre."}
+    ],
+    "gold": 0
+  },
+  "druid": {
+    "choices": [],
+    "fixed": [
+      {"name": "Escudo", "quantity": 1, "description": "+2 CA", "equipped": true},
+      {"name": "Cimitarra", "quantity": 1, "damage": "1d6", "damageType": "cortante", "equipped": true},
+      {"name": "Armadura de cuero", "quantity": 1, "description": "CA 11 + Des", "equipped": true},
+      {"name": "Equipo de explorador", "quantity": 1},
+      {"name": "Foco druídico", "quantity": 1}
+    ],
+    "gold": 0
+  },
+  "fighter": {
+    "choices": [],
+    "fixed": [
+      {"name": "Cota de mallas", "quantity": 1, "description": "CA 16", "equipped": true},
+      {"name": "Espada larga", "quantity": 1, "damage": "1d8", "damageType": "cortante", "equipped": true},
+      {"name": "Escudo", "quantity": 1, "description": "+2 CA", "equipped": true},
+      {"name": "Ballesta ligera", "quantity": 1, "damage": "1d8", "damageType": "perforante"},
+      {"name": "Virotes", "quantity": 20},
+      {"name": "Equipo de dungeoneer", "quantity": 1}
+    ],
+    "gold": 0
+  },
+  "monk": {
+    "choices": [],
+    "fixed": [
+      {"name": "Espada corta", "quantity": 1, "damage": "1d6", "damageType": "perforante", "equipped": true},
+      {"name": "Dardos", "quantity": 10, "damage": "1d4", "damageType": "perforante"},
+      {"name": "Equipo de explorador", "quantity": 1}
+    ],
+    "gold": 0
+  },
+  "paladin": {
+    "choices": [],
+    "fixed": [
+      {"name": "Espada larga", "quantity": 1, "damage": "1d8", "damageType": "cortante", "equipped": true},
+      {"name": "Escudo", "quantity": 1, "description": "+2 CA", "equipped": true},
+      {"name": "Cota de mallas", "quantity": 1, "description": "CA 16", "equipped": true},
+      {"name": "Símbolo sagrado", "quantity": 1},
+      {"name": "Equipo de sacerdote", "quantity": 1}
+    ],
+    "gold": 0
+  },
+  "ranger": {
+    "choices": [],
+    "fixed": [
+      {"name": "Cota de escamas", "quantity": 1, "description": "CA 14 + Des (máx 2)", "equipped": true},
+      {"name": "Espada corta", "quantity": 2, "damage": "1d6", "damageType": "perforante", "equipped": true},
+      {"name": "Arco largo", "quantity": 1, "damage": "1d8", "damageType": "perforante"},
+      {"name": "Flechas", "quantity": 20},
+      {"name": "Equipo de dungeoneer", "quantity": 1}
+    ],
+    "gold": 0
+  },
+  "rogue": {
+    "choices": [],
+    "fixed": [
+      {"name": "Estoque", "quantity": 1, "damage": "1d8", "damageType": "perforante", "equipped": true},
+      {"name": "Arco corto", "quantity": 1, "damage": "1d6", "damageType": "perforante"},
+      {"name": "Flechas", "quantity": 20},
+      {"name": "Armadura de cuero", "quantity": 1, "description": "CA 11 + Des", "equipped": true},
+      {"name": "Daga", "quantity": 2, "damage": "1d4", "damageType": "perforante"},
+      {"name": "Herramientas de ladrón", "quantity": 1},
+      {"name": "Equipo de ladrón", "quantity": 1}
+    ],
+    "gold": 0
+  },
+  "sorcerer": {
+    "choices": [],
+    "fixed": [
+      {"name": "Ballesta ligera", "quantity": 1, "damage": "1d8", "damageType": "perforante"},
+      {"name": "Virotes", "quantity": 20},
+      {"name": "Foco arcano", "quantity": 1},
+      {"name": "Daga", "quantity": 2, "damage": "1d4", "damageType": "perforante"},
+      {"name": "Equipo de dungeoneer", "quantity": 1}
+    ],
+    "gold": 0
+  },
+  "warlock": {
+    "choices": [],
+    "fixed": [
+      {"name": "Ballesta ligera", "quantity": 1, "damage": "1d8", "damageType": "perforante"},
+      {"name": "Virotes", "quantity": 20},
+      {"name": "Foco arcano", "quantity": 1},
+      {"name": "Armadura de cuero", "quantity": 1, "description": "CA 11 + Des", "equipped": true},
+      {"name": "Daga", "quantity": 2, "damage": "1d4", "damageType": "perforante"},
+      {"name": "Equipo de erudito", "quantity": 1}
+    ],
+    "gold": 0
+  },
+  "wizard": {
+    "choices": [],
+    "fixed": [
+      {"name": "Bastón", "quantity": 1, "damage": "1d6", "damageType": "contundente", "equipped": true},
+      {"name": "Foco arcano", "quantity": 1},
+      {"name": "Libro de conjuros", "quantity": 1, "description": "Contiene 6 conjuros de nivel 1."},
+      {"name": "Equipo de erudito", "quantity": 1}
+    ],
+    "gold": 0
+  }
+}

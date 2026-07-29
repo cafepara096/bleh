@@ -102,8 +102,11 @@ export interface Character {
   name: string;
   playerName?: string;
   race: string;
+  raceId?: string;
   class: string;
+  classId?: string;
   subclass?: string;
+  subclassId?: string;
   background: string;
   alignment?: string;
   level: number;

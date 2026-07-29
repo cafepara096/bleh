@@ -24,7 +24,9 @@ import {
   Shield,
   Zap,
   Star,
+  TrendingUp,
 } from 'lucide-react';
+import { LevelUpModal } from './LevelUpModal';
 
 interface Props {
   character: Character;
@@ -37,6 +39,7 @@ export function CharacterSheet({ character: initial, onSave, onBack, onExport }:
   const [character, setCharacter] = useState<Character>(initial);
   const [activeTab, setActiveTab] = useState<'main' | 'inventory' | 'features' | 'notes'>('main');
   const [dirty, setDirty] = useState(false);
+  const [showLevelUp, setShowLevelUp] = useState(false);
 
   const update = useCallback((partial: Partial<Character>) => {
     setCharacter((prev) => ({ ...prev, ...partial }));
@@ -150,6 +153,12 @@ export function CharacterSheet({ character: initial, onSave, onBack, onExport }:
             className="flex items-center gap-1 px-3 py-2 bg-green-700 hover:bg-green-600 rounded-lg text-sm font-medium"
           >
             <Save className="w-4 h-4" /> Guardar
+          </button>
+          <button
+            onClick={() => setShowLevelUp(true)}
+            className="flex items-center gap-1 px-3 py-2 bg-amber-600 hover:bg-amber-500 rounded-lg text-sm font-medium"
+          >
+            <TrendingUp className="w-4 h-4" /> Subir nivel
           </button>
           <button
             onClick={() => onExport(character)}
@@ -467,6 +476,18 @@ export function CharacterSheet({ character: initial, onSave, onBack, onExport }:
           </div>
         )}
       </div>
+
+      {showLevelUp && (
+        <LevelUpModal
+          character={character}
+          onClose={() => setShowLevelUp(false)}
+          onConfirm={(updated) => {
+            setCharacter(updated);
+            setDirty(true);
+            setShowLevelUp(false);
+          }}
+        />
+      )}
     </div>
   );
 }
