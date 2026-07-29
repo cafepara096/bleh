@@ -1,0 +1,1034 @@
+[
+  {
+    "id": "acid-splash",
+    "name": "Salpicadura de Ácido",
+    "level": 0,
+    "school": "conjuration",
+    "castingTime": "1 acción",
+    "range": "60 feet",
+    "components": "V, S",
+    "duration": "Instantáneo",
+    "description": "Lanzas una burbuja de ácido. Elige una criatura a la vista en el alcance, o elige dos criaturas a la vista en el alcance que estén a 5 feet o menos la una de la otra. Un objetivo debe superar una tirada de salvación de Destreza o sufrir 1d6 de daño de ácido.\n\nEl daño de este conjuro aumenta en 1d6 cuando alcanzas el nivel 5 (2d6), el nivel 11 (3d6) y el nivel 17 (4d6).",
+    "damage": "1d6",
+    "damageType": "ácido",
+    "classes": [
+      "hechicero",
+      "mago"
+    ]
+  },
+  {
+    "id": "chill-touch",
+    "name": "Toque Helado",
+    "level": 0,
+    "school": "necromancy",
+    "castingTime": "1 acción",
+    "range": "120 feet",
+    "components": "V, S",
+    "duration": "1 asalto",
+    "description": "Creas una mano espectral y esquelética en el espacio de una criatura a la vista en el alcance. Realiza un ataque de conjuro a distancia contra la criatura para asestarla con la mano. Si impactas, el objetivo sufre 1d8 de daño necrótico y no puede recuperar puntos de golpe hasta el inicio de tu próximo turno.\n\nEl daño aumenta en 1d8 en los niveles 5, 11 y 17.",
+    "damage": "1d8",
+    "damageType": "necrótico",
+    "classes": [
+      "hechicero",
+      "brujo",
+      "mago"
+    ]
+  },
+  {
+    "id": "fire-bolt",
+    "name": "Proyectil Ígneo",
+    "level": 0,
+    "school": "evocation",
+    "castingTime": "1 acción",
+    "range": "120 feet",
+    "components": "V, S",
+    "duration": "Instantáneo",
+    "description": "Lanzas un mote de fuego a una criatura u objeto a la vista en el alcance. Realiza un ataque de conjuro a distancia. Si impactas, el objetivo sufre 1d10 de daño de fuego. Un objeto inflamable golpeado por este conjuro se incendia si no lo lleva o porta una criatura.\n\nEl daño aumenta en 1d10 en los niveles 5, 11 y 17.",
+    "damage": "1d10",
+    "damageType": "fuego",
+    "classes": [
+      "hechicero",
+      "mago"
+    ]
+  },
+  {
+    "id": "guidance",
+    "name": "Orientación",
+    "level": 0,
+    "school": "divination",
+    "castingTime": "1 acción",
+    "range": "Toque",
+    "components": "V, S",
+    "duration": "Concentración, hasta 1 minuto",
+    "concentration": true,
+    "description": "Tocas a una criatura voluntaria. Una vez antes de que termine el conjuro, el objetivo puede tirar 1d4 y añadir el número obtenido a una prueba de característica de su elección. Puede tirar el dado antes o después de realizar la prueba. El conjuro termina entonces.",
+    "classes": [
+      "clérigo",
+      "druida"
+    ]
+  },
+  {
+    "id": "light",
+    "name": "Luz",
+    "level": 0,
+    "school": "evocation",
+    "castingTime": "1 acción",
+    "range": "Toque",
+    "components": "V, M (una luciérnaga o musgo fosforescente)",
+    "duration": "1 hora",
+    "description": "Tocas un objeto que no mida más de 10 feet en cualquier dimensión. Hasta que el conjuro termine, el objeto emite luz brillante en un radio de 20 feet y luz tenue 20 feet adicionales. El color lo eliges tú. Cubrir el objeto con algo opaco bloquea la luz.",
+    "classes": [
+      "bardo",
+      "clérigo",
+      "hechicero",
+      "mago"
+    ]
+  },
+  {
+    "id": "mage-hand",
+    "name": "Mano de Mago",
+    "level": 0,
+    "school": "conjuration",
+    "castingTime": "1 acción",
+    "range": "30 feet",
+    "components": "V, S",
+    "duration": "1 minuto",
+    "description": "Una mano espectral flotante aparece en un punto que elijas en el alcance. La mano dura la duración del conjuro o hasta que la despidas con una acción. La mano se desvanece si se aleja más de 30 feet de ti o si lanzas este conjuro de nuevo.\n\nPuedes usar tu acción para controlar la mano. Puedes usarla para manipular un objeto, abrir una puerta o un recipiente sin cerrar, guardar o sacar un objeto de un contenedor abierto, o verter el contenido de un vial.",
+    "classes": [
+      "bardo",
+      "hechicero",
+      "brujo",
+      "mago"
+    ]
+  },
+  {
+    "id": "mending",
+    "name": "Reparar",
+    "level": 0,
+    "school": "transmutation",
+    "castingTime": "1 minuto",
+    "range": "Toque",
+    "components": "V, S, M (dos piedras de imán)",
+    "duration": "Instantáneo",
+    "description": "Reparas una rotura o desgarro en un objeto que tocas, como un eslabón de cadena roto, dos mitades de una llave partida, un manto rasgado o una bota con fuga. Siempre que la rotura o desgarro no sea mayor de 1 foot en cualquier dimensión, lo reparas sin dejar rastro.",
+    "classes": [
+      "bardo",
+      "clérigo",
+      "druida",
+      "hechicero",
+      "mago"
+    ]
+  },
+  {
+    "id": "message",
+    "name": "Mensaje",
+    "level": 0,
+    "school": "transmutation",
+    "castingTime": "1 acción",
+    "range": "120 feet",
+    "components": "V, S, M (un trozo de cable de cobre)",
+    "duration": "1 asalto",
+    "description": "Señalas con el dedo a una criatura en el alcance y susurras un mensaje. El objetivo (y solo el objetivo) oye el mensaje y puede responder en un susurro que solo tú oyes. Puedes lanzar este conjuro a través de objetos sólidos si conoces al objetivo y estás al tanto de que está más allá de la barrera.",
+    "classes": [
+      "bardo",
+      "hechicero",
+      "mago"
+    ]
+  },
+  {
+    "id": "minor-illusion",
+    "name": "Ilusión Menor",
+    "level": 0,
+    "school": "illusion",
+    "castingTime": "1 acción",
+    "range": "30 feet",
+    "components": "S, M (un poco de vellón)",
+    "duration": "1 minuto",
+    "description": "Creas un sonido o una imagen de un objeto en el alcance que dura la duración. La ilusión también termina si la despides con una acción o lanzas este conjuro de nuevo.\n\nSi creas un sonido, su volumen puede ir de un susurro a un grito. Si creas una imagen de un objeto, debe ser no mayor de un cubo de 5 feet.",
+    "classes": [
+      "bardo",
+      "hechicero",
+      "brujo",
+      "mago"
+    ]
+  },
+  {
+    "id": "prestidigitation",
+    "name": "Prestidigitación",
+    "level": 0,
+    "school": "transmutation",
+    "castingTime": "1 acción",
+    "range": "10 feet",
+    "components": "V, S",
+    "duration": "Hasta 1 hora",
+    "description": "Este conjuro es un truco mágico menor que los lanzadores novatos usan para practicar. Creas uno de los siguientes efectos mágicos en el alcance: un efecto sensorial inofensivo; enciendes o apagas una vela, antorcha o fogata pequeña; limpias o ensucias un objeto de no más de 1 pie cúbico; enfrías, calientas o sazonas material no vivo; haces aparecer un color, marca o símbolo en un objeto o superficie; creas una baratija no mágica o una imagen ilusoria que cabe en tu mano.",
+    "classes": [
+      "bardo",
+      "hechicero",
+      "brujo",
+      "mago"
+    ]
+  },
+  {
+    "id": "ray-of-frost",
+    "name": "Rayo de Escarcha",
+    "level": 0,
+    "school": "evocation",
+    "castingTime": "1 acción",
+    "range": "60 feet",
+    "components": "V, S",
+    "duration": "Instantáneo",
+    "description": "Un rayo gélido de luz azul pálida se dirige hacia una criatura en el alcance. Realiza un ataque de conjuro a distancia. Si impactas, el objetivo sufre 1d8 de daño de frío y su velocidad se reduce en 10 feet hasta el inicio de tu próximo turno.\n\nEl daño aumenta en 1d8 en los niveles 5, 11 y 17.",
+    "damage": "1d8",
+    "damageType": "frío",
+    "classes": [
+      "hechicero",
+      "mago"
+    ]
+  },
+  {
+    "id": "resistance",
+    "name": "Resistencia",
+    "level": 0,
+    "school": "abjuration",
+    "castingTime": "1 acción",
+    "range": "Toque",
+    "components": "V, S, M (una capa en miniatura)",
+    "duration": "Concentración, hasta 1 minuto",
+    "concentration": true,
+    "description": "Tocas a una criatura voluntaria. Una vez antes de que termine el conjuro, el objetivo puede tirar 1d4 y añadir el número obtenido a una tirada de salvación de su elección. Puede tirar el dado antes o después de realizar la salvación. El conjuro termina entonces.",
+    "classes": [
+      "clérigo",
+      "druida"
+    ]
+  },
+  {
+    "id": "sacred-flame",
+    "name": "Llama Sagrada",
+    "level": 0,
+    "school": "evocation",
+    "castingTime": "1 acción",
+    "range": "60 feet",
+    "components": "V, S",
+    "duration": "Instantáneo",
+    "description": "Una llama-like radiance descends on a creature that you can see within range. The target must succeed on a Dexterity saving throw or take 1d8 radiant damage. The target gains no benefit from cover for this saving throw.\n\nEl daño aumenta en 1d8 en los niveles 5, 11 y 17.",
+    "damage": "1d8",
+    "damageType": "radiante",
+    "classes": [
+      "clérigo"
+    ]
+  },
+  {
+    "id": "shocking-grasp",
+    "name": "Toque Electrificante",
+    "level": 0,
+    "school": "evocation",
+    "castingTime": "1 acción",
+    "range": "Toque",
+    "components": "V, S",
+    "duration": "Instantáneo",
+    "description": "Relámpago salta de tu mano para descargar sobre una criatura que intentas tocar. Realiza un ataque de conjuro cuerpo a cuerpo. Tienes ventaja si el objetivo lleva armadura metálica. Si impactas, el objetivo sufre 1d8 de daño de rayo y no puede realizar reacciones hasta el inicio de su próximo turno.\n\nEl daño aumenta en 1d8 en los niveles 5, 11 y 17.",
+    "damage": "1d8",
+    "damageType": "rayo",
+    "classes": [
+      "hechicero",
+      "mago"
+    ]
+  },
+  {
+    "id": "thaumaturgy",
+    "name": "Taumaturgia",
+    "level": 0,
+    "school": "transmutation",
+    "castingTime": "1 acción",
+    "range": "30 feet",
+    "components": "V",
+    "duration": "Hasta 1 minuto",
+    "description": "Manifiestas una pequeña maravilla, una señal de poder sobrenatural, en el alcance. Creas uno de estos efectos: tu voz resuena hasta el triple de fuerte; haces temblar el suelo levemente; creas sonidos inofensivos; haces centellear una luz; abres o cierras una puerta o ventana desbloqueada.",
+    "classes": [
+      "clérigo"
+    ]
+  },
+  {
+    "id": "true-strike",
+    "name": "Golpe Cierto",
+    "level": 0,
+    "school": "divination",
+    "castingTime": "1 acción",
+    "range": "30 feet",
+    "components": "S",
+    "duration": "Concentración, hasta 1 asalto",
+    "concentration": true,
+    "description": "Extiendes tu mano y señas a un objetivo en el alcance. Tu magia te otorga una breve visión de las defensas del objetivo. En tu próximo turno, ganas ventaja en tu primera tirada de ataque contra el objetivo, siempre que este conjuro no haya terminado.",
+    "classes": [
+      "bardo",
+      "hechicero",
+      "brujo",
+      "mago"
+    ]
+  },
+  {
+    "id": "vicious-mockery",
+    "name": "Burla Cruel",
+    "level": 0,
+    "school": "enchantment",
+    "castingTime": "1 acción",
+    "range": "60 feet",
+    "components": "V",
+    "duration": "Instantáneo",
+    "description": "Lanzas una sarta de insultos impregnados de sutil encantamiento a una criatura que puedas ver en el alcance. Si el objetivo puede oírte (no necesita entenderte), debe superar una tirada de salvación de Sabiduría o sufrir 1d4 de daño psíquico y tener desventaja en la siguiente tirada de ataque que realice antes del final de su próximo turno.\n\nEl daño aumenta en 1d4 en los niveles 5, 11 y 17.",
+    "damage": "1d4",
+    "damageType": "psíquico",
+    "classes": [
+      "bardo"
+    ]
+  },
+  {
+    "id": "burning-hands",
+    "name": "Manos Ardientes",
+    "level": 1,
+    "school": "evocation",
+    "castingTime": "1 acción",
+    "range": "Personal (cono de 15 feet)",
+    "components": "V, S",
+    "duration": "Instantáneo",
+    "description": "Al poner juntos los pulgares y extender los dedos, una fina capa de llamas sale de tus dedos extendidos. Cada criatura en un cono de 15 feet debe realizar una tirada de salvación de Destreza. Una criatura sufre 3d6 de daño de fuego si falla, o la mitad si tiene éxito.\n\nA niveles superiores: +1d6 por cada nivel por encima de 1.",
+    "damage": "3d6",
+    "damageType": "fuego",
+    "higherLevels": "+1d6 por nivel de conjuro por encima de 1º",
+    "classes": [
+      "hechicero",
+      "mago"
+    ]
+  },
+  {
+    "id": "charm-person",
+    "name": "Encantar Persona",
+    "level": 1,
+    "school": "enchantment",
+    "castingTime": "1 acción",
+    "range": "30 feet",
+    "components": "V, S",
+    "duration": "1 hora",
+    "description": "Intentas hechizar a un humanoide que puedas ver en el alcance. Debe realizar una tirada de salvación de Sabiduría, con ventaja si tú o tus compañeros estáis combatiendo con él. Si falla, está hechizado por ti hasta que termine el conjuro o hasta que tú o tus compañeros le hagáis daño.",
+    "classes": [
+      "bardo",
+      "druida",
+      "hechicero",
+      "brujo",
+      "mago"
+    ]
+  },
+  {
+    "id": "cure-wounds",
+    "name": "Curar Heridas",
+    "level": 1,
+    "school": "evocation",
+    "castingTime": "1 acción",
+    "range": "Toque",
+    "components": "V, S",
+    "duration": "Instantáneo",
+    "description": "Una criatura que tocas recupera puntos de golpe iguales a 1d8 + tu modificador de característica de lanzamiento de conjuros. Este conjuro no tiene efecto en no muertos ni constructos.\n\nA niveles superiores: +1d8 por cada nivel por encima de 1.",
+    "damage": "1d8 + mod",
+    "damageType": "curación",
+    "higherLevels": "+1d8 por nivel por encima de 1º",
+    "classes": [
+      "bardo",
+      "clérigo",
+      "druida",
+      "paladín",
+      "explorador"
+    ]
+  },
+  {
+    "id": "detect-magic",
+    "name": "Detectar Magia",
+    "level": 1,
+    "school": "divination",
+    "castingTime": "1 acción",
+    "range": "Personal",
+    "components": "V, S",
+    "duration": "Concentración, hasta 10 minutos",
+    "concentration": true,
+    "ritual": true,
+    "description": "Durante la duración, sientes la presencia de magia a 30 feet de ti. Si sientes magia de esta forma, puedes usar tu acción para ver un aura tenue alrededor de cualquier criatura u objeto visible en el área que porte magia, y aprendes su escuela de magia, si la tiene.",
+    "classes": [
+      "bardo",
+      "clérigo",
+      "druida",
+      "paladín",
+      "explorador",
+      "hechicero",
+      "mago"
+    ]
+  },
+  {
+    "id": "feather-fall",
+    "name": "Caída de Pluma",
+    "level": 1,
+    "school": "transmutation",
+    "castingTime": "1 reacción, que tomas cuando tú o una criatura a 60 feet de ti cae",
+    "range": "60 feet",
+    "components": "V, M (una pequeña pluma o trozo de plumón)",
+    "duration": "1 minuto",
+    "description": "Elige hasta cinco criaturas que caigan en el alcance. La velocidad de caída de cada objetivo se reduce a 60 feet por asalto hasta que el conjuro termine. Si un objetivo aterriza antes de que termine el conjuro, no sufre daño por la caída.",
+    "classes": [
+      "bardo",
+      "hechicero",
+      "mago"
+    ]
+  },
+  {
+    "id": "healing-word",
+    "name": "Palabra Sanadora",
+    "level": 1,
+    "school": "evocation",
+    "castingTime": "1 acción adicional",
+    "range": "60 feet",
+    "components": "V",
+    "duration": "Instantáneo",
+    "description": "Una criatura de tu elección que puedas ver en el alcance recupera puntos de golpe iguales a 1d4 + tu modificador de característica de lanzamiento de conjuros. Este conjuro no tiene efecto en no muertos ni constructos.\n\nA niveles superiores: +1d4 por cada nivel por encima de 1.",
+    "damage": "1d4 + mod",
+    "damageType": "curación",
+    "higherLevels": "+1d4 por nivel por encima de 1º",
+    "classes": [
+      "bardo",
+      "clérigo",
+      "druida"
+    ]
+  },
+  {
+    "id": "identify",
+    "name": "Identificar",
+    "level": 1,
+    "school": "divination",
+    "castingTime": "1 minuto",
+    "range": "Toque",
+    "components": "V, S, M (una perla de al menos 100 gp y una pluma de búho)",
+    "duration": "Instantáneo",
+    "ritual": true,
+    "description": "Tocas un objeto durante el lanzamiento del conjuro. Si es un objeto mágico o algún otro objeto imbuido de magia, aprendes sus propiedades y cómo usarlas, si requiere sintonización y cuántas cargas tiene.",
+    "classes": [
+      "bardo",
+      "mago"
+    ]
+  },
+  {
+    "id": "mage-armor",
+    "name": "Armadura de Mago",
+    "level": 1,
+    "school": "abjuration",
+    "castingTime": "1 acción",
+    "range": "Toque",
+    "components": "V, S, M (un trozo de cuero curado)",
+    "duration": "8 horas",
+    "description": "Tocas a una criatura voluntaria que no lleve armadura, y una fuerza mágica protectora la rodea hasta que termine el conjuro. La CA base del objetivo se convierte en 13 + su modificador de Destreza. El conjuro termina si el objetivo se pone una armadura o si lo despides con una acción.",
+    "classes": [
+      "hechicero",
+      "mago"
+    ]
+  },
+  {
+    "id": "magic-missile",
+    "name": "Misil Mágico",
+    "level": 1,
+    "school": "evocation",
+    "castingTime": "1 acción",
+    "range": "120 feet",
+    "components": "V, S",
+    "duration": "Instantáneo",
+    "description": "Creas tres dardos de fuerza mágica reluciente. Cada dardo impacta a una criatura de tu elección que puedas ver en el alcance. Un dardo causa 1d4+1 de daño de fuerza al objetivo. Los dardos impactan simultáneamente y puedes dirigirlos a un solo objetivo o a varios.\n\nA niveles superiores: +1 dardo por cada nivel por encima de 1.",
+    "damage": "1d4+1",
+    "damageType": "fuerza",
+    "higherLevels": "+1 dardo por nivel por encima de 1º",
+    "classes": [
+      "hechicero",
+      "mago"
+    ]
+  },
+  {
+    "id": "shield",
+    "name": "Escudo",
+    "level": 1,
+    "school": "abjuration",
+    "castingTime": "1 reacción, que tomas cuando eres golpeado por un ataque o el objetivo de misil mágico",
+    "range": "Personal",
+    "components": "V, S",
+    "duration": "1 asalto",
+    "description": "Una barrera invisible de fuerza mágica aparece y te protege. Hasta el inicio de tu próximo turno, tienes un bonificador de +5 a la CA, incluido contra el ataque desencadenante, y no sufres daño de misil mágico.",
+    "classes": [
+      "hechicero",
+      "mago"
+    ]
+  },
+  {
+    "id": "sleep",
+    "name": "Sueño",
+    "level": 1,
+    "school": "enchantment",
+    "castingTime": "1 acción",
+    "range": "90 feet",
+    "components": "V, S, M (un puñado de arena fina, pétalos de rosa o un grillo)",
+    "duration": "1 minuto",
+    "description": "Este conjuro envía a criaturas a un sueño mágico. Tira 5d8; el total es la cantidad de puntos de golpe de criaturas a las que este conjuro puede afectar. Las criaturas en un radio de 20 feet de un punto que elijas en el alcance se ven afectadas en orden ascendente de sus puntos de golpe actuales.\n\nA niveles superiores: +2d8 por cada nivel por encima de 1.",
+    "higherLevels": "+2d8 por nivel por encima de 1º",
+    "classes": [
+      "bardo",
+      "hechicero",
+      "mago"
+    ]
+  },
+  {
+    "id": "thunderwave",
+    "name": "Onda Atronadora",
+    "level": 1,
+    "school": "evocation",
+    "castingTime": "1 acción",
+    "range": "Personal (cubo de 15 feet)",
+    "components": "V, S",
+    "duration": "Instantáneo",
+    "description": "Una ola de fuerza atronadora sale de ti. Cada criatura en un cubo de 15 feet originado en ti debe realizar una tirada de salvación de Constitución. Si falla, sufre 2d8 de daño de trueno y es empujada 10 feet lejos de ti. Si tiene éxito, sufre la mitad de daño y no es empujada.\n\nA niveles superiores: +1d8 por cada nivel por encima de 1.",
+    "damage": "2d8",
+    "damageType": "trueno",
+    "higherLevels": "+1d8 por nivel por encima de 1º",
+    "classes": [
+      "bardo",
+      "druida",
+      "hechicero",
+      "mago"
+    ]
+  },
+  {
+    "id": "invisibility",
+    "name": "Invisibilidad",
+    "level": 2,
+    "school": "illusion",
+    "castingTime": "1 acción",
+    "range": "Toque",
+    "components": "V, S, M (una pestaña en una goma arábiga)",
+    "duration": "Concentración, hasta 1 hora",
+    "concentration": true,
+    "description": "Una criatura que tocas se vuelve invisible hasta que termine el conjuro. Cualquier cosa que el objetivo lleve o porte también es invisible mientras esté sobre la persona del objetivo. El conjuro termina para un objetivo que ataque o lance un conjuro.\n\nA niveles superiores: puedes apuntar a una criatura adicional por cada nivel por encima de 2.",
+    "classes": [
+      "bardo",
+      "hechicero",
+      "brujo",
+      "mago"
+    ]
+  },
+  {
+    "id": "misty-step",
+    "name": "Paso Brumoso",
+    "level": 2,
+    "school": "conjuration",
+    "castingTime": "1 acción adicional",
+    "range": "Personal",
+    "components": "V",
+    "duration": "Instantáneo",
+    "description": "Te rodeas brevemente de una niebla plateada y te teletransportas hasta 30 feet a un espacio desocupado que puedas ver.",
+    "classes": [
+      "hechicero",
+      "brujo",
+      "mago"
+    ]
+  },
+  {
+    "id": "scorching-ray",
+    "name": "Rayo Abrasador",
+    "level": 2,
+    "school": "evocation",
+    "castingTime": "1 acción",
+    "range": "120 feet",
+    "components": "V, S",
+    "duration": "Instantáneo",
+    "description": "Creas tres rayos de fuego y los diriges contra objetivos en el alcance. Puedes dirigirlos al mismo o a distintos objetivos. Realiza un ataque de conjuro a distancia por cada rayo. Si impacta, el objetivo sufre 2d6 de daño de fuego.\n\nA niveles superiores: +1 rayo por cada nivel por encima de 2.",
+    "damage": "2d6",
+    "damageType": "fuego",
+    "higherLevels": "+1 rayo por nivel por encima de 2º",
+    "classes": [
+      "hechicero",
+      "mago"
+    ]
+  },
+  {
+    "id": "shatter",
+    "name": "Estallar",
+    "level": 2,
+    "school": "evocation",
+    "castingTime": "1 acción",
+    "range": "60 feet",
+    "components": "V, S, M (una astilla de mica)",
+    "duration": "Instantáneo",
+    "description": "Un ruido ensordecedor y repentino erupta desde un punto de tu elección en el alcance. Cada criatura en una esfera de 10 feet de radio centrada en ese punto debe realizar una tirada de salvación de Constitución. Una criatura sufre 3d8 de daño de trueno si falla, o la mitad si tiene éxito.\n\nA niveles superiores: +1d8 por cada nivel por encima de 2.",
+    "damage": "3d8",
+    "damageType": "trueno",
+    "higherLevels": "+1d8 por nivel por encima de 2º",
+    "classes": [
+      "bardo",
+      "hechicero",
+      "brujo",
+      "mago"
+    ]
+  },
+  {
+    "id": "spiritual-weapon",
+    "name": "Arma Espiritual",
+    "level": 2,
+    "school": "evocation",
+    "castingTime": "1 acción adicional",
+    "range": "60 feet",
+    "components": "V, S",
+    "duration": "1 minuto",
+    "description": "Creas un arma espectral flotante en el alcance que dura la duración o hasta que lances este conjuro de nuevo. Cuando aparece, puedes realizar un ataque de conjuro cuerpo a cuerpo contra una criatura a 5 feet de ella. Si impacta, el objetivo sufre daño de fuerza igual a 1d8 + tu modificador de característica de lanzamiento.\n\nComo acción adicional en tu turno, puedes mover el arma hasta 20 feet y repetir el ataque.\n\nA niveles superiores: +1d8 por cada dos niveles por encima de 2.",
+    "damage": "1d8 + mod",
+    "damageType": "fuerza",
+    "higherLevels": "+1d8 por cada dos niveles por encima de 2º",
+    "classes": [
+      "clérigo"
+    ]
+  },
+  {
+    "id": "web",
+    "name": "Telaraña",
+    "level": 2,
+    "school": "conjuration",
+    "castingTime": "1 acción",
+    "range": "60 feet",
+    "components": "V, S, M (un trozo de telaraña)",
+    "duration": "Concentración, hasta 1 hora",
+    "concentration": true,
+    "description": "Conjuras una masa de telarañas espesas y pegajosas en un punto de tu elección en el alcance. Las telarañas llenan un cubo de 20 feet desde ese punto durante la duración. Las telarañas son terreno difícil y oscurecen ligeramente el área.\n\nSi las telarañas no están ancladas, el conjuro falla. Cada criatura que empiece su turno en las telarañas o entre en ellas debe superar una tirada de salvación de Destreza o quedar apresada.",
+    "classes": [
+      "hechicero",
+      "mago"
+    ]
+  },
+  {
+    "id": "counterspell",
+    "name": "Contrahechizo",
+    "level": 3,
+    "school": "abjuration",
+    "castingTime": "1 reacción, que tomas cuando ves a una criatura a 60 feet de ti lanzando un conjuro",
+    "range": "60 feet",
+    "components": "S",
+    "duration": "Instantáneo",
+    "description": "Intentas interrumpir a una criatura en proceso de lanzar un conjuro. Si la criatura está lanzando un conjuro de nivel 3 o inferior, el conjuro falla. Si es de nivel 4 o superior, realiza una prueba de característica usando tu característica de lanzamiento de conjuros. La CD es igual a 10 + el nivel del conjuro. Si tienes éxito, el conjuro de la criatura falla.\n\nA niveles superiores: el conjuro interrumpido automáticamente es de nivel igual o inferior al nivel al que lanzas este conjuro.",
+    "classes": [
+      "hechicero",
+      "brujo",
+      "mago"
+    ]
+  },
+  {
+    "id": "fireball",
+    "name": "Bola de Fuego",
+    "level": 3,
+    "school": "evocation",
+    "castingTime": "1 acción",
+    "range": "150 feet",
+    "components": "V, S, M (una minúscula bola de guano de murciélago y azufre)",
+    "duration": "Instantáneo",
+    "description": "Un destello brillante brota de tu dedo hacia un punto que elijas en el alcance y luego florece con un bajo rugido en una explosión de llama. Cada criatura en una esfera de 20 feet de radio centrada en ese punto debe realizar una tirada de salvación de Destreza. Un objetivo sufre 8d6 de daño de fuego si falla, o la mitad si tiene éxito.\n\nA niveles superiores: +1d6 por cada nivel por encima de 3.",
+    "damage": "8d6",
+    "damageType": "fuego",
+    "higherLevels": "+1d6 por nivel por encima de 3º",
+    "classes": [
+      "hechicero",
+      "mago"
+    ]
+  },
+  {
+    "id": "fly",
+    "name": "Volar",
+    "level": 3,
+    "school": "transmutation",
+    "castingTime": "1 acción",
+    "range": "Toque",
+    "components": "V, S, M (una pluma del ala de cualquier ave)",
+    "duration": "Concentración, hasta 10 minutos",
+    "concentration": true,
+    "description": "Tocas a una criatura voluntaria. El objetivo gana una velocidad de vuelo de 60 feet durante la duración. Cuando el conjuro termina, el objetivo cae si aún está en el aire.\n\nA niveles superiores: puedes apuntar a una criatura adicional por cada nivel por encima de 3.",
+    "classes": [
+      "hechicero",
+      "brujo",
+      "mago"
+    ]
+  },
+  {
+    "id": "haste",
+    "name": "Acelerar",
+    "level": 3,
+    "school": "transmutation",
+    "castingTime": "1 acción",
+    "range": "30 feet",
+    "components": "V, S, M (una viruta de raíz de liquen)",
+    "duration": "Concentración, hasta 1 minuto",
+    "concentration": true,
+    "description": "Elige una criatura voluntaria que puedas ver en el alcance. Hasta que termine el conjuro, la velocidad del objetivo se duplica, gana un bonificador de +2 a la CA, tiene ventaja en tiradas de salvación de Destreza y gana una acción adicional en cada uno de sus turnos (solo puede usarla para Atacar —un arma—, Dash, Disengage, Hide o Use an Object).\n\nCuando el conjuro termina, el objetivo no puede moverse ni realizar acciones hasta después de su próximo turno.",
+    "classes": [
+      "hechicero",
+      "mago"
+    ]
+  },
+  {
+    "id": "lightning-bolt",
+    "name": "Rayo",
+    "level": 3,
+    "school": "evocation",
+    "castingTime": "1 acción",
+    "range": "Personal (línea de 100 feet)",
+    "components": "V, S, M (un poco de piel y una barra de ámbar, cristal o vidrio)",
+    "duration": "Instantáneo",
+    "description": "Una descarga de rayo formando una línea de 100 feet de largo y 5 feet de ancho brota de ti en una dirección que elijas. Cada criatura en la línea debe realizar una tirada de salvación de Destreza. Una criatura sufre 8d6 de daño de rayo si falla, o la mitad si tiene éxito.\n\nA niveles superiores: +1d6 por cada nivel por encima de 3.",
+    "damage": "8d6",
+    "damageType": "rayo",
+    "higherLevels": "+1d6 por nivel por encima de 3º",
+    "classes": [
+      "hechicero",
+      "mago"
+    ]
+  },
+  {
+    "id": "revivify",
+    "name": "Revivir",
+    "level": 3,
+    "school": "necromancy",
+    "castingTime": "1 acción",
+    "range": "Toque",
+    "components": "V, S, M (diamantes por valor de 300 gp, que el conjuro consume)",
+    "duration": "Instantáneo",
+    "description": "Tocas a una criatura que haya muerto en el último minuto. Esa criatura vuelve a la vida con 1 punto de golpe. Este conjuro no puede devolver la vida a una criatura que haya muerto de vejez, ni puede restaurar partes del cuerpo perdidas.",
+    "classes": [
+      "clérigo",
+      "paladín"
+    ]
+  },
+  {
+    "id": "dimension-door",
+    "name": "Puerta Dimensional",
+    "level": 4,
+    "school": "conjuration",
+    "castingTime": "1 acción",
+    "range": "500 feet",
+    "components": "V",
+    "duration": "Instantáneo",
+    "description": "Te teletransportas a ti y hasta una criatura voluntaria a 5 feet de ti a un destino a 500 feet. El destino debe ser un lugar que puedas ver, visualizar o describir por distancia y dirección.",
+    "classes": [
+      "bardo",
+      "hechicero",
+      "brujo",
+      "mago"
+    ]
+  },
+  {
+    "id": "greater-invisibility",
+    "name": "Invisibilidad Superior",
+    "level": 4,
+    "school": "illusion",
+    "castingTime": "1 acción",
+    "range": "Toque",
+    "components": "V, S",
+    "duration": "Concentración, hasta 1 minuto",
+    "concentration": true,
+    "description": "Tocas a una criatura y esta se vuelve invisible hasta que termine el conjuro. Cualquier cosa que el objetivo lleve o porte es invisible mientras esté sobre su persona. A diferencia de Invisibilidad, este efecto no termina si el objetivo ataca o lanza un conjuro.",
+    "classes": [
+      "bardo",
+      "hechicero",
+      "mago"
+    ]
+  },
+  {
+    "id": "ice-storm",
+    "name": "Tormenta de Hielo",
+    "level": 4,
+    "school": "evocation",
+    "castingTime": "1 acción",
+    "range": "300 feet",
+    "components": "V, S, M (una pizca de polvo y unas gotas de agua)",
+    "duration": "Instantáneo",
+    "description": "Una lluvia de granizo de piedra de hielo golpea el suelo en un cilindro de 20 feet de radio y 40 feet de alto centrado en un punto en el alcance. Cada criatura en el cilindro debe realizar una tirada de salvación de Destreza. Una criatura sufre 2d8 de daño contundente y 4d6 de daño de frío si falla, o la mitad si tiene éxito.\n\nA niveles superiores: +1d8 de daño contundente por cada nivel por encima de 4.",
+    "damage": "2d8 + 4d6",
+    "damageType": "contundente + frío",
+    "higherLevels": "+1d8 contundente por nivel por encima de 4º",
+    "classes": [
+      "druida",
+      "hechicero",
+      "mago"
+    ]
+  },
+  {
+    "id": "stoneskin",
+    "name": "Piel de Piedra",
+    "level": 4,
+    "school": "abjuration",
+    "castingTime": "1 acción",
+    "range": "Toque",
+    "components": "V, S, M (polvo de diamante por valor de 100 gp, que el conjuro consume)",
+    "duration": "Concentración, hasta 1 hora",
+    "concentration": true,
+    "description": "Este conjuro convierte la carne de una criatura voluntaria en tan dura como piedra. Hasta que termine el conjuro, el objetivo tiene resistencia al daño no mágico contundente, perforante y cortante.",
+    "classes": [
+      "druida",
+      "explorador",
+      "hechicero",
+      "mago"
+    ]
+  },
+  {
+    "id": "cone-of-cold",
+    "name": "Cono de Frío",
+    "level": 5,
+    "school": "evocation",
+    "castingTime": "1 acción",
+    "range": "Personal (cono de 60 feet)",
+    "components": "V, S, M (un pequeño cristal o vaso de cristal)",
+    "duration": "Instantáneo",
+    "description": "Una ráfaga de aire frío sale de tus manos. Cada criatura en un cono de 60 feet debe realizar una tirada de salvación de Constitución. Una criatura sufre 8d8 de daño de frío si falla, o la mitad si tiene éxito.\n\nA niveles superiores: +1d8 por cada nivel por encima de 5.",
+    "damage": "8d8",
+    "damageType": "frío",
+    "higherLevels": "+1d8 por nivel por encima de 5º",
+    "classes": [
+      "hechicero",
+      "mago"
+    ]
+  },
+  {
+    "id": "dominate-person",
+    "name": "Dominar Persona",
+    "level": 5,
+    "school": "enchantment",
+    "castingTime": "1 acción",
+    "range": "60 feet",
+    "components": "V, S",
+    "duration": "Concentración, hasta 1 minuto",
+    "concentration": true,
+    "description": "Intentas hechizar a un humanoide que puedas ver en el alcance. Debe superar una tirada de salvación de Sabiduría o quedar hechizado por ti durante la duración. Si tú o tus compañeros estáis combatiendo con él, tiene ventaja en la salvación.\n\nMientras está hechizado, tienes un vínculo telepáico. Puedes usar este vínculo para emitir órdenes. Puedes usar tu acción para tomar control total y preciso hasta el final de tu próximo turno.",
+    "classes": [
+      "bardo",
+      "hechicero",
+      "mago"
+    ]
+  },
+  {
+    "id": "flame-strike",
+    "name": "Golpe Flamígero",
+    "level": 5,
+    "school": "evocation",
+    "castingTime": "1 acción",
+    "range": "60 feet",
+    "components": "V, S, M (una pizca de azufre)",
+    "duration": "Instantáneo",
+    "description": "Una columna vertical de fuego divino ruge hacia abajo desde los cielos en un lugar que especifiques. Cada criatura en un cilindro de 10 feet de radio y 40 feet de alto centrado en un punto en el alcance debe realizar una tirada de salvación de Destreza. Una criatura sufre 4d6 de daño de fuego y 4d6 de daño radiante si falla, o la mitad si tiene éxito.\n\nA niveles superiores: +1d6 de fuego o radiante (tú eliges) por cada nivel por encima de 5.",
+    "damage": "4d6 + 4d6",
+    "damageType": "fuego + radiante",
+    "higherLevels": "+1d6 por nivel por encima de 5º",
+    "classes": [
+      "clérigo"
+    ]
+  },
+  {
+    "id": "hold-monster",
+    "name": "Inmovilizar Monstruo",
+    "level": 5,
+    "school": "enchantment",
+    "castingTime": "1 acción",
+    "range": "90 feet",
+    "components": "V, S, M (un trozo pequeño y recto de hierro)",
+    "duration": "Concentración, hasta 1 minuto",
+    "concentration": true,
+    "description": "Elige una criatura que puedas ver en el alcance. El objetivo debe superar una tirada de salvación de Sabiduría o quedar paralizado durante la duración. Este conjuro no tiene efecto en no muertos. Al final de cada uno de sus turnos, el objetivo puede repetir la salvación.\n\nA niveles superiores: puedes apuntar a una criatura adicional por cada nivel por encima de 5.",
+    "classes": [
+      "bardo",
+      "hechicero",
+      "brujo",
+      "mago"
+    ]
+  },
+  {
+    "id": "chain-lightning",
+    "name": "Cadena de Relámpagos",
+    "level": 6,
+    "school": "evocation",
+    "castingTime": "1 acción",
+    "range": "150 feet",
+    "components": "V, S, M (un poco de piel; una pieza de ámbar, cristal o vidrio; y tres alfileres de plata)",
+    "duration": "Instantáneo",
+    "description": "Creas un rayo que arde hacia un objetivo de tu elección que puedas ver en el alcance. Tres rayos saltan del objetivo a otros tantos objetivos, cada uno a no más de 30 feet del primero. Un objetivo puede ser una criatura u objeto y solo puede ser objetivo de un rayo.\n\nUn objetivo debe realizar una tirada de salvación de Destreza. El objetivo sufre 10d8 de daño de rayo si falla, o la mitad si tiene éxito.\n\nA niveles superiores: un rayo adicional salta a otro objetivo por cada nivel por encima de 6.",
+    "damage": "10d8",
+    "damageType": "rayo",
+    "higherLevels": "+1 rayo por nivel por encima de 6º",
+    "classes": [
+      "hechicero",
+      "mago"
+    ]
+  },
+  {
+    "id": "disintegrate",
+    "name": "Desintegrar",
+    "level": 6,
+    "school": "transmutation",
+    "castingTime": "1 acción",
+    "range": "60 feet",
+    "components": "V, S, M (un imán y una pizca de polvo)",
+    "duration": "Instantáneo",
+    "description": "Un fino rayo verde se dispara desde tu dedo hacia un objetivo que puedas ver en el alcance. El objetivo puede ser una criatura, un objeto o una creación de fuerza mágica.\n\nUna criatura objetivo debe realizar una tirada de salvación de Destreza. Si falla, sufre 10d6+40 de daño de fuerza. Si esto reduce sus PG a 0, se desintegra.\n\nA niveles superiores: +3d6 de daño por cada nivel por encima de 6.",
+    "damage": "10d6+40",
+    "damageType": "fuerza",
+    "higherLevels": "+3d6 por nivel por encima de 6º",
+    "classes": [
+      "hechicero",
+      "mago"
+    ]
+  },
+  {
+    "id": "heal",
+    "name": "Curar",
+    "level": 6,
+    "school": "evocation",
+    "castingTime": "1 acción",
+    "range": "60 feet",
+    "components": "V, S",
+    "duration": "Instantáneo",
+    "description": "Elige una criatura que puedas ver en el alcance. Una oleada de energía positiva la atraviesa, restaurando 70 puntos de golpe. Este conjuro también termina ceguera, sordera y cualquier enfermedad que afecte al objetivo.\n\nA niveles superiores: +10 PG por cada nivel por encima de 6.",
+    "damage": "70",
+    "damageType": "curación",
+    "higherLevels": "+10 PG por nivel por encima de 6º",
+    "classes": [
+      "clérigo",
+      "druida"
+    ]
+  },
+  {
+    "id": "finger-of-death",
+    "name": "Dedo de Muerte",
+    "level": 7,
+    "school": "necromancy",
+    "castingTime": "1 acción",
+    "range": "60 feet",
+    "components": "V, S",
+    "duration": "Instantáneo",
+    "description": "Envías energía negativa a través de una criatura que puedas ver en el alcance, causándole agónicos dolores. El objetivo debe realizar una tirada de salvación de Constitución. Sufre 7d8+30 de daño necrótico si falla, o la mitad si tiene éxito.\n\nUn humanoide asesinado por este conjuro se alza al inicio de tu próximo turno como un zombi permanentemente bajo tu control.",
+    "damage": "7d8+30",
+    "damageType": "necrótico",
+    "classes": [
+      "hechicero",
+      "brujo",
+      "mago"
+    ]
+  },
+  {
+    "id": "teleport",
+    "name": "Teletransporte",
+    "level": 7,
+    "school": "conjuration",
+    "castingTime": "1 acción",
+    "range": "10 feet",
+    "components": "V",
+    "duration": "Instantáneo",
+    "description": "Este conjuro te teletransporta instantáneamente a ti y hasta ocho criaturas voluntarias de tu elección, o un solo objeto que puedas ver en el alcance, a un destino que selecciones. El destino debe estar en el mismo plano de existencia.",
+    "classes": [
+      "bardo",
+      "hechicero",
+      "mago"
+    ]
+  },
+  {
+    "id": "dominate-monster",
+    "name": "Dominar Monstruo",
+    "level": 8,
+    "school": "enchantment",
+    "castingTime": "1 acción",
+    "range": "60 feet",
+    "components": "V, S",
+    "duration": "Concentración, hasta 1 hora",
+    "concentration": true,
+    "description": "Intentas hechizar a una criatura que puedas ver en el alcance. Debe superar una tirada de salvación de Sabiduría o quedar hechizada por ti durante la duración. Si tú o tus compañeros estáis combatiendo con ella, tiene ventaja en la salvación.\n\nMientras está hechizada, tienes un vínculo telepáico. Puedes usar tu acción para tomar control total y preciso.\n\nA niveles superiores: duración 8 horas a nivel 9.",
+    "classes": [
+      "bardo",
+      "hechicero",
+      "brujo",
+      "mago"
+    ]
+  },
+  {
+    "id": "power-word-stun",
+    "name": "Palabra de Poder: Aturdir",
+    "level": 8,
+    "school": "enchantment",
+    "castingTime": "1 acción",
+    "range": "60 feet",
+    "components": "V",
+    "duration": "Instantáneo",
+    "description": "Pronuncias una palabra de poder que puede abrumar la mente de una criatura que puedas ver en el alcance, dejándola aturdida. Si el objetivo tiene 150 puntos de golpe o menos, queda aturdido. De lo contrario, el conjuro no tiene efecto.\n\nEl objetivo aturdido debe realizar una tirada de salvación de Constitución al final de cada uno de sus turnos. Si tiene éxito, la condición de aturdido termina.",
+    "classes": [
+      "bardo",
+      "hechicero",
+      "brujo",
+      "mago"
+    ]
+  },
+  {
+    "id": "power-word-kill",
+    "name": "Palabra de Poder: Matar",
+    "level": 9,
+    "school": "enchantment",
+    "castingTime": "1 acción",
+    "range": "60 feet",
+    "components": "V",
+    "duration": "Instantáneo",
+    "description": "Pronuncias una palabra de poder que puede obligar a una criatura que puedas ver en el alcance a morir instantáneamente. Si el objetivo tiene 100 puntos de golpe o menos, muere. De lo contrario, el conjuro no tiene efecto.",
+    "classes": [
+      "bardo",
+      "hechicero",
+      "brujo",
+      "mago"
+    ]
+  },
+  {
+    "id": "wish",
+    "name": "Deseo",
+    "level": 9,
+    "school": "conjuration",
+    "castingTime": "1 acción",
+    "range": "Personal",
+    "components": "V",
+    "duration": "Instantáneo",
+    "description": "Wish es el conjuro más poderoso que una criatura mortal puede lanzar. Al simplemente hablar en voz alta, puedes alterar los fundamentos mismos de la realidad.\n\nEl uso básico es duplicar cualquier otro conjuro de nivel 8 o inferior sin componentes. También puedes crear otros efectos a discreción del DM, con posibles riesgos de estrés.",
+    "classes": [
+      "hechicero",
+      "mago"
+    ]
+  },
+  {
+    "id": "time-stop",
+    "name": "Detener el Tiempo",
+    "level": 9,
+    "school": "transmutation",
+    "castingTime": "1 acción",
+    "range": "Personal",
+    "components": "V",
+    "duration": "Instantáneo",
+    "description": "Detienes brevemente el flujo del tiempo para todos excepto para ti. No pasa tiempo para otras criaturas, mientras que tú realizas 1d4+1 turnos seguidos, durante los cuales puedes usar acciones y moverte con normalidad.\n\nEste conjuro termina si una de las acciones que realizas durante este período, o cualquier efecto que crees, afecta a una criatura distinta de ti o a un objeto que lleve o porte otra criatura.",
+    "classes": [
+      "hechicero",
+      "mago"
+    ]
+  },
+  {
+    "id": "meteor-swarm",
+    "name": "Enjambre de Meteoros",
+    "level": 9,
+    "school": "evocation",
+    "castingTime": "1 acción",
+    "range": "1 mile",
+    "components": "V, S",
+    "duration": "Instantáneo",
+    "description": "Orbes de fuego llameante se precipitan hacia el suelo en cuatro puntos diferentes que puedas ver en el alcance. Cada criatura en una esfera de 40 feet de radio centrada en cada punto debe realizar una tirada de salvación de Destreza. La esfera se propaga alrededor de las esquinas. Una criatura sufre 20d6 de daño de fuego y 20d6 de daño contundente si falla, o la mitad si tiene éxito. Una criatura en el área de más de una explosión se ve afectada solo una vez.",
+    "damage": "20d6 + 20d6",
+    "damageType": "fuego + contundente",
+    "classes": [
+      "hechicero",
+      "mago"
+    ]
+  }
+]
