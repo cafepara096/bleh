@@ -3,6 +3,7 @@ import { Layout } from './components/Layout'
 import { HomePage } from './pages/HomePage'
 import { CharactersPage } from './pages/CharactersPage'
 import { ItemsPage } from './pages/ItemsPage'
+import { SpellsPage } from './pages/SpellsPage'
 import { PlaceholderPage } from './pages/PlaceholderPage'
 
 export default function App() {
@@ -12,15 +13,7 @@ export default function App() {
         <Route index element={<HomePage />} />
         <Route path="characters" element={<CharactersPage />} />
         <Route path="items" element={<ItemsPage />} />
-        <Route
-          path="spells"
-          element={
-            <PlaceholderPage
-              title="Conjuros"
-              description="Compendio de conjuros editable con soporte homebrew."
-            />
-          }
-        />
+        <Route path="spells" element={<SpellsPage />} />
         <Route
           path="monsters"
           element={

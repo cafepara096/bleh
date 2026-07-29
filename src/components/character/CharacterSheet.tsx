@@ -9,6 +9,7 @@ import {
   applyDamage,
   heal,
 } from '../../utils/character';
+import { formatSpeed } from '../../utils/units';
 import { AbilityScoreBox } from './AbilityScoreBox';
 import { HitPointsTracker } from './HitPointsTracker';
 import { DeathSaves } from './DeathSaves';
@@ -196,6 +197,7 @@ export function CharacterSheet({ character: initial, onSave, onBack, onExport }:
               />
               <span className="text-xs">ft</span>
             </div>
+            <div className="text-[10px] text-ink-500 text-center">{formatSpeed(character.speed)}</div>
           </div>
         </div>
 

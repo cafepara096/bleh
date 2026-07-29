@@ -1,6 +1,7 @@
 import { useState, useMemo, useRef } from 'react';
 import { useItems } from '../hooks/useItems';
 import type { Item } from '../types/dnd';
+import { formatWeight, dualizeDescription } from '../utils/units';
 import {
   Plus,
   Search,
@@ -262,7 +263,7 @@ export function ItemsPage() {
               </div>
 
               <p className="text-ink-800 leading-relaxed whitespace-pre-wrap mb-4">
-                {selected.description}
+                {dualizeDescription(selected.description)}
               </p>
 
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 text-sm">
@@ -283,7 +284,7 @@ export function ItemsPage() {
                 {selected.weight !== undefined && (
                   <div className="bg-white border border-ink-200 rounded-lg p-3">
                     <div className="text-xs text-ink-500 uppercase font-bold">Peso</div>
-                    <div className="font-semibold">{selected.weight} lb</div>
+                    <div className="font-semibold">{formatWeight(selected.weight)}</div>
                   </div>
                 )}
                 {selected.cost && (

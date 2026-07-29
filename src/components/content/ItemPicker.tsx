@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react';
 import type { Item, InventoryItem } from '../../types/dnd';
+import { formatWeight, dualizeDescription } from '../../utils/units';
 import { X, Search, Plus } from 'lucide-react';
 
 interface Props {
@@ -192,7 +193,7 @@ export function ItemPicker({ items, onSelect, onClose }: Props) {
               </div>
 
               <p className="text-sm text-ink-700 whitespace-pre-wrap leading-relaxed">
-                {selected.description}
+                {dualizeDescription(selected.description)}
               </p>
 
               {(selected.damage || selected.armorClass || selected.properties?.length) && (
@@ -214,7 +215,7 @@ export function ItemPicker({ items, onSelect, onClose }: Props) {
                   )}
                   {selected.weight !== undefined && (
                     <div>
-                      <strong>Peso:</strong> {selected.weight} lb
+                      <strong>Peso:</strong> {formatWeight(selected.weight)}
                     </div>
                   )}
                 </div>
