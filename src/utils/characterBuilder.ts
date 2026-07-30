@@ -148,16 +148,45 @@ export function featuresUpToLevel(
   return features.filter((f) => f.level <= level);
 }
 
+export function computeFeatureMaxUses(
+  uses: NonNullable<FeatureEntry['uses']>,
+  featureLevel: number,
+  characterLevel: number
+): number {
+  let max = uses.max;
+  if (uses.perLevels && uses.gainAmount && characterLevel > featureLevel) {
+    const steps = Math.floor((characterLevel - featureLevel) / uses.perLevels);
+    max += steps * uses.gainAmount;
+  }
+  return max;
+}
+
 export function toCharacterFeatures(
   entries: FeatureEntry[],
-  source: string
+  source: string,
+  characterLevel = 1
 ): CharacterFeature[] {
-  return entries.map((e) => ({
-    id: e.id,
-    name: e.name,
-    description: e.description,
-    source: e.source || source,
-  }));
+  return entries.map((e) => {
+    const feat: CharacterFeature = {
+      id: e.id,
+      name: e.name,
+      description: e.description,
+      source: e.source || source,
+      actionType: e.actionType,
+    };
+    if (e.uses) {
+      const max = computeFeatureMaxUses(e.uses, e.level, characterLevel);
+      feat.uses = {
+        current: max,
+        max,
+        recovery: e.uses.recovery,
+        baseMax: e.uses.max,
+        perLevels: e.uses.perLevels,
+        gainAmount: e.uses.gainAmount,
+      };
+    }
+    return feat;
+  });
 }
 
 export function buildStartingInventory(classId: string): InventoryItem[] {
@@ -213,14 +242,8 @@ export function buildCharacterFromWizard(opts: {
     hp += Math.max(1, Math.floor(die / 2) + 1 + conMod); // average rounded up
   }
 
-  const raceTraits = toCharacterFeatures(
-    featuresUpToLevel(opts.race.traits, level),
-    'race'
-  );
-  const classFeats = toCharacterFeatures(
-    featuresUpToLevel(opts.classData.features, level),
-    'class'
-  );
+  const raceTraits = toCharacterFeatures(featuresUpToLevel(opts.race.traits, level), 'race', level);
+  const classFeats = toCharacterFeatures(featuresUpToLevel(opts.classData.features, level), 'class', level);
 
   // Saving throws from class names
   const saveMap: Record<string, AbilityScore> = {
@@ -353,6 +376,44 @@ export function isAsiLevel(level: number): boolean {
   return ASI_LEVELS.includes(level);
 }
 
+export function refreshFeatureUses(
+  features: CharacterFeature[],
+  classData: ClassData | undefined,
+  level: number
+): CharacterFeature[] {
+  return features.map((f) => {
+    if (!f.uses) return f;
+    const entry = classData?.features.find((x) => x.id === f.id);
+    if (entry?.uses) {
+      const max = computeFeatureMaxUses(entry.uses, entry.level, level);
+      return {
+        ...f,
+        uses: {
+          ...f.uses,
+          max,
+          current: Math.min(f.uses.current + Math.max(0, max - f.uses.max), max),
+        },
+      };
+    }
+    // homebrew: scale with stored perLevels
+    if (f.uses.perLevels && f.uses.gainAmount && f.uses.baseMax !== undefined) {
+      // approximate: baseMax + floor((level-1)/perLevels)*gainAmount
+      const max =
+        (f.uses.baseMax || f.uses.max) +
+        Math.floor(Math.max(0, level - 1) / f.uses.perLevels) * f.uses.gainAmount;
+      return {
+        ...f,
+        uses: {
+          ...f.uses,
+          max,
+          current: Math.min(f.uses.current + Math.max(0, max - f.uses.max), max),
+        },
+      };
+    }
+    return f;
+  });
+}
+
 export function applyLevelUp(
   character: Character,
   classData: ClassData | undefined,
@@ -396,6 +457,8 @@ export function applyLevelUp(
   const hitDie = classData?.hitDie || character.hitDice.replace(/^\d+/, '') || 'd8';
   const dieNum = hitDieNumber(hitDie.startsWith('d') ? hitDie : `d${hitDie}`);
 
+  const refreshed = refreshFeatureUses(features, classData, newLevel);
+
   return {
     ...character,
     level: newLevel,
@@ -404,7 +467,7 @@ export function applyLevelUp(
     hitPointMax: character.hitPointMax + opts.hpGain,
     hitPointCurrent: character.hitPointCurrent + opts.hpGain,
     hitDice: `${newLevel}d${dieNum}`,
-    features,
+    features: refreshed,
     updatedAt: new Date().toISOString(),
   };
 }

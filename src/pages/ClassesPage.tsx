@@ -21,7 +21,19 @@ export function ClassesPage() {
   const [showForm, setShowForm] = useState(false);
   const [showFeatForm, setShowFeatForm] = useState(false);
   const [showSpellPicker, setShowSpellPicker] = useState(false);
-  const [featForm, setFeatForm] = useState({ name: '', description: '', level: 1 });
+  const [featForm, setFeatForm] = useState({
+    name: '',
+    description: '',
+    level: 1,
+    hasUses: false,
+    maxUses: 1,
+    recovery: 'short' as 'short' | 'long' | 'dawn' | 'none',
+    perLevels: 0,
+    gainAmount: 1,
+    actionType: '' as '' | 'action' | 'bonus' | 'reaction' | 'special' | 'passive',
+    requiresChoice: false,
+    choiceHint: '',
+  });
   const [form, setForm] = useState({
     name: '',
     description: '',
@@ -62,9 +74,32 @@ export function ClassesPage() {
       description: featForm.description.trim() || '—',
       level: featForm.level,
       source: 'homebrew',
+      actionType: featForm.actionType || undefined,
+      requiresChoice: featForm.requiresChoice || undefined,
+      choiceHint: featForm.choiceHint || undefined,
+      uses: featForm.hasUses
+        ? {
+            max: featForm.maxUses,
+            recovery: featForm.recovery,
+            perLevels: featForm.perLevels > 0 ? featForm.perLevels : undefined,
+            gainAmount: featForm.perLevels > 0 ? featForm.gainAmount : undefined,
+          }
+        : undefined,
     };
     addFeature(current.id, feature);
-    setFeatForm({ name: '', description: '', level: 1 });
+    setFeatForm({
+      name: '',
+      description: '',
+      level: 1,
+      hasUses: false,
+      maxUses: 1,
+      recovery: 'short',
+      perLevels: 0,
+      gainAmount: 1,
+      actionType: '',
+      requiresChoice: false,
+      choiceHint: '',
+    });
     setShowFeatForm(false);
     setSelected({ ...current, features: [...current.features, feature], homebrew: true });
   };
@@ -307,6 +342,98 @@ export function ClassesPage() {
             <input placeholder="Nombre *" value={featForm.name} onChange={(e) => setFeatForm({ ...featForm, name: e.target.value })} className="w-full px-3 py-2 border-2 border-ink-300 rounded-lg" />
             <input type="number" min={1} max={20} placeholder="Nivel" value={featForm.level} onChange={(e) => setFeatForm({ ...featForm, level: parseInt(e.target.value) || 1 })} className="w-full px-3 py-2 border-2 border-ink-300 rounded-lg" />
             <textarea placeholder="Descripción" value={featForm.description} onChange={(e) => setFeatForm({ ...featForm, description: e.target.value })} rows={3} className="w-full px-3 py-2 border-2 border-ink-300 rounded-lg" />
+            <select
+              value={featForm.actionType}
+              onChange={(e) => setFeatForm({ ...featForm, actionType: e.target.value as any })}
+              className="w-full px-3 py-2 border-2 border-ink-300 rounded-lg text-sm"
+            >
+              <option value="">Tipo de acción (opcional)</option>
+              <option value="action">Acción</option>
+              <option value="bonus">Acción adicional</option>
+              <option value="reaction">Reacción</option>
+              <option value="special">Especial</option>
+              <option value="passive">Pasivo</option>
+            </select>
+            <label className="flex items-center gap-2 text-sm">
+              <input
+                type="checkbox"
+                checked={featForm.hasUses}
+                onChange={(e) => setFeatForm({ ...featForm, hasUses: e.target.checked })}
+              />
+              Usos limitados
+            </label>
+            {featForm.hasUses && (
+              <div className="bg-ink-50 border border-ink-200 rounded-lg p-3 space-y-2 text-sm">
+                <div className="flex gap-2">
+                  <div className="flex-1">
+                    <label className="text-xs font-bold">Usos base</label>
+                    <input
+                      type="number"
+                      min={1}
+                      value={featForm.maxUses}
+                      onChange={(e) => setFeatForm({ ...featForm, maxUses: parseInt(e.target.value) || 1 })}
+                      className="w-full px-2 py-1 border rounded"
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <label className="text-xs font-bold">Recuperación</label>
+                    <select
+                      value={featForm.recovery}
+                      onChange={(e) => setFeatForm({ ...featForm, recovery: e.target.value as any })}
+                      className="w-full px-2 py-1 border rounded"
+                    >
+                      <option value="short">Descanso corto</option>
+                      <option value="long">Descanso largo</option>
+                      <option value="dawn">Amanecer</option>
+                      <option value="none">No se recupera solo</option>
+                    </select>
+                  </div>
+                </div>
+                <div className="flex gap-2 items-end">
+                  <div className="flex-1">
+                    <label className="text-xs font-bold">+ usos cada N niveles</label>
+                    <input
+                      type="number"
+                      min={0}
+                      value={featForm.perLevels}
+                      onChange={(e) => setFeatForm({ ...featForm, perLevels: parseInt(e.target.value) || 0 })}
+                      className="w-full px-2 py-1 border rounded"
+                      placeholder="0 = no escala"
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <label className="text-xs font-bold">Cantidad que suma</label>
+                    <input
+                      type="number"
+                      min={1}
+                      value={featForm.gainAmount}
+                      onChange={(e) => setFeatForm({ ...featForm, gainAmount: parseInt(e.target.value) || 1 })}
+                      className="w-full px-2 py-1 border rounded"
+                      disabled={featForm.perLevels <= 0}
+                    />
+                  </div>
+                </div>
+                <p className="text-[11px] text-ink-500">
+                  Ej. Segundo aliento: 1 uso, descanso corto. Furia: 2 usos, +1 cada ciertos niveles.
+                </p>
+              </div>
+            )}
+            <label className="flex items-center gap-2 text-sm">
+              <input
+                type="checkbox"
+                checked={featForm.requiresChoice}
+                onChange={(e) => setFeatForm({ ...featForm, requiresChoice: e.target.checked })}
+              />
+              Requiere elección al obtenerse
+            </label>
+            {featForm.requiresChoice && (
+              <input
+                placeholder="Pista de elección (estilo de combate, subclase…)"
+                value={featForm.choiceHint}
+                onChange={(e) => setFeatForm({ ...featForm, choiceHint: e.target.value })}
+                className="w-full px-3 py-2 border-2 border-ink-300 rounded-lg text-sm"
+              />
+            )}
             <button onClick={handleAddFeature} className="w-full py-2 bg-crimson-600 text-white rounded-lg font-medium">Añadir</button>
           </div>
         </div>

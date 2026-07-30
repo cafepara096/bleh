@@ -9,7 +9,15 @@ interface Props {
 
 export function FeaturesPanel({ character, onUpdate }: Props) {
   const [showAdd, setShowAdd] = useState(false);
-  const [newFeature, setNewFeature] = useState({ name: '', description: '', source: 'homebrew' });
+  const [newFeature, setNewFeature] = useState({
+    name: '',
+    description: '',
+    source: 'homebrew',
+    hasUses: false,
+    maxUses: 1,
+    recovery: 'short' as 'short' | 'long' | 'dawn' | 'none',
+    actionType: '' as '' | 'action' | 'bonus' | 'reaction' | 'special' | 'passive',
+  });
 
   const addFeature = () => {
     if (!newFeature.name.trim()) return;
@@ -18,14 +26,51 @@ export function FeaturesPanel({ character, onUpdate }: Props) {
       name: newFeature.name.trim(),
       description: newFeature.description.trim(),
       source: newFeature.source,
+      actionType: newFeature.actionType || undefined,
+      uses: newFeature.hasUses
+        ? {
+            current: newFeature.maxUses,
+            max: newFeature.maxUses,
+            recovery: newFeature.recovery,
+            baseMax: newFeature.maxUses,
+          }
+        : undefined,
     };
     onUpdate([...character.features, feature]);
-    setNewFeature({ name: '', description: '', source: 'homebrew' });
+    setNewFeature({
+      name: '',
+      description: '',
+      source: 'homebrew',
+      hasUses: false,
+      maxUses: 1,
+      recovery: 'short',
+      actionType: '',
+    });
     setShowAdd(false);
   };
 
   const removeFeature = (id: string) => {
     onUpdate(character.features.filter((f) => f.id !== id));
+  };
+
+  const spend = (id: string) => {
+    onUpdate(
+      character.features.map((f) =>
+        f.id === id && f.uses && f.uses.current > 0
+          ? { ...f, uses: { ...f.uses, current: f.uses.current - 1 } }
+          : f
+      )
+    );
+  };
+
+  const restore = (id: string) => {
+    onUpdate(
+      character.features.map((f) =>
+        f.id === id && f.uses && f.uses.current < f.uses.max
+          ? { ...f, uses: { ...f.uses, current: f.uses.current + 1 } }
+          : f
+      )
+    );
   };
 
   return (
@@ -44,80 +89,127 @@ export function FeaturesPanel({ character, onUpdate }: Props) {
       </div>
 
       {showAdd && (
-        <div className="mb-3 p-3 bg-parchment-200 rounded border border-ink-300 space-y-2">
+        <div className="mb-4 p-3 bg-white border-2 border-ink-300 rounded-lg space-y-2">
           <input
-            type="text"
-            placeholder="Nombre del rasgo"
+            placeholder="Nombre"
             value={newFeature.name}
             onChange={(e) => setNewFeature({ ...newFeature, name: e.target.value })}
-            className="w-full px-2 py-1 border border-ink-400 rounded text-sm"
+            className="w-full px-3 py-2 border-2 border-ink-300 rounded-lg"
           />
           <textarea
             placeholder="Descripción"
             value={newFeature.description}
             onChange={(e) => setNewFeature({ ...newFeature, description: e.target.value })}
-            rows={3}
-            className="w-full px-2 py-1 border border-ink-400 rounded text-sm"
+            rows={2}
+            className="w-full px-3 py-2 border-2 border-ink-300 rounded-lg"
           />
           <select
-            value={newFeature.source}
-            onChange={(e) => setNewFeature({ ...newFeature, source: e.target.value })}
-            className="px-2 py-1 border border-ink-400 rounded text-sm"
+            value={newFeature.actionType}
+            onChange={(e) => setNewFeature({ ...newFeature, actionType: e.target.value as any })}
+            className="w-full px-3 py-2 border-2 border-ink-300 rounded-lg text-sm"
           >
-            <option value="class">Clase</option>
-            <option value="subclass">Subclase</option>
-            <option value="race">Raza</option>
-            <option value="feat">Dote</option>
-            <option value="background">Trasfondo</option>
-            <option value="homebrew">Homebrew</option>
+            <option value="">Tipo de acción</option>
+            <option value="action">Acción</option>
+            <option value="bonus">Acción adicional</option>
+            <option value="reaction">Reacción</option>
+            <option value="special">Especial</option>
+            <option value="passive">Pasivo</option>
           </select>
-          <div className="flex gap-2">
-            <button
-              onClick={addFeature}
-              className="px-3 py-1 bg-green-700 text-white rounded text-sm hover:bg-green-600"
-            >
-              Guardar
-            </button>
-            <button
-              onClick={() => setShowAdd(false)}
-              className="px-3 py-1 bg-ink-300 rounded text-sm hover:bg-ink-400"
-            >
-              Cancelar
-            </button>
-          </div>
+          <label className="flex items-center gap-2 text-sm">
+            <input
+              type="checkbox"
+              checked={newFeature.hasUses}
+              onChange={(e) => setNewFeature({ ...newFeature, hasUses: e.target.checked })}
+            />
+            Usos limitados
+          </label>
+          {newFeature.hasUses && (
+            <div className="flex gap-2">
+              <input
+                type="number"
+                min={1}
+                value={newFeature.maxUses}
+                onChange={(e) =>
+                  setNewFeature({ ...newFeature, maxUses: parseInt(e.target.value) || 1 })
+                }
+                className="w-20 px-2 py-1 border rounded"
+              />
+              <select
+                value={newFeature.recovery}
+                onChange={(e) =>
+                  setNewFeature({ ...newFeature, recovery: e.target.value as any })
+                }
+                className="flex-1 px-2 py-1 border rounded text-sm"
+              >
+                <option value="short">Descanso corto</option>
+                <option value="long">Descanso largo</option>
+                <option value="dawn">Amanecer</option>
+              </select>
+            </div>
+          )}
+          <button
+            onClick={addFeature}
+            className="w-full py-2 bg-crimson-600 text-white rounded-lg font-medium"
+          >
+            Crear rasgo
+          </button>
         </div>
       )}
 
-      <div className="space-y-2 max-h-72 overflow-y-auto">
-        {character.features.length === 0 && (
-          <p className="text-ink-500 text-sm italic">Sin rasgos</p>
-        )}
-        {character.features.map((feature) => (
+      <div className="space-y-2">
+        {character.features.map((f) => (
           <div
-            key={feature.id}
-            className="p-2 bg-white border border-ink-200 rounded group"
+            key={f.id}
+            className="bg-white border border-ink-200 rounded-lg p-3 flex gap-2 group"
           >
-            <div className="flex items-start justify-between gap-2">
-              <div>
-                <span className="font-semibold">{feature.name}</span>
-                {feature.source && (
-                  <span className="ml-2 text-xs bg-ink-200 text-ink-700 px-1.5 py-0.5 rounded capitalize">
-                    {feature.source}
+            <div className="flex-1 min-w-0">
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="font-semibold">{f.name}</span>
+                {f.source && (
+                  <span className="text-[10px] bg-ink-100 px-1.5 rounded capitalize">{f.source}</span>
+                )}
+                {f.actionType && (
+                  <span className="text-[10px] bg-amber-100 text-amber-900 px-1.5 rounded">
+                    {f.actionType}
                   </span>
                 )}
               </div>
-              <button
-                onClick={() => removeFeature(feature.id)}
-                className="opacity-0 group-hover:opacity-100 p-1 text-red-600 hover:bg-red-100 rounded transition-opacity"
-              >
-                <Trash2 className="w-4 h-4" />
-              </button>
+              <p className="text-sm text-ink-700 mt-1 whitespace-pre-wrap">{f.description}</p>
             </div>
-            <p className="text-sm text-ink-700 mt-1 whitespace-pre-wrap">
-              {feature.description}
-            </p>
+            {f.uses && (
+              <div className="flex flex-col items-center gap-0.5 shrink-0">
+                <div className="flex gap-0.5">
+                  {Array.from({ length: f.uses.max }).map((_, i) => {
+                    const used = f.uses!.max - f.uses!.current;
+                    return (
+                      <button
+                        key={i}
+                        type="button"
+                        onClick={() => (i < used ? restore(f.id) : spend(f.id))}
+                        className={`w-4 h-4 rounded-full border-2 border-ink-700 ${
+                          i < used ? 'bg-ink-700' : 'bg-white'
+                        }`}
+                      />
+                    );
+                  })}
+                </div>
+                <span className="text-[10px] font-mono">
+                  {f.uses.current}/{f.uses.max}
+                </span>
+                <span className="text-[9px] text-ink-500">{f.uses.recovery}</span>
+              </div>
+            )}
+            <button
+              onClick={() => removeFeature(f.id)}
+              className="opacity-0 group-hover:opacity-100 p-1 text-red-600 hover:bg-red-50 rounded h-fit"
+            >
+              <Trash2 className="w-4 h-4" />
+            </button>
           </div>
         ))}
+        {character.features.length === 0 && (
+          <p className="text-sm text-ink-500 italic text-center py-4">Sin rasgos</p>
+        )}
       </div>
     </div>
   );
