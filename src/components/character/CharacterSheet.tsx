@@ -28,6 +28,7 @@ import {
 } from 'lucide-react';
 import { LevelUpModal } from './LevelUpModal';
 import { CombatPanel } from './CombatPanel';
+import { ActionsPanel } from './ActionsPanel';
 
 interface Props {
   character: Character;
@@ -480,10 +481,16 @@ export function CharacterSheet({ character: initial, onSave, onBack, onExport }:
         )}
 
         {activeTab === 'combat' && (
-          <CombatPanel
-            character={character}
-            onUpdate={(partial) => update(partial)}
-          />
+          <div className="space-y-6">
+            <ActionsPanel
+              character={character}
+              onUpdate={(partial) => update(partial)}
+            />
+            <CombatPanel
+              character={character}
+              onUpdate={(partial) => update(partial)}
+            />
+          </div>
         )}
 
         {activeTab === 'inventory' && (

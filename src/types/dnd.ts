@@ -53,11 +53,30 @@ export interface SpellSlot {
   used: number;
 }
 
+export interface FeatureUses {
+  /** Current remaining uses */
+  current: number;
+  /** Maximum uses at this level */
+  max: number;
+  /** short | long | dawn | none */
+  recovery: 'short' | 'long' | 'dawn' | 'none';
+  /** Base max at the level the feature is gained */
+  baseMax?: number;
+  /** Extra uses every N character levels (e.g. 1 every level, or 1 every 2 levels) */
+  perLevels?: number;
+  /** Amount gained each interval */
+  gainAmount?: number;
+}
+
 export interface CharacterFeature {
   id: string;
   name: string;
   description: string;
   source?: string; // class, race, feat, background, homebrew
+  /** Limited-use resource (Second Wind, Rage, Channel Divinity…) */
+  uses?: FeatureUses;
+  /** Suggested action economy for D&D Beyond-style actions list */
+  actionType?: 'action' | 'bonus' | 'reaction' | 'special' | 'passive';
 }
 
 export interface InventoryItem {
@@ -232,6 +251,18 @@ export interface FeatureEntry {
   source?: string;
   /** Automatic ability score bonuses granted by this feature (applied on character create) */
   abilityBonuses?: Partial<Record<AbilityScore, number>>;
+  /** Limited uses definition for catalog features */
+  uses?: {
+    max: number;
+    recovery: 'short' | 'long' | 'dawn' | 'none';
+    /** Gain +gainAmount max uses every perLevels levels after the feature level */
+    perLevels?: number;
+    gainAmount?: number;
+  };
+  actionType?: 'action' | 'bonus' | 'reaction' | 'special' | 'passive';
+  /** If true, level-up should prompt the player to choose something for this feature */
+  requiresChoice?: boolean;
+  choiceHint?: string;
 }
 
 export interface RaceData {

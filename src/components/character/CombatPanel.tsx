@@ -56,6 +56,7 @@ export function CombatPanel({ character, onUpdate }: Props) {
 
   const [spellEditor, setSpellEditor] = useState<'cantrip' | 'spell' | null>(null);
   const [query, setQuery] = useState('');
+  const [upcastLevel, setUpcastLevel] = useState<Record<string, number>>({});
 
   const weapons = character.inventory.filter((i) => i.damage || i.equipped);
 
@@ -412,6 +413,45 @@ export function CombatPanel({ character, onUpdate }: Props) {
                     {s.concentration && ' · Concentración'}
                     {s.ritual && ' · Ritual'}
                   </div>
+                  {s.higherLevels && (
+                    <div className="mt-1.5 bg-purple-50 border border-purple-200 rounded p-1.5 text-xs space-y-1">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <span className="font-bold text-purple-900">Lanzar a nivel:</span>
+                        <select
+                          value={upcastLevel[s.id] ?? s.level}
+                          onChange={(e) =>
+                            setUpcastLevel((prev) => ({
+                              ...prev,
+                              [s.id]: parseInt(e.target.value),
+                            }))
+                          }
+                          className="px-1 py-0.5 border border-purple-300 rounded text-xs"
+                        >
+                          {Array.from({ length: 10 - s.level }, (_, i) => s.level + i)
+                            .filter((lv) => lv <= Math.max(s.level, maxSpellLv || 9))
+                            .map((lv) => (
+                              <option key={lv} value={lv}>
+                                {lv}
+                              </option>
+                            ))}
+                        </select>
+                        {(upcastLevel[s.id] ?? s.level) > s.level && (
+                          <span className="text-purple-800">
+                            (usa espacio de niv. {upcastLevel[s.id]})
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-purple-900/80">
+                        <strong>A niveles superiores:</strong> {s.higherLevels}
+                      </p>
+                      {s.damage && (upcastLevel[s.id] ?? s.level) > s.level && (
+                        <p className="text-[11px] text-ink-600">
+                          El daño/efecto mejora según la descripción al usar un espacio más alto.
+                          Gasta el espacio del nivel elegido arriba.
+                        </p>
+                      )}
+                    </div>
+                  )}
                 </div>
                 <button
                   onClick={() => removeSpell(s.id)}

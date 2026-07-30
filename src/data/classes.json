@@ -18,7 +18,14 @@
         "name": "Furia",
         "description": "Entras en furia: ventaja Fue, dano extra, resistencia.",
         "level": 1,
-        "source": "class"
+        "source": "class",
+        "uses": {
+          "max": 2,
+          "recovery": "long",
+          "perLevels": 3,
+          "gainAmount": 1
+        },
+        "actionType": "bonus"
       },
       {
         "id": "barb-defense",
@@ -32,7 +39,9 @@
         "name": "Camino primigenio",
         "description": "Eliges subclase.",
         "level": 3,
-        "source": "class"
+        "source": "class",
+        "requiresChoice": true,
+        "choiceHint": "Elige tu subclase / camino / dominio / tradición."
       },
       {
         "id": "barb-extra",
@@ -76,14 +85,22 @@
         "name": "Inspiracion bardica",
         "description": "Das d6 de inspiracion a un aliado.",
         "level": 1,
-        "source": "class"
+        "source": "class",
+        "uses": {
+          "max": 1,
+          "recovery": "long"
+        },
+        "actionType": "bonus",
+        "requiresChoice": false
       },
       {
         "id": "bard-college",
         "name": "Colegio bardico",
         "description": "Eliges subclase.",
         "level": 3,
-        "source": "class"
+        "source": "class",
+        "requiresChoice": true,
+        "choiceHint": "Elige tu subclase / camino / dominio / tradición."
       }
     ]
   },
@@ -121,7 +138,9 @@
         "name": "Dominio divino",
         "description": "Eliges subclase.",
         "level": 1,
-        "source": "class"
+        "source": "class",
+        "requiresChoice": true,
+        "choiceHint": "Elige tu subclase / camino / dominio / tradición."
       },
       {
         "id": "cleric-channel",
@@ -169,7 +188,9 @@
         "name": "Circulo druidico",
         "description": "Eliges subclase.",
         "level": 2,
-        "source": "class"
+        "source": "class",
+        "requiresChoice": true,
+        "choiceHint": "Elige tu subclase / camino / dominio / tradición."
       }
     ]
   },
@@ -192,28 +213,42 @@
         "name": "Estilo de combate",
         "description": "Adoptas un estilo.",
         "level": 1,
-        "source": "class"
+        "source": "class",
+        "requiresChoice": true,
+        "choiceHint": "Elige un estilo de combate (Arquería, Defensa, Duelo, etc.)."
       },
       {
         "id": "fighter-second",
         "name": "Segundo aliento",
-        "description": "1d10+nivel PG.",
+        "description": "En tu turno, puedes usar una acción adicional para recuperar puntos de golpe iguales a 1d10 + tu nivel de guerrero. Una vez por descanso corto o largo.",
         "level": 1,
-        "source": "class"
+        "source": "class",
+        "uses": {
+          "max": 1,
+          "recovery": "short"
+        },
+        "actionType": "bonus"
       },
       {
         "id": "fighter-surge",
         "name": "Oleada de accion",
         "description": "Accion adicional.",
         "level": 2,
-        "source": "class"
+        "source": "class",
+        "uses": {
+          "max": 1,
+          "recovery": "short"
+        },
+        "actionType": "special"
       },
       {
         "id": "fighter-archetype",
         "name": "Arquetipo marcial",
         "description": "Eliges subclase.",
         "level": 3,
-        "source": "class"
+        "source": "class",
+        "requiresChoice": true,
+        "choiceHint": "Elige tu subclase / camino / dominio / tradición."
       },
       {
         "id": "fighter-extra",
@@ -264,7 +299,9 @@
         "name": "Tradicion monastica",
         "description": "Eliges subclase.",
         "level": 3,
-        "source": "class"
+        "source": "class",
+        "requiresChoice": true,
+        "choiceHint": "Elige tu subclase / camino / dominio / tradición."
       }
     ]
   },
@@ -312,7 +349,9 @@
         "name": "Juramento sagrado",
         "description": "Eliges subclase.",
         "level": 3,
-        "source": "class"
+        "source": "class",
+        "requiresChoice": true,
+        "choiceHint": "Elige tu subclase / camino / dominio / tradición."
       }
     ]
   },
@@ -353,7 +392,9 @@
         "name": "Arquetipo",
         "description": "Eliges subclase.",
         "level": 3,
-        "source": "class"
+        "source": "class",
+        "requiresChoice": true,
+        "choiceHint": "Elige tu subclase / camino / dominio / tradición."
       }
     ]
   },
@@ -377,7 +418,9 @@
         "name": "Pericia",
         "description": "Duplicas competencia en 2 habilidades.",
         "level": 1,
-        "source": "class"
+        "source": "class",
+        "requiresChoice": true,
+        "choiceHint": "Elige habilidades para Pericia (duplicar competencia)."
       },
       {
         "id": "rogue-sneak",
@@ -398,7 +441,9 @@
         "name": "Arquetipo",
         "description": "Eliges subclase.",
         "level": 3,
-        "source": "class"
+        "source": "class",
+        "requiresChoice": true,
+        "choiceHint": "Elige tu subclase / camino / dominio / tradición."
       }
     ]
   },
@@ -435,7 +480,9 @@
         "name": "Origen",
         "description": "Eliges subclase.",
         "level": 1,
-        "source": "class"
+        "source": "class",
+        "requiresChoice": true,
+        "choiceHint": "Elige tu subclase / camino / dominio / tradición."
       },
       {
         "id": "sorc-points",
@@ -472,7 +519,9 @@
         "name": "Patron",
         "description": "Eliges subclase.",
         "level": 1,
-        "source": "class"
+        "source": "class",
+        "requiresChoice": true,
+        "choiceHint": "Elige tu subclase / camino / dominio / tradición."
       },
       {
         "id": "warlock-cast",
@@ -531,7 +580,9 @@
         "name": "Tradicion arcana",
         "description": "Eliges subclase.",
         "level": 2,
-        "source": "class"
+        "source": "class",
+        "requiresChoice": true,
+        "choiceHint": "Elige tu subclase / camino / dominio / tradición."
       }
     ]
   }

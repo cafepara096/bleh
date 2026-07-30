@@ -35,6 +35,8 @@ export function LevelUpModal({ character, onConfirm, onClose }: Props) {
   const [asi, setAsi] = useState<Partial<AbilityScores>>({});
   const asiBudget = 2; // +2 total or two +1
   const [subclassId, setSubclassId] = useState(character.subclassId || '');
+  const [choiceNotes, setChoiceNotes] = useState<Record<string, string>>({});
+  const [acknowledgedChoices, setAcknowledgedChoices] = useState<Record<string, boolean>>({});
 
   const needsAsi = isAsiLevel(newLevel);
   const subclassOptions = classData ? SUBCLASSES[classData.id] || [] : [];
@@ -91,11 +93,36 @@ export function LevelUpModal({ character, onConfirm, onClose }: Props) {
             ...updated.features,
             ...toCharacterFeatures(
               sub.features.filter((f) => f.level <= newLevel),
-              'subclass'
+              'subclass',
+              newLevel
             ),
           ],
         };
       }
+    }
+
+    // Append choice notes into features descriptions or notes
+    const notes: string[] = [];
+    for (const f of featuresAtLevel) {
+      if (f.requiresChoice && choiceNotes[f.id]?.trim()) {
+        notes.push(`${f.name}: ${choiceNotes[f.id].trim()}`);
+      }
+    }
+    if (notes.length) {
+      updated = {
+        ...updated,
+        notes: [updated.notes || '', '— Elecciones al subir de nivel —', ...notes]
+          .filter(Boolean)
+          .join('\n'),
+        features: updated.features.map((feat) => {
+          const note = choiceNotes[feat.id];
+          if (!note?.trim()) return feat;
+          return {
+            ...feat,
+            description: `${feat.description}\n\nElección: ${note.trim()}`,
+          };
+        }),
+      };
     }
 
     onConfirm(updated);
@@ -180,20 +207,69 @@ export function LevelUpModal({ character, onConfirm, onClose }: Props) {
             </p>
           </section>
 
-          {/* Features gained */}
+          {/* Features gained + choices */}
           {featuresAtLevel.length > 0 && (
             <section className="bg-white border border-ink-200 rounded-lg p-3">
               <h3 className="font-bold text-sm mb-2">Nuevas características de clase</h3>
-              <ul className="space-y-1 text-sm">
+              <ul className="space-y-3 text-sm">
                 {featuresAtLevel.map((f) => (
-                  <li key={f.id}>
-                    <strong>{f.name}</strong>
-                    <p className="text-ink-600 text-xs">{f.description}</p>
+                  <li key={f.id} className="border border-ink-100 rounded-lg p-2">
+                    <div className="flex items-start gap-2">
+                      <strong className="flex-1">{f.name}</strong>
+                      {f.uses && (
+                        <span className="text-[10px] bg-ink-100 px-1.5 rounded">
+                          {f.uses.max} uso(s) / {f.uses.recovery}
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-ink-600 text-xs mt-1">{f.description}</p>
+                    {f.requiresChoice && (
+                      <div className="mt-2 bg-amber-50 border border-amber-300 rounded p-2 space-y-1">
+                        <p className="text-xs font-bold text-amber-900">
+                          ⚠ Debes elegir algo
+                        </p>
+                        <p className="text-xs text-amber-800">
+                          {f.choiceHint || 'Consulta el manual / homebrew y anota tu elección.'}
+                        </p>
+                        <input
+                          placeholder="Anota aquí tu elección…"
+                          value={choiceNotes[f.id] || ''}
+                          onChange={(e) =>
+                            setChoiceNotes((prev) => ({ ...prev, [f.id]: e.target.value }))
+                          }
+                          className="w-full px-2 py-1 border border-amber-300 rounded text-xs"
+                        />
+                        <label className="flex items-center gap-2 text-xs">
+                          <input
+                            type="checkbox"
+                            checked={!!acknowledgedChoices[f.id]}
+                            onChange={(e) =>
+                              setAcknowledgedChoices((prev) => ({
+                                ...prev,
+                                [f.id]: e.target.checked,
+                              }))
+                            }
+                          />
+                          Ya elegí / lo haré en la hoja
+                        </label>
+                      </div>
+                    )}
                   </li>
                 ))}
               </ul>
             </section>
           )}
+
+          <section className="bg-blue-50 border border-blue-200 rounded-lg p-3 text-xs text-ink-700 space-y-1">
+            <p className="font-bold text-sm text-blue-900">Qué revisar al subir de nivel</p>
+            <ul className="list-disc list-inside space-y-0.5">
+              <li>Nuevos rasgos de clase (arriba) y subclase si aplica</li>
+              <li>Espacios de conjuro y trucos/conjuros conocidos (pestaña Combate)</li>
+              <li>Usos de rasgos que escalan con el nivel (Furia, etc.)</li>
+              {needsAsi && <li>Mejora de característica (ASI) o dote</li>}
+              {needsSubclass && <li>Elección de subclase</li>}
+            </ul>
+          </section>
 
           {/* ASI */}
           {needsAsi && (
