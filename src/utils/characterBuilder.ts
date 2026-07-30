@@ -10,6 +10,8 @@ import type {
 } from '../types/dnd';
 import { getModifier, getProficiencyBonus, createEmptyCharacter } from './character';
 import startingEquipment from '../data/starting-equipment.json';
+import backgroundsData from '../data/backgrounds.json';
+import type { BackgroundData } from '../types/dnd';
 
 export const STANDARD_ARRAY = [15, 14, 13, 12, 10, 8] as const;
 
@@ -167,6 +169,30 @@ export function buildCharacterFromWizard(opts: {
 
   const inventory = buildStartingInventory(opts.classData.id);
 
+  // Background feature
+  const bg = (backgroundsData as BackgroundData[]).find(
+    (b) => b.name.toLowerCase() === opts.background.toLowerCase() || b.id === opts.background.toLowerCase()
+  );
+  if (bg?.feature) {
+    classFeats.push({
+      id: `bg-${bg.id}`,
+      name: bg.feature.name,
+      description: bg.feature.description,
+      source: 'background',
+    });
+  }
+  // Background equipment as inventory notes
+  if (bg?.equipment) {
+    for (const eq of bg.equipment) {
+      inventory.push({
+        id: crypto.randomUUID(),
+        name: eq,
+        quantity: 1,
+        description: 'Equipo de trasfondo',
+      });
+    }
+  }
+
   const empty = createEmptyCharacter(opts.name);
   const char: Character = {
     ...empty,
@@ -178,6 +204,7 @@ export function buildCharacterFromWizard(opts: {
     subclass: opts.subclassName,
     subclassId: opts.subclassId,
     background: opts.background,
+    backgroundId: bg?.id,
     level,
     proficiencyBonus: getProficiencyBonus(level),
     abilityScores: scores,
@@ -195,6 +222,14 @@ export function buildCharacterFromWizard(opts: {
       spellId,
       prepared: true,
     })),
+    spellSlots: (() => {
+      const sc = opts.classData.spellcasting;
+      if (!sc) return {};
+      // Level 1 full caster: 2 first-level slots; half: 0; pact: 1
+      if (sc.type === 'full') return { 1: { max: 2, used: 0 } };
+      if (sc.type === 'pact') return { 1: { max: 1, used: 0 } };
+      return {};
+    })(),
   };
   return char;
 }

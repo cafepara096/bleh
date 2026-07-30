@@ -108,6 +108,9 @@ export interface Character {
   subclass?: string;
   subclassId?: string;
   background: string;
+  backgroundId?: string;
+  /** Chosen languages from race/background */
+  languages?: string[];
   alignment?: string;
   level: number;
   experience: number;
@@ -267,4 +270,17 @@ export interface ClassData {
   homebrew?: boolean;
 }
 
-export type ContentType = 'spell' | 'monster' | 'item' | 'character' | 'race' | 'class';
+
+export interface BackgroundData {
+  id: string;
+  name: string;
+  description: string;
+  skillProficiencies?: string[];
+  toolProficiencies?: string[];
+  languages?: { count: number; description: string };
+  equipment?: string[];
+  feature?: { name: string; description: string };
+  homebrew?: boolean;
+}
+
+export type ContentType = 'spell' | 'monster' | 'item' | 'character' | 'race' | 'class' | 'background';
