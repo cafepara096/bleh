@@ -3,9 +3,22 @@
     "id": "acolyte",
     "name": "Acólito",
     "description": "Pasaste tu vida al servicio de un templo, aprendiendo ritos sagrados y sirviendo a los fieles.",
-    "skillProficiencies": ["Perspicacia", "Religión"],
-    "languages": { "count": 2, "description": "Dos idiomas a tu elección" },
-    "equipment": ["Símbolo sagrado", "Libro de oraciones", "5 barritas de incienso", "Vestimentas", "Ropa común", "15 gp"],
+    "skillProficiencies": [
+      "Perspicacia",
+      "Religión"
+    ],
+    "languages": {
+      "count": 2,
+      "description": "Dos idiomas a tu elección"
+    },
+    "equipment": [
+      "Símbolo sagrado",
+      "Libro de oraciones",
+      "5 barritas de incienso",
+      "Vestimentas",
+      "Ropa común",
+      "15 gp"
+    ],
     "feature": {
       "name": "Refugio de los fieles",
       "description": "Puedes recibir cuidados y hospitalidad en templos de tu fe. Los sacerdotes te ayudarán con recursos modestos."
@@ -15,9 +28,20 @@
     "id": "criminal",
     "name": "Criminal",
     "description": "Estás acostumbrado a la vida delictiva: contactos en el bajo mundo y un historial de infracciones.",
-    "skillProficiencies": ["Engaño", "Sigilo"],
-    "toolProficiencies": ["Un tipo de kit de juego", "Herramientas de ladrón"],
-    "equipment": ["Palanqueta", "Ropa oscura con capucha", "Bolsa", "15 gp"],
+    "skillProficiencies": [
+      "Engaño",
+      "Sigilo"
+    ],
+    "toolProficiencies": [
+      "Un tipo de kit de juego",
+      "Herramientas de ladrón"
+    ],
+    "equipment": [
+      "Palanqueta",
+      "Ropa oscura con capucha",
+      "Bolsa",
+      "15 gp"
+    ],
     "feature": {
       "name": "Contacto criminal",
       "description": "Tienes un contacto de confianza en la red criminal que puedes contactar para obtener información o ayuda ilícita."
@@ -27,9 +51,21 @@
     "id": "folk-hero",
     "name": "Héroe del pueblo",
     "description": "Vienes de gente humilde y te convertiste en un campeón local por un acto de valentía.",
-    "skillProficiencies": ["Trato con Animales", "Supervivencia"],
-    "toolProficiencies": ["Un tipo de herramientas de artesano", "Vehículos (tierra)"],
-    "equipment": ["Herramientas de artesano", "Pala", "Olla de hierro", "Ropa común", "10 gp"],
+    "skillProficiencies": [
+      "Trato con Animales",
+      "Supervivencia"
+    ],
+    "toolProficiencies": [
+      "Un tipo de herramientas de artesano",
+      "Vehículos (tierra)"
+    ],
+    "equipment": [
+      "Herramientas de artesano",
+      "Pala",
+      "Olla de hierro",
+      "Ropa común",
+      "10 gp"
+    ],
     "feature": {
       "name": "Hospitalidad rústica",
       "description": "La gente común te ofrece un lugar seguro para descansar, esconderte o recuperarte. Tratan de ocultarte de la ley o de enemigos si no les pones en peligro."
@@ -39,10 +75,23 @@
     "id": "noble",
     "name": "Noble",
     "description": "Naciste en una familia de buena posición, acostumbrado al privilegio y a la política.",
-    "skillProficiencies": ["Historia", "Persuasión"],
-    "toolProficiencies": ["Un tipo de kit de juego"],
-    "languages": { "count": 1, "description": "Un idioma a tu elección" },
-    "equipment": ["Ropa fina", "Anillo de sello", "Pergamino de linaje", "25 gp"],
+    "skillProficiencies": [
+      "Historia",
+      "Persuasión"
+    ],
+    "toolProficiencies": [
+      "Un tipo de kit de juego"
+    ],
+    "languages": {
+      "count": 1,
+      "description": "Un idioma a tu elección"
+    },
+    "equipment": [
+      "Ropa fina",
+      "Anillo de sello",
+      "Pergamino de linaje",
+      "25 gp"
+    ],
     "feature": {
       "name": "Posición privilegiada",
       "description": "Se te admite en la alta sociedad. La gente común se esfuerza por agradarte y puedes conseguir audiencia con nobles locales."
@@ -52,9 +101,22 @@
     "id": "sage",
     "name": "Sabio",
     "description": "Pasaste años aprendiendo el secreto del universo, estudiando en bibliotecas y laboratorios.",
-    "skillProficiencies": ["Arcana", "Historia"],
-    "languages": { "count": 2, "description": "Dos idiomas a tu elección" },
-    "equipment": ["Tinta", "Pluma", "Cuchillo pequeño", "Carta de un colega muerto", "Ropa común", "10 gp"],
+    "skillProficiencies": [
+      "Arcanos",
+      "Historia"
+    ],
+    "languages": {
+      "count": 2,
+      "description": "Dos idiomas a tu elección"
+    },
+    "equipment": [
+      "Tinta",
+      "Pluma",
+      "Cuchillo pequeño",
+      "Carta de un colega muerto",
+      "Ropa común",
+      "10 gp"
+    ],
     "feature": {
       "name": "Investigador",
       "description": "Si no sabes una información, a menudo sabes dónde encontrarla: quién la tiene, o qué biblioteca o sabio la posee."
@@ -64,9 +126,21 @@
     "id": "soldier",
     "name": "Soldado",
     "description": "La guerra ha sido tu vida. Entrenaste, luchaste y sobreviviste en el ejército.",
-    "skillProficiencies": ["Atletismo", "Intimidación"],
-    "toolProficiencies": ["Un tipo de kit de juego", "Vehículos (tierra)"],
-    "equipment": ["Insignia de rango", "Trofeo de enemigo caído", "Set de juego", "Ropa común", "10 gp"],
+    "skillProficiencies": [
+      "Atletismo",
+      "Intimidación"
+    ],
+    "toolProficiencies": [
+      "Un tipo de kit de juego",
+      "Vehículos (tierra)"
+    ],
+    "equipment": [
+      "Insignia de rango",
+      "Trofeo de enemigo caído",
+      "Set de juego",
+      "Ropa común",
+      "10 gp"
+    ],
     "feature": {
       "name": "Rango militar",
       "description": "Los soldados leales a tu antigua organización te reconocen. Puedes ejercer influencia sobre ellos y conseguir ayuda o equipo sencillo."
@@ -76,10 +150,24 @@
     "id": "hermit",
     "name": "Ermitaño",
     "description": "Viviste en reclusión, ya sea en un monasterio o en la naturaleza, buscando verdad espiritual o personal.",
-    "skillProficiencies": ["Medicina", "Religión"],
-    "toolProficiencies": ["Kit de herboristería"],
-    "languages": { "count": 1, "description": "Un idioma a tu elección" },
-    "equipment": ["Estuche de pergaminos", "Manta de invierno", "Ropa común", "Kit de herboristería", "5 gp"],
+    "skillProficiencies": [
+      "Medicina",
+      "Religión"
+    ],
+    "toolProficiencies": [
+      "Kit de herboristería"
+    ],
+    "languages": {
+      "count": 1,
+      "description": "Un idioma a tu elección"
+    },
+    "equipment": [
+      "Estuche de pergaminos",
+      "Manta de invierno",
+      "Ropa común",
+      "Kit de herboristería",
+      "5 gp"
+    ],
     "feature": {
       "name": "Descubrimiento",
       "description": "El aislamiento te otorgó un descubrimiento único: un hecho sobre el cosmos, la deidad, o un conocimiento que otros buscan."
@@ -89,9 +177,21 @@
     "id": "entertainer",
     "name": "Artista",
     "description": "Ganas la vida con tu arte: música, actuación, danza o espectáculos.",
-    "skillProficiencies": ["Acrobacias", "Interpretación"],
-    "toolProficiencies": ["Kit de disfraz", "Un instrumento musical"],
-    "equipment": ["Instrumento musical", "Favor de un admirador", "Disfraz", "Ropa de disfraz", "15 gp"],
+    "skillProficiencies": [
+      "Acrobacias",
+      "Interpretación"
+    ],
+    "toolProficiencies": [
+      "Kit de disfraz",
+      "Un instrumento musical"
+    ],
+    "equipment": [
+      "Instrumento musical",
+      "Favor de un admirador",
+      "Disfraz",
+      "Ropa de disfraz",
+      "15 gp"
+    ],
     "feature": {
       "name": "Con demanda",
       "description": "Siempre encuentras un lugar para actuar. Recibes alojamiento y comida modestos a cambio de una actuación nocturna."
@@ -101,10 +201,24 @@
     "id": "outlander",
     "name": "Forastero",
     "description": "Creciste en los páramos, lejos de la civilización, cazando y sobreviviendo.",
-    "skillProficiencies": ["Atletismo", "Supervivencia"],
-    "toolProficiencies": ["Un instrumento musical"],
-    "languages": { "count": 1, "description": "Un idioma a tu elección" },
-    "equipment": ["Bastón", "Trampa de caza", "Trofeo animal", "Ropa de viajero", "10 gp"],
+    "skillProficiencies": [
+      "Atletismo",
+      "Supervivencia"
+    ],
+    "toolProficiencies": [
+      "Un instrumento musical"
+    ],
+    "languages": {
+      "count": 1,
+      "description": "Un idioma a tu elección"
+    },
+    "equipment": [
+      "Bastón",
+      "Trampa de caza",
+      "Trofeo animal",
+      "Ropa de viajero",
+      "10 gp"
+    ],
     "feature": {
       "name": "Wanderer",
       "description": "Tienes excelente memoria para mapas y terreno. Puedes encontrar comida y agua dulce para ti y hasta cinco personas cada día, si la tierra lo ofrece."
@@ -114,9 +228,20 @@
     "id": "charlatan",
     "name": "Charlatán",
     "description": "Siempre tienes un plan y un disfraz. El engaño es tu oficio.",
-    "skillProficiencies": ["Engaño", "Juego de Manos"],
-    "toolProficiencies": ["Kit de disfraz", "Kit de falsificación"],
-    "equipment": ["Ropa fina", "Kit de disfraz", "Herramientas de estafa", "15 gp"],
+    "skillProficiencies": [
+      "Engaño",
+      "Juego de Manos"
+    ],
+    "toolProficiencies": [
+      "Kit de disfraz",
+      "Kit de falsificación"
+    ],
+    "equipment": [
+      "Ropa fina",
+      "Kit de disfraz",
+      "Herramientas de estafa",
+      "15 gp"
+    ],
     "feature": {
       "name": "Identidad falsa",
       "description": "Has creado una segunda identidad con documentación, conocidos y disfraces. Además puedes falsificar documentos."

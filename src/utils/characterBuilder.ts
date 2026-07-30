@@ -7,11 +7,53 @@ import type {
   InventoryItem,
   RaceData,
   FeatureEntry,
+  SkillId,
 } from '../types/dnd';
+import { SKILLS } from '../types/dnd';
 import { getModifier, getProficiencyBonus, createEmptyCharacter } from './character';
 import startingEquipment from '../data/starting-equipment.json';
 import backgroundsData from '../data/backgrounds.json';
 import type { BackgroundData } from '../types/dnd';
+
+
+/** Map Spanish skill names from backgrounds/traits to SkillId */
+export function mapSkillName(name: string): SkillId | null {
+  const n = name
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .trim();
+  const aliases: Record<string, SkillId> = {
+    acrobacias: 'acrobatics',
+    'trato con animales': 'animalHandling',
+    arcana: 'arcana',
+    arcanos: 'arcana',
+    atletismo: 'athletics',
+    engano: 'deception',
+    historia: 'history',
+    perspicacia: 'insight',
+    intimidacion: 'intimidation',
+    investigacion: 'investigation',
+    medicina: 'medicine',
+    naturaleza: 'nature',
+    percepcion: 'perception',
+    interpretacion: 'performance',
+    persuasion: 'persuasion',
+    religion: 'religion',
+    'juego de manos': 'sleightOfHand',
+    sigilo: 'stealth',
+    supervivencia: 'survival',
+  };
+  if (aliases[n]) return aliases[n];
+  const byName = SKILLS.find(
+    (s) =>
+      s.name
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '') === n || s.id === n
+  );
+  return byName ? (byName.id as SkillId) : null;
+}
 
 export const STANDARD_ARRAY = [15, 14, 13, 12, 10, 8] as const;
 
@@ -193,6 +235,31 @@ export function buildCharacterFromWizard(opts: {
     }
   }
 
+  // Skills from background
+  const skills: Character['skills'] = {};
+  if (bg?.skillProficiencies) {
+    for (const sk of bg.skillProficiencies) {
+      const id = mapSkillName(sk);
+      if (id) skills[id] = { proficient: true, expertise: false };
+    }
+  }
+  // Racial skill traits (e.g. Perception for elves, Intimidation for half-orcs)
+  for (const trait of opts.race.traits) {
+    const desc = (trait.name + ' ' + trait.description).toLowerCase();
+    if (desc.includes('percepción') || desc.includes('percepcion')) {
+      skills['perception'] = { proficient: true, expertise: false };
+    }
+    if (desc.includes('intimidación') || desc.includes('intimidacion')) {
+      skills['intimidation'] = { proficient: true, expertise: false };
+    }
+  }
+
+  // Languages list
+  const languages = [...(opts.race.languages || [])];
+  if (bg?.languages?.count) {
+    languages.push(bg.languages.description);
+  }
+
   const empty = createEmptyCharacter(opts.name);
   const char: Character = {
     ...empty,
@@ -205,10 +272,12 @@ export function buildCharacterFromWizard(opts: {
     subclassId: opts.subclassId,
     background: opts.background,
     backgroundId: bg?.id,
+    languages,
     level,
     proficiencyBonus: getProficiencyBonus(level),
     abilityScores: scores,
     savingThrows,
+    skills,
     speed: opts.race.speed,
     hitPointMax: Math.max(1, hp),
     hitPointCurrent: Math.max(1, hp),

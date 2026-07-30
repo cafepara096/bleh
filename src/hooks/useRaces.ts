@@ -20,10 +20,13 @@ export function useRaces() {
     if (!loading) localStorage.setItem(STORAGE_KEY, JSON.stringify(homebrew));
   }, [homebrew, loading]);
 
-  const races: RaceData[] = useMemo(
-    () => [...(baseRaces as RaceData[]), ...homebrew],
-    [homebrew]
-  );
+  const races: RaceData[] = useMemo(() => {
+    const map = new Map((baseRaces as RaceData[]).map((r) => [r.id, r]));
+    for (const hb of homebrew) {
+      map.set(hb.id, hb);
+    }
+    return Array.from(map.values());
+  }, [homebrew]);
 
   const addHomebrew = useCallback((data: Omit<RaceData, 'id' | 'homebrew'>) => {
     const race: RaceData = { ...data, id: `hb-${crypto.randomUUID()}`, homebrew: true };
