@@ -380,47 +380,80 @@ export function CharacterSheet({ character: initial, onSave, onBack, onExport }:
                 </button>
               </div>
 
-              {/* Spell slots on main */}
-              {Object.keys(character.spellSlots).length > 0 && (
-                <div className="bg-purple-50 border-2 border-purple-300 rounded-lg p-3">
-                  <div className="text-xs font-bold uppercase text-purple-800 mb-1">Espacios de conjuro</div>
-                  <div className="flex flex-wrap gap-3">
+              {/* Spell slots on main — interactive */}
+              <div className="bg-purple-50 border-2 border-purple-400 rounded-lg p-3">
+                <div className="text-xs font-bold uppercase text-purple-800 mb-2">
+                  Espacios de conjuro
+                  {character.spellcastingAbility && (
+                    <span className="ml-2 font-normal normal-case text-purple-700">
+                      (caract. {character.spellcastingAbility.toUpperCase()})
+                    </span>
+                  )}
+                </div>
+                {Object.keys(character.spellSlots).length === 0 ? (
+                  <p className="text-xs text-ink-500">
+                    Sin espacios. Los lanzadores los obtienen al crear o subir de nivel.
+                    También puedes gestionarlos en la pestaña Combate.
+                  </p>
+                ) : (
+                  <div className="flex flex-wrap gap-4">
                     {Object.keys(character.spellSlots)
                       .map(Number)
                       .sort((a, b) => a - b)
                       .map((lvl) => {
                         const s = character.spellSlots[lvl];
                         return (
-                          <div key={lvl} className="text-center text-xs">
-                            <div className="font-bold">N{lvl}</div>
-                            <div className="font-mono">
+                          <div key={lvl} className="text-center">
+                            <div className="text-[10px] uppercase text-ink-500 font-bold">Niv. {lvl}</div>
+                            <div className="flex gap-1 my-1 justify-center">
+                              {Array.from({ length: s.max }).map((_, i) => (
+                                <button
+                                  key={i}
+                                  type="button"
+                                  title={i < s.used ? 'Restaurar' : 'Gastar'}
+                                  onClick={() => {
+                                    const slots = { ...character.spellSlots };
+                                    const cur = { ...slots[lvl] };
+                                    if (i < cur.used) cur.used = Math.max(0, cur.used - 1);
+                                    else if (cur.used < cur.max) cur.used += 1;
+                                    slots[lvl] = cur;
+                                    update({ spellSlots: slots });
+                                  }}
+                                  className={`w-5 h-5 rounded-full border-2 border-purple-700 ${
+                                    i < s.used ? 'bg-purple-700' : 'bg-white hover:bg-purple-100'
+                                  }`}
+                                />
+                              ))}
+                            </div>
+                            <div className="text-xs font-mono font-bold">
                               {s.max - s.used}/{s.max}
                             </div>
                           </div>
                         );
                       })}
                   </div>
-                </div>
-              )}
+                )}
+              </div>
 
-              {/* Features & Traits compact */}
+              {/* Features & Traits */}
               <div className="bg-parchment-100 border-2 border-ink-800 rounded-lg p-3 shadow-sm">
                 <div className="text-xs font-bold uppercase text-ink-600 mb-2">Features &amp; Traits</div>
                 {character.features.length === 0 ? (
                   <p className="text-xs text-ink-500 italic">Sin rasgos</p>
                 ) : (
-                  <div className="flex flex-wrap gap-1">
+                  <div className="space-y-1 max-h-48 overflow-y-auto">
                     {character.features.map((f) => (
-                      <span
-                        key={f.id}
-                        title={f.description}
-                        className="text-xs bg-white border border-ink-200 px-2 py-0.5 rounded cursor-help"
-                      >
-                        {f.name}
-                        {f.source && (
-                          <span className="text-ink-400 ml-1">({f.source})</span>
-                        )}
-                      </span>
+                      <details key={f.id} className="bg-white border border-ink-200 rounded text-xs">
+                        <summary className="px-2 py-1.5 cursor-pointer font-medium flex items-center gap-2">
+                          <span className="flex-1">{f.name}</span>
+                          {f.source && (
+                            <span className="text-[10px] bg-ink-100 px-1.5 rounded capitalize">{f.source}</span>
+                          )}
+                        </summary>
+                        <p className="px-2 pb-2 text-ink-700 whitespace-pre-wrap border-t border-ink-100 pt-1">
+                          {f.description}
+                        </p>
+                      </details>
                     ))}
                   </div>
                 )}

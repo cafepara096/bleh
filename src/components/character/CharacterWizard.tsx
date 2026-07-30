@@ -222,7 +222,19 @@ export function CharacterWizard({ onComplete, onCancel }: Props) {
                   <div className="text-xs text-ink-500 mt-1">
                     {r.abilityScoreIncrease} · {formatSpeed(r.speed)} · {r.size}
                   </div>
-                  <p className="text-sm text-ink-700 mt-1 line-clamp-2">{r.description}</p>
+                  <p className="text-sm text-ink-700 mt-1">{r.description}</p>
+                  <div className="text-xs text-ink-600 mt-2">
+                    <strong>Idiomas:</strong> {r.languages.join(', ')}
+                  </div>
+                  {r.traits.length > 0 && (
+                    <ul className="mt-2 space-y-1">
+                      {r.traits.map((tr) => (
+                        <li key={tr.id} className="text-xs bg-white/80 border border-ink-100 rounded px-2 py-1">
+                          <strong>{tr.name}:</strong> {tr.description}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </button>
               ))}
             </div>
