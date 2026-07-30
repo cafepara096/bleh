@@ -435,6 +435,14 @@ export function CharacterSheet({ character: initial, onSave, onBack, onExport }:
                 )}
               </div>
 
+              {/* Languages */}
+              {(character.languages && character.languages.length > 0) && (
+                <div className="bg-parchment-100 border-2 border-ink-800 rounded-lg p-3 shadow-sm">
+                  <div className="text-xs font-bold uppercase text-ink-600 mb-1">Idiomas</div>
+                  <p className="text-sm">{character.languages.join(', ')}</p>
+                </div>
+              )}
+
               {/* Features & Traits */}
               <div className="bg-parchment-100 border-2 border-ink-800 rounded-lg p-3 shadow-sm">
                 <div className="text-xs font-bold uppercase text-ink-600 mb-2">Features &amp; Traits</div>

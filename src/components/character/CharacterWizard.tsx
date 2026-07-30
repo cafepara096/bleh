@@ -11,7 +11,11 @@ import {
   applyRaceASI,
   buildCharacterFromWizard,
   SUBCLASSES,
+  countExtraLanguageChoices,
+  COMMON_LANGUAGES,
 } from '../../utils/characterBuilder';
+import startingEquipment from '../../data/starting-equipment.json';
+import type { InventoryItem } from '../../types/dnd';
 import { getModifier, formatModifier } from '../../utils/character';
 import { formatSpeed } from '../../utils/units';
 import { ChevronRight, ChevronLeft, Check } from 'lucide-react';
@@ -23,7 +27,7 @@ interface Props {
   onCancel: () => void;
 }
 
-type Step = 'identity' | 'race' | 'class' | 'subclass' | 'abilities' | 'background' | 'review';
+type Step = 'identity' | 'race' | 'class' | 'subclass' | 'abilities' | 'background' | 'choices' | 'equipment' | 'review';
 
 const STEPS: { id: Step; label: string }[] = [
   { id: 'identity', label: 'Nombre' },
@@ -32,6 +36,8 @@ const STEPS: { id: Step; label: string }[] = [
   { id: 'subclass', label: 'Subclase' },
   { id: 'abilities', label: 'Atributos' },
   { id: 'background', label: 'Trasfondo' },
+  { id: 'choices', label: 'Elecciones' },
+  { id: 'equipment', label: 'Equipo' },
   { id: 'review', label: 'Resumen' },
 ];
 
@@ -51,6 +57,8 @@ export function CharacterWizard({ onComplete, onCancel }: Props) {
   });
   const [arrayAssign, setArrayAssign] = useState<Partial<Record<AbilityScore, number>>>({});
   const [background, setBackground] = useState('Soldado');
+  const [chosenLanguages, setChosenLanguages] = useState<string[]>([]);
+  const [equipChoices, setEquipChoices] = useState<Record<string, number>>({});
 
   const race = races.find((r) => r.id === raceId) || null;
   const classData = classes.find((c) => c.id === classId) || null;
@@ -59,7 +67,18 @@ export function CharacterWizard({ onComplete, onCancel }: Props) {
 
   const finalScores = useMemo(() => {
     if (!race) return baseScores;
-    return applyRaceASI(baseScores, race.abilityScoreIncrease);
+    let scores = applyRaceASI(baseScores, race.abilityScoreIncrease);
+    for (const trait of race.traits) {
+      if (trait.abilityBonuses) {
+        (Object.keys(trait.abilityBonuses) as (keyof typeof scores)[]).forEach((k) => {
+          scores = {
+            ...scores,
+            [k]: Math.min(20, scores[k] + (trait.abilityBonuses![k] || 0)),
+          };
+        });
+      }
+    }
+    return scores;
   }, [baseScores, race]);
 
   const stepIndex = STEPS.findIndex((s) => s.id === step);
@@ -83,6 +102,20 @@ export function CharacterWizard({ onComplete, onCancel }: Props) {
         return true;
       case 'background':
         return background.trim().length > 0;
+      case 'choices': {
+        if (!race) return false;
+        const bg = backgrounds.find(
+          (b) => b.name === background || b.id === background.toLowerCase()
+        );
+        const need = countExtraLanguageChoices(race, bg?.languages);
+        return chosenLanguages.filter(Boolean).length >= need;
+      }
+      case 'equipment': {
+        if (!classId) return true;
+        const pack = (startingEquipment as any)[classId];
+        if (!pack?.choices?.length) return true;
+        return pack.choices.every((c: any) => equipChoices[c.id] !== undefined);
+      }
       case 'review':
         return true;
       default:
@@ -135,6 +168,20 @@ export function CharacterWizard({ onComplete, onCancel }: Props) {
         if (arrayAssign[a] !== undefined) scores[a] = arrayAssign[a]!;
       });
     }
+    const pack = (startingEquipment as any)[classData.id];
+    let customInventory: InventoryItem[] | undefined;
+    if (pack) {
+      const items: InventoryItem[] = [];
+      for (const fixed of pack.fixed || []) {
+        items.push({ ...fixed, id: crypto.randomUUID(), quantity: fixed.quantity || 1 });
+      }
+      for (const choice of pack.choices || []) {
+        const idx = equipChoices[choice.id] ?? 0;
+        const opt = choice.options[idx];
+        if (opt) items.push({ ...opt, id: crypto.randomUUID(), quantity: opt.quantity || 1 });
+      }
+      customInventory = items;
+    }
     const char = buildCharacterFromWizard({
       name: name.trim(),
       race,
@@ -144,6 +191,8 @@ export function CharacterWizard({ onComplete, onCancel }: Props) {
       background: background.trim(),
       baseScores: scores,
       level: 1,
+      chosenLanguages: chosenLanguages.filter(Boolean),
+      customInventory,
     });
     // Add subclass features if any at level 1-3 that apply at 1... typically 3
     if (subclass) {
@@ -527,12 +576,136 @@ export function CharacterWizard({ onComplete, onCancel }: Props) {
           </div>
         )}
 
+        {step === 'choices' && race && (
+          <div className="space-y-4">
+            <p className="text-sm text-ink-600">
+              Elige las opciones que te otorgan raza y trasfondo (idiomas, etc.).
+            </p>
+            <div className="bg-white border border-ink-200 rounded-lg p-3 text-sm">
+              <strong>Idiomas fijos de la raza:</strong>{' '}
+              {race.languages.filter((l) => !/adicional|elección|eleccion/i.test(l)).join(', ') || '—'}
+            </div>
+            {(() => {
+              const bg = backgrounds.find(
+                (b) => b.name === background || b.id === background.toLowerCase()
+              );
+              const need = countExtraLanguageChoices(race, bg?.languages);
+              if (need === 0) {
+                return (
+                  <p className="text-sm text-ink-500 italic">
+                    No hay idiomas adicionales a elegir para esta combinación.
+                  </p>
+                );
+              }
+              return (
+                <div className="space-y-2">
+                  <p className="text-sm font-medium">
+                    Elige {need} idioma{need > 1 ? 's' : ''} adicional{need > 1 ? 'es' : ''}:
+                  </p>
+                  {Array.from({ length: need }).map((_, i) => (
+                    <select
+                      key={i}
+                      value={chosenLanguages[i] || ''}
+                      onChange={(e) => {
+                        const next = [...chosenLanguages];
+                        next[i] = e.target.value;
+                        setChosenLanguages(next);
+                      }}
+                      className="w-full px-3 py-2 border-2 border-ink-300 rounded-lg"
+                    >
+                      <option value="">— Seleccionar —</option>
+                      {COMMON_LANGUAGES.map((lang) => (
+                        <option
+                          key={lang}
+                          value={lang}
+                          disabled={chosenLanguages.includes(lang) && chosenLanguages[i] !== lang}
+                        >
+                          {lang}
+                        </option>
+                      ))}
+                    </select>
+                  ))}
+                  {bg?.languages && (
+                    <p className="text-xs text-ink-500">Trasfondo: {bg.languages.description}</p>
+                  )}
+                </div>
+              );
+            })()}
+          </div>
+        )}
+
+        {step === 'equipment' && classData && (
+          <div className="space-y-4">
+            <p className="text-sm text-ink-600">
+              Elige el equipo inicial de {classData.name} (opciones del PHB/SRD 5e).
+            </p>
+            {(() => {
+              const pack = (startingEquipment as any)[classData.id];
+              if (!pack) {
+                return <p className="text-sm text-ink-500">Sin paquete de equipo para esta clase.</p>;
+              }
+              return (
+                <div className="space-y-4">
+                  {(pack.fixed || []).length > 0 && (
+                    <div className="bg-ink-50 border border-ink-200 rounded-lg p-3 text-sm">
+                      <strong>Equipo fijo:</strong>
+                      <ul className="list-disc list-inside mt-1 text-ink-700">
+                        {pack.fixed.map((it: any, i: number) => (
+                          <li key={i}>{it.name}{it.quantity > 1 ? ` ×${it.quantity}` : ''}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                  {(pack.choices || []).map((choice: any) => (
+                    <div key={choice.id} className="border-2 border-ink-200 rounded-lg p-3">
+                      <div className="font-bold text-sm mb-2">{choice.label}</div>
+                      <div className="space-y-2">
+                        {choice.options.map((opt: any, idx: number) => (
+                          <button
+                            key={idx}
+                            type="button"
+                            onClick={() =>
+                              setEquipChoices((prev) => ({ ...prev, [choice.id]: idx }))
+                            }
+                            className={`w-full text-left p-2 rounded border-2 text-sm ${
+                              equipChoices[choice.id] === idx
+                                ? 'border-crimson-600 bg-parchment-200'
+                                : 'border-ink-200 bg-white hover:border-ink-400'
+                            }`}
+                          >
+                            <strong>{opt.name}</strong>
+                            {opt.damage && (
+                              <span className="text-xs text-red-700 ml-2">
+                                {opt.damage} {opt.damageType}
+                              </span>
+                            )}
+                            {opt.description && (
+                              <p className="text-xs text-ink-600 mt-0.5">{opt.description}</p>
+                            )}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              );
+            })()}
+          </div>
+        )}
+
         {step === 'review' && race && classData && (
           <div className="space-y-3 text-sm">
             <h2 className="text-xl font-display font-bold">{name}</h2>
             <p>
               {race.name} {classData.name}
               {subclass ? ` (${subclass.name})` : ''} · Nivel 1 · {background}
+            </p>
+            <p className="text-sm text-ink-700">
+              <strong>Idiomas:</strong>{' '}
+              {[
+                ...race.languages.filter((l) => !/adicional|elección|eleccion/i.test(l)),
+                ...chosenLanguages.filter(Boolean),
+              ].join(', ') || '—'}
             </p>
             <div className="grid grid-cols-3 gap-2">
               {ABILITIES.map((a) => (
