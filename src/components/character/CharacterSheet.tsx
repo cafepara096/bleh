@@ -496,7 +496,7 @@ export function CharacterSheet({ character: initial, onSave, onBack, onExport }:
         {activeTab === 'inventory' && (
           <InventoryPanel
             character={character}
-            onUpdate={(inventory) => update({ inventory })}
+            onUpdate={(partial) => update(partial)}
           />
         )}
 
