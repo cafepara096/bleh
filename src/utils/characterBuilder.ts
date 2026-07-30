@@ -223,12 +223,16 @@ export function buildCharacterFromWizard(opts: {
       prepared: true,
     })),
     spellSlots: (() => {
+      const slots: Record<number, { max: number; used: number }> = {};
       const sc = opts.classData.spellcasting;
-      if (!sc) return {};
+      if (!sc) return slots;
       // Level 1 full caster: 2 first-level slots; half: 0; pact: 1
-      if (sc.type === 'full') return { 1: { max: 2, used: 0 } };
-      if (sc.type === 'pact') return { 1: { max: 1, used: 0 } };
-      return {};
+      if (sc.type === 'full') {
+        slots[1] = { max: 2, used: 0 };
+      } else if (sc.type === 'pact') {
+        slots[1] = { max: 1, used: 0 };
+      }
+      return slots;
     })(),
   };
   return char;
