@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { useRaces } from '../hooks/useRaces';
 import { useSpells } from '../hooks/useSpells';
-import type { RaceData, FeatureEntry } from '../types/dnd';
+import type { RaceData, FeatureEntry, AbilityScore } from '../types/dnd';
+import { ABILITY_LABELS } from '../types/dnd';
 import { dualizeDescription, formatSpeed } from '../utils/units';
 import { Plus, Trash2, Users, X, Sparkles } from 'lucide-react';
 
@@ -11,7 +12,13 @@ export function RacesPage() {
   const [selected, setSelected] = useState<RaceData | null>(null);
   const [showForm, setShowForm] = useState(false);
   const [showTraitForm, setShowTraitForm] = useState(false);
-  const [traitForm, setTraitForm] = useState({ name: '', description: '', spellId: '' });
+  const [traitForm, setTraitForm] = useState({
+    name: '',
+    description: '',
+    spellId: '',
+    bonusAbility: '' as AbilityScore | '',
+    bonusAmount: 1,
+  });
   const [form, setForm] = useState({
     name: '',
     description: '',
@@ -42,16 +49,29 @@ export function RacesPage() {
 
   const handleAddTrait = () => {
     if (!current || !traitForm.name.trim()) return;
+    const abilityBonuses =
+      traitForm.bonusAbility && traitForm.bonusAmount
+        ? { [traitForm.bonusAbility]: traitForm.bonusAmount }
+        : undefined;
+    let description = traitForm.description.trim() || '—';
+    if (abilityBonuses && traitForm.bonusAbility) {
+      const label = ABILITY_LABELS[traitForm.bonusAbility];
+      const bonusText = `+${traitForm.bonusAmount} ${label}`;
+      if (!description.includes(bonusText)) {
+        description = description === '—' ? bonusText : `${description} (${bonusText})`;
+      }
+    }
     const trait: FeatureEntry = {
       id: `trait-${crypto.randomUUID()}`,
       name: traitForm.name.trim(),
-      description: traitForm.description.trim() || '—',
+      description,
       level: 1,
       source: 'homebrew',
       spellId: traitForm.spellId || undefined,
+      abilityBonuses,
     };
     addTrait(current.id, trait);
-    setTraitForm({ name: '', description: '', spellId: '' });
+    setTraitForm({ name: '', description: '', spellId: '', bonusAbility: '', bonusAmount: 1 });
     setShowTraitForm(false);
     setSelected({ ...current, traits: [...current.traits, trait], homebrew: true });
   };
@@ -163,6 +183,12 @@ export function RacesPage() {
                               Conjuro: {spells.find((s) => s.id === t.spellId)?.name || t.spellId}
                             </span>
                           )}
+                          {t.abilityBonuses &&
+                            Object.entries(t.abilityBonuses).map(([ab, amt]) => (
+                              <span key={ab} className="ml-2 text-xs bg-green-100 text-green-900 px-1.5 rounded font-bold">
+                                +{amt} {ABILITY_LABELS[ab as AbilityScore] || ab}
+                              </span>
+                            ))}
                         </div>
                         <button
                           onClick={() => {
@@ -233,6 +259,39 @@ export function RacesPage() {
                   <option key={s.id} value={s.id}>{s.name} (niv. {s.level})</option>
                 ))}
               </select>
+            </div>
+            <div className="bg-green-50 border border-green-200 rounded-lg p-3 space-y-2">
+              <label className="text-sm font-bold block">Bono de característica (opcional)</label>
+              <p className="text-xs text-ink-600">Se aplicará automáticamente al crear un personaje con esta raza.</p>
+              <div className="flex gap-2">
+                <select
+                  value={traitForm.bonusAbility}
+                  onChange={(e) =>
+                    setTraitForm({
+                      ...traitForm,
+                      bonusAbility: e.target.value as AbilityScore | '',
+                    })
+                  }
+                  className="flex-1 px-3 py-2 border-2 border-ink-300 rounded-lg"
+                >
+                  <option value="">Sin bono</option>
+                  {(Object.keys(ABILITY_LABELS) as AbilityScore[]).map((a) => (
+                    <option key={a} value={a}>{ABILITY_LABELS[a]}</option>
+                  ))}
+                </select>
+                <select
+                  value={traitForm.bonusAmount}
+                  onChange={(e) =>
+                    setTraitForm({ ...traitForm, bonusAmount: parseInt(e.target.value) || 1 })
+                  }
+                  className="w-24 px-3 py-2 border-2 border-ink-300 rounded-lg"
+                  disabled={!traitForm.bonusAbility}
+                >
+                  {[1, 2, 3].map((n) => (
+                    <option key={n} value={n}>+{n}</option>
+                  ))}
+                </select>
+              </div>
             </div>
             <button onClick={handleAddTrait} className="w-full py-2 bg-crimson-600 text-white rounded-lg font-medium">Añadir rasgo</button>
           </div>

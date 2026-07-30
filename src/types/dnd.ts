@@ -230,6 +230,8 @@ export interface FeatureEntry {
   /** Optional link to a spell id from the spells catalog */
   spellId?: string;
   source?: string;
+  /** Automatic ability score bonuses granted by this feature (applied on character create) */
+  abilityBonuses?: Partial<Record<AbilityScore, number>>;
 }
 
 export interface RaceData {

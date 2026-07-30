@@ -55,6 +55,27 @@ export function mapSkillName(name: string): SkillId | null {
   return byName ? (byName.id as SkillId) : null;
 }
 
+
+export function countExtraLanguageChoices(race: RaceData, bgLanguages?: { count: number }): number {
+  let n = bgLanguages?.count || 0;
+  for (const lang of race.languages || []) {
+    if (/adicional|elección|eleccion|a tu elecci/i.test(lang)) n += 1;
+  }
+  for (const trait of race.traits || []) {
+    if (/idioma adicional|lengua adicional|un idioma a tu/i.test(trait.name + trait.description)) {
+      // avoid double-count if already in languages array
+      if (!(race.languages || []).some((l) => /adicional|elección|eleccion/i.test(l))) n += 1;
+    }
+  }
+  return n;
+}
+
+export const COMMON_LANGUAGES = [
+  'Común', 'Élfico', 'Énano', 'Mediano', 'Gnomo', 'Orco', 'Dracónico',
+  'Infernal', 'Abisal', 'Celestial', 'Primordial', 'Silvano', 'Goblin',
+  'Gigante', 'Infracomún', 'Subcomún',
+];
+
 export const STANDARD_ARRAY = [15, 14, 13, 12, 10, 8] as const;
 
 /** Point-buy: total 27 points. Costs from PHB. */
@@ -168,9 +189,22 @@ export function buildCharacterFromWizard(opts: {
   background: string;
   baseScores: AbilityScores; // before race ASI
   level?: number;
+  /** Chosen languages beyond fixed racial ones */
+  chosenLanguages?: string[];
+  /** Override starting inventory (player equipment choices) */
+  customInventory?: InventoryItem[];
 }): Character {
   const level = opts.level ?? 1;
-  const scores = applyRaceASI(opts.baseScores, opts.race.abilityScoreIncrease);
+  let scores = applyRaceASI(opts.baseScores, opts.race.abilityScoreIncrease);
+  // Trait-level ability bonuses (homebrew / explicit)
+  for (const trait of opts.race.traits) {
+    if (trait.abilityBonuses) {
+      (Object.keys(trait.abilityBonuses) as AbilityScore[]).forEach((k) => {
+        const add = trait.abilityBonuses![k] || 0;
+        scores[k] = Math.min(20, scores[k] + add);
+      });
+    }
+  }
   const conMod = getModifier(scores.con);
   const die = hitDieNumber(opts.classData.hitDie);
   // Level 1 HP = max hit die + con
@@ -209,7 +243,9 @@ export function buildCharacterFromWizard(opts: {
     .map((s) => saveMap[s.toLowerCase()])
     .filter(Boolean) as AbilityScore[];
 
-  const inventory = buildStartingInventory(opts.classData.id);
+  const inventory = opts.customInventory
+    ? opts.customInventory
+    : buildStartingInventory(opts.classData.id);
 
   // Background feature
   const bg = (backgroundsData as BackgroundData[]).find(
@@ -255,8 +291,11 @@ export function buildCharacterFromWizard(opts: {
   }
 
   // Languages list
-  const languages = [...(opts.race.languages || [])];
-  if (bg?.languages?.count) {
+  const languages = [
+    ...(opts.race.languages || []).filter((l) => !/adicional|elección|eleccion/i.test(l)),
+    ...(opts.chosenLanguages || []),
+  ];
+  if (bg?.languages?.count && !(opts.chosenLanguages && opts.chosenLanguages.length)) {
     languages.push(bg.languages.description);
   }
 
