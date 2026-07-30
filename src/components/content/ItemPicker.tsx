@@ -7,6 +7,8 @@ interface Props {
   items: Item[];
   onSelect: (item: InventoryItem) => void;
   onClose: () => void;
+  /** Label for the add button (e.g. "Añadir a la mochila") */
+  addLabel?: string;
 }
 
 const TYPE_LABELS: Record<string, string> = {
@@ -27,7 +29,7 @@ const RARITY_COLORS: Record<string, string> = {
   legendary: 'bg-amber-100 text-amber-900',
 };
 
-export function ItemPicker({ items, onSelect, onClose }: Props) {
+export function ItemPicker({ items, onSelect, onClose, addLabel }: Props) {
   const [query, setQuery] = useState('');
   const [typeFilter, setTypeFilter] = useState<string>('all');
   const [selected, setSelected] = useState<Item | null>(null);
@@ -234,7 +236,7 @@ export function ItemPicker({ items, onSelect, onClose }: Props) {
                   onClick={handleAdd}
                   className="flex-1 flex items-center justify-center gap-1 px-3 py-2 bg-crimson-600 hover:bg-crimson-700 text-white rounded-lg text-sm font-medium"
                 >
-                  <Plus className="w-4 h-4" /> Añadir al inventario
+                  <Plus className="w-4 h-4" /> {addLabel || 'Añadir al inventario'}
                 </button>
               </div>
             </div>
