@@ -27,6 +27,7 @@ import {
   TrendingUp,
 } from 'lucide-react';
 import { LevelUpModal } from './LevelUpModal';
+import { CombatPanel } from './CombatPanel';
 
 interface Props {
   character: Character;
@@ -37,7 +38,7 @@ interface Props {
 
 export function CharacterSheet({ character: initial, onSave, onBack, onExport }: Props) {
   const [character, setCharacter] = useState<Character>(initial);
-  const [activeTab, setActiveTab] = useState<'main' | 'inventory' | 'features' | 'notes'>('main');
+  const [activeTab, setActiveTab] = useState<'main' | 'combat' | 'inventory' | 'features' | 'notes'>('main');
   const [dirty, setDirty] = useState(false);
   const [showLevelUp, setShowLevelUp] = useState(false);
 
@@ -248,7 +249,7 @@ export function CharacterSheet({ character: initial, onSave, onBack, onExport }:
 
       {/* Tabs */}
       <div className="bg-parchment-100 border-x-2 border-ink-800 flex">
-        {(['main', 'inventory', 'features', 'notes'] as const).map((tab) => (
+        {(['main', 'combat', 'inventory', 'features', 'notes'] as const).map((tab) => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
@@ -259,6 +260,7 @@ export function CharacterSheet({ character: initial, onSave, onBack, onExport }:
             }`}
           >
             {tab === 'main' && 'Principal'}
+            {tab === 'combat' && 'Combate'}
             {tab === 'inventory' && 'Inventario'}
             {tab === 'features' && 'Rasgos'}
             {tab === 'notes' && 'Notas'}
@@ -377,6 +379,52 @@ export function CharacterSheet({ character: initial, onSave, onBack, onExport }:
                   Descanso Largo
                 </button>
               </div>
+
+              {/* Spell slots on main */}
+              {Object.keys(character.spellSlots).length > 0 && (
+                <div className="bg-purple-50 border-2 border-purple-300 rounded-lg p-3">
+                  <div className="text-xs font-bold uppercase text-purple-800 mb-1">Espacios de conjuro</div>
+                  <div className="flex flex-wrap gap-3">
+                    {Object.keys(character.spellSlots)
+                      .map(Number)
+                      .sort((a, b) => a - b)
+                      .map((lvl) => {
+                        const s = character.spellSlots[lvl];
+                        return (
+                          <div key={lvl} className="text-center text-xs">
+                            <div className="font-bold">N{lvl}</div>
+                            <div className="font-mono">
+                              {s.max - s.used}/{s.max}
+                            </div>
+                          </div>
+                        );
+                      })}
+                  </div>
+                </div>
+              )}
+
+              {/* Features & Traits compact */}
+              <div className="bg-parchment-100 border-2 border-ink-800 rounded-lg p-3 shadow-sm">
+                <div className="text-xs font-bold uppercase text-ink-600 mb-2">Features &amp; Traits</div>
+                {character.features.length === 0 ? (
+                  <p className="text-xs text-ink-500 italic">Sin rasgos</p>
+                ) : (
+                  <div className="flex flex-wrap gap-1">
+                    {character.features.map((f) => (
+                      <span
+                        key={f.id}
+                        title={f.description}
+                        className="text-xs bg-white border border-ink-200 px-2 py-0.5 rounded cursor-help"
+                      >
+                        {f.name}
+                        {f.source && (
+                          <span className="text-ink-400 ml-1">({f.source})</span>
+                        )}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
 
             {/* Skills */}
@@ -388,6 +436,13 @@ export function CharacterSheet({ character: initial, onSave, onBack, onExport }:
               />
             </div>
           </div>
+        )}
+
+        {activeTab === 'combat' && (
+          <CombatPanel
+            character={character}
+            onUpdate={(partial) => update(partial)}
+          />
         )}
 
         {activeTab === 'inventory' && (

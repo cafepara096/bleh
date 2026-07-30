@@ -3,6 +3,7 @@ import type { AbilityScore, AbilityScores, Character } from '../../types/dnd';
 import { ABILITY_LABELS } from '../../types/dnd';
 import { useRaces } from '../../hooks/useRaces';
 import { useClasses } from '../../hooks/useClasses';
+import { useBackgrounds } from '../../hooks/useBackgrounds';
 import {
   STANDARD_ARRAY,
   POINT_BUY_COST,
@@ -37,6 +38,7 @@ const STEPS: { id: Step; label: string }[] = [
 export function CharacterWizard({ onComplete, onCancel }: Props) {
   const { races } = useRaces();
   const { classes } = useClasses();
+  const { backgrounds } = useBackgrounds();
 
   const [step, setStep] = useState<Step>('identity');
   const [name, setName] = useState('');
@@ -319,16 +321,24 @@ export function CharacterWizard({ onComplete, onCancel }: Props) {
                 <p className="text-sm text-ink-600">
                   Asigna {STANDARD_ARRAY.join(', ')} a cada característica.
                 </p>
-                {ABILITIES.map((a) => (
-                  <div key={a} className="flex items-center gap-3">
-                    <span className="w-28 font-medium text-sm">{ABILITY_LABELS[a]}</span>
+                {ABILITIES.map((a) => {
+                  const base = arrayAssign[a];
+                  const showFinal = race && base !== undefined;
+                  const fin = showFinal ? applyRaceASI({ ...baseScores, [a]: base! }, race!.abilityScoreIncrease)[a] : base;
+                  return (
+                  <div key={a} className="flex items-center gap-3 flex-wrap">
+                    <span className="w-28 font-medium text-sm">
+                      {ABILITY_LABELS[a]}
+                      {showFinal && fin !== undefined && fin > base! && (
+                        <span className="ml-1 text-[10px] bg-green-200 text-green-900 px-1 rounded">+{fin - base!} raza</span>
+                      )}
+                    </span>
                     <select
                       value={arrayAssign[a] ?? ''}
                       onChange={(e) => {
                         const v = parseInt(e.target.value);
                         setArrayAssign((prev) => {
                           const next = { ...prev };
-                          // free previous use of this number
                           (Object.keys(next) as AbilityScore[]).forEach((k) => {
                             if (next[k] === v) delete next[k];
                           });
@@ -336,6 +346,9 @@ export function CharacterWizard({ onComplete, onCancel }: Props) {
                           else delete next[a];
                           return next;
                         });
+                        if (!isNaN(v)) {
+                          setBaseScores((prev) => ({ ...prev, [a]: v }));
+                        }
                       }}
                       className="px-2 py-1 border-2 border-ink-300 rounded"
                     >
@@ -350,8 +363,11 @@ export function CharacterWizard({ onComplete, onCancel }: Props) {
                         </option>
                       ))}
                     </select>
+                    {showFinal && fin !== undefined && (
+                      <span className="text-xs text-ink-600">→ total <strong>{fin}</strong></span>
+                    )}
                   </div>
-                ))}
+                );})}
               </div>
             )}
 
@@ -363,9 +379,16 @@ export function CharacterWizard({ onComplete, onCancel }: Props) {
                     <span className="text-red-600 ml-2">¡Excedes el límite!</span>
                   )}
                 </p>
-                {ABILITIES.map((a) => (
+                {ABILITIES.map((a) => {
+                  const racial = race ? finalScores[a] - baseScores[a] : 0;
+                  return (
                   <div key={a} className="flex items-center gap-3">
-                    <span className="w-28 font-medium text-sm">{ABILITY_LABELS[a]}</span>
+                    <span className="w-28 font-medium text-sm">
+                      {ABILITY_LABELS[a]}
+                      {racial > 0 && (
+                        <span className="ml-1 text-[10px] bg-green-200 text-green-900 px-1 rounded">+{racial} raza</span>
+                      )}
+                    </span>
                     <input
                       type="number"
                       min={8}
@@ -375,10 +398,11 @@ export function CharacterWizard({ onComplete, onCancel }: Props) {
                       className="w-16 px-2 py-1 border-2 border-ink-300 rounded text-center"
                     />
                     <span className="text-sm text-ink-500">
-                      {formatModifier(getModifier(baseScores[a]))} · coste {POINT_BUY_COST[baseScores[a]] ?? '?'}
+                      base {baseScores[a]} → <strong>{finalScores[a]}</strong> ({formatModifier(getModifier(finalScores[a]))})
+                      · coste {POINT_BUY_COST[baseScores[a]] ?? '?'}
                     </span>
                   </div>
-                ))}
+                );})}
               </div>
             )}
 
@@ -407,15 +431,35 @@ export function CharacterWizard({ onComplete, onCancel }: Props) {
             )}
 
             {race && (
-              <div className="bg-green-50 border border-green-200 rounded-lg p-3 text-sm">
-                <strong>Con bonos raciales ({race.name}):</strong>
-                <div className="flex flex-wrap gap-3 mt-1">
-                  {ABILITIES.map((a) => (
-                    <span key={a}>
-                      {ABILITY_LABELS[a].slice(0, 3)} {finalScores[a]} ({formatModifier(getModifier(finalScores[a]))})
-                    </span>
-                  ))}
+              <div className="bg-green-50 border border-green-300 rounded-lg p-3 text-sm space-y-2">
+                <strong>Origen de los atributos — {race.name}</strong>
+                <p className="text-xs text-ink-600">{race.abilityScoreIncrease}</p>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                  {ABILITIES.map((a) => {
+                    const racial = finalScores[a] - baseScores[a];
+                    return (
+                      <div key={a} className="bg-white border border-green-200 rounded p-2 text-center">
+                        <div className="text-[10px] uppercase text-ink-500">{ABILITY_LABELS[a]}</div>
+                        <div className="font-bold text-lg">{finalScores[a]}</div>
+                        <div className="text-[11px] text-ink-600">
+                          base {baseScores[a]}
+                          {racial > 0 ? (
+                            <span className="text-green-700 font-semibold"> +{racial} raza</span>
+                          ) : (
+                            <span className="text-ink-400"> +0 raza</span>
+                          )}
+                        </div>
+                        <div className="text-xs">{formatModifier(getModifier(finalScores[a]))}</div>
+                      </div>
+                    );
+                  })}
                 </div>
+                {classData && (
+                  <p className="text-xs text-ink-500">
+                    Clase <strong>{classData.name}</strong>: no suma atributos fijos al crear (salvo rasgos especiales de subclase/homebrew).
+                    Salvaciones: {classData.savingThrows.join(', ')}.
+                  </p>
+                )}
               </div>
             )}
           </div>
@@ -423,27 +467,50 @@ export function CharacterWizard({ onComplete, onCancel }: Props) {
 
         {step === 'background' && (
           <div className="space-y-3">
-            <p className="text-sm text-ink-600">Trasfondo (puedes editarlo después).</p>
-            <div className="flex flex-wrap gap-2">
-              {['Acolito', 'Criminal', 'Artista', 'Soldado', 'Sabio', 'Huérfano', 'Marinero', 'Hermitaño'].map(
-                (b) => (
-                  <button
-                    key={b}
-                    onClick={() => setBackground(b)}
-                    className={`px-3 py-1.5 rounded-lg text-sm border-2 ${
-                      background === b ? 'border-crimson-600 bg-parchment-200' : 'border-ink-200 bg-white'
-                    }`}
-                  >
-                    {b}
-                  </button>
-                )
-              )}
+            <p className="text-sm text-ink-600">Elige un trasfondo. Verás qué otorga (habilidades, idiomas, equipo, rasgo).</p>
+            <div className="grid gap-2 max-h-72 overflow-y-auto">
+              {backgrounds.map((bg) => (
+                <button
+                  key={bg.id}
+                  onClick={() => setBackground(bg.name)}
+                  className={`text-left p-3 rounded-lg border-2 ${
+                    background === bg.name
+                      ? 'border-crimson-600 bg-parchment-200'
+                      : 'border-ink-200 bg-white hover:border-ink-400'
+                  }`}
+                >
+                  <div className="font-bold flex items-center gap-2">
+                    {bg.name}
+                    {bg.homebrew && (
+                      <span className="text-[10px] bg-amber-200 text-amber-900 px-1 rounded">HB</span>
+                    )}
+                  </div>
+                  <p className="text-xs text-ink-600 mt-1">{bg.description}</p>
+                  <div className="text-xs mt-2 space-y-0.5 text-ink-700">
+                    {bg.skillProficiencies && (
+                      <div><strong>Habilidades:</strong> {bg.skillProficiencies.join(', ')}</div>
+                    )}
+                    {bg.toolProficiencies && (
+                      <div><strong>Herramientas:</strong> {bg.toolProficiencies.join(', ')}</div>
+                    )}
+                    {bg.languages && (
+                      <div><strong>Idiomas:</strong> {bg.languages.description}</div>
+                    )}
+                    {bg.feature && (
+                      <div><strong>Rasgo — {bg.feature.name}:</strong> {bg.feature.description}</div>
+                    )}
+                    {bg.equipment && (
+                      <div><strong>Equipo:</strong> {bg.equipment.join(', ')}</div>
+                    )}
+                  </div>
+                </button>
+              ))}
             </div>
             <input
               value={background}
               onChange={(e) => setBackground(e.target.value)}
               className="w-full px-3 py-2 border-2 border-ink-300 rounded-lg"
-              placeholder="O escribe uno (homebrew)"
+              placeholder="O escribe un trasfondo libre / homebrew"
             />
           </div>
         )}
