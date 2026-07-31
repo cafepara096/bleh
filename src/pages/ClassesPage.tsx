@@ -208,6 +208,30 @@ export function ClassesPage() {
               </div>
 
               {/* Features */}
+
+              {current.subclasses && current.subclasses.length > 0 && (
+                <div className="mt-4">
+                  <h3 className="font-bold mb-2">Subclases (PHB 2024)</h3>
+                  <div className="space-y-2">
+                    {current.subclasses.map((s) => (
+                      <details key={s.id} className="bg-white border border-ink-200 rounded-lg p-3">
+                        <summary className="cursor-pointer font-semibold text-sm">{s.name}</summary>
+                        <p className="text-xs text-ink-600 mt-1">{s.description}</p>
+                        <ul className="mt-2 space-y-1">
+                          {s.features.map((f) => (
+                            <li key={f.id} className="text-xs border-t border-ink-100 pt-1">
+                              <strong>Niv. {f.level} — {f.name}:</strong> {f.description}
+                              {f.requiresChoice && (
+                                <span className="ml-1 text-amber-800">(requiere elección)</span>
+                              )}
+                            </li>
+                          ))}
+                        </ul>
+                      </details>
+                    ))}
+                  </div>
+                </div>
+              )}
               <div>
                 <div className="flex items-center justify-between mb-2">
                   <h3 className="font-bold flex items-center gap-2">

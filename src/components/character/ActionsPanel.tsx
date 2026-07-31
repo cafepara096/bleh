@@ -8,6 +8,8 @@ import {
   getSpellSaveDC,
 } from '../../utils/character';
 import { useSpells } from '../../hooks/useSpells';
+import { useItems } from '../../hooks/useItems';
+import { resolveInventoryItem } from '../../utils/catalogResolve';
 import { Swords, Zap, Shield, Sparkles, BookOpen, List } from 'lucide-react';
 
 interface Props {
@@ -79,6 +81,7 @@ function weaponAbility(
 
 export function ActionsPanel({ character, onUpdate }: Props) {
   const { spells: catalog } = useSpells();
+  const { items: itemCatalog } = useItems();
   const strMod = getModifier(character.abilityScores.str);
   const dexMod = getModifier(character.abilityScores.dex);
   const prof = character.proficiencyBonus;
@@ -87,7 +90,8 @@ export function ActionsPanel({ character, onUpdate }: Props) {
   const spellAbility = character.spellcastingAbility;
   const spellAbilityLabel = spellAbility ? ABILITY_LABELS[spellAbility] : null;
 
-  const weapons = character.inventory.filter((i) => i.damage || i.equipped);
+  const resolvedInventory = character.inventory.map((i) => resolveInventoryItem(i, itemCatalog));
+  const weapons = resolvedInventory.filter((i) => i.damage || i.equipped);
 
   const spendUse = (featureId: string) => {
     if (!onUpdate) return;
@@ -266,6 +270,11 @@ export function ActionsPanel({ character, onUpdate }: Props) {
               <div key={w.id} className="px-3 py-2.5 bg-white/70">
                 <div className="font-semibold text-sm flex flex-wrap items-center gap-2">
                   {w.name}
+                  {'nameEn' in w && (w as { nameEn?: string }).nameEn && (
+                    <span className="text-[10px] font-normal text-ink-400">
+                      ({(w as { nameEn?: string }).nameEn})
+                    </span>
+                  )}
                   {w.equipped && (
                     <span className="text-[10px] bg-amber-100 text-amber-900 px-1.5 rounded">
                       En mano
@@ -379,7 +388,12 @@ export function ActionsPanel({ character, onUpdate }: Props) {
             return (
               <div key={s.id} className="px-3 py-2.5 bg-white/70">
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className="font-semibold text-sm">{s.name}</span>
+                  <span className="font-semibold text-sm">
+                    {s.name}
+                    {s.nameEn && (
+                      <span className="ml-1 text-[10px] font-normal text-ink-400">({s.nameEn})</span>
+                    )}
+                  </span>
                   <span className="text-[10px] bg-purple-100 text-purple-800 px-1.5 rounded">
                     {s.level === 0 ? 'Truco' : `Niv. ${s.level}`}
                   </span>

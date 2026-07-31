@@ -39,7 +39,11 @@ export function LevelUpModal({ character, onConfirm, onClose }: Props) {
   const [acknowledgedChoices, setAcknowledgedChoices] = useState<Record<string, boolean>>({});
 
   const needsAsi = isAsiLevel(newLevel);
-  const subclassOptions = classData ? SUBCLASSES[classData.id] || [] : [];
+  const subclassOptions = classData?.subclasses?.length
+    ? classData.subclasses
+    : classData
+    ? SUBCLASSES[classData.id] || []
+    : [];
   const subclassLevel =
     classData?.features.find((f) => /subclase|arquetipo|camino|colegio|dominio|juramento|círculo|tradici[oó]n|origen|patr[oó]n/i.test(f.name))?.level || 3;
   const needsSubclass =
@@ -98,7 +102,7 @@ export function LevelUpModal({ character, onConfirm, onClose }: Props) {
         };
       }
     } else if (character.subclassId && classData) {
-      const sub = (SUBCLASSES[classData.id] || []).find((s) => s.id === character.subclassId);
+      const sub = subclassOptions.find((s) => s.id === character.subclassId);
       if (sub) {
         const atLvl = sub.features.filter((f) => f.level === newLevel);
         subclassFeaturesAtLevel = atLvl;
@@ -243,6 +247,39 @@ export function LevelUpModal({ character, onConfirm, onClose }: Props) {
               PG máximos: {character.hitPointMax} → {character.hitPointMax + hpGain}
             </p>
           </section>
+
+
+          {/* Subclass features this level (already has subclass) */}
+          {character.subclassId && !needsSubclass && (() => {
+            const sub = subclassOptions.find((s) => s.id === character.subclassId);
+            const atLvl = sub?.features.filter((f) => f.level === newLevel) || [];
+            if (!atLvl.length) return null;
+            return (
+              <section className="bg-purple-50 border border-purple-300 rounded-lg p-3">
+                <h3 className="font-bold text-sm mb-2">
+                  Rasgos de subclase a este nivel — {character.subclass}
+                </h3>
+                <ul className="space-y-2">
+                  {atLvl.map((f) => (
+                    <li key={f.id} className="bg-white border border-purple-100 rounded p-2 text-sm">
+                      <strong>{f.name}</strong>
+                      <p className="text-xs text-ink-600 mt-0.5">{f.description}</p>
+                      {f.requiresChoice && (
+                        <input
+                          placeholder={f.choiceHint || 'Anota tu elección…'}
+                          value={choiceNotes[f.id] || ''}
+                          onChange={(e) =>
+                            setChoiceNotes((prev) => ({ ...prev, [f.id]: e.target.value }))
+                          }
+                          className="mt-1 w-full px-2 py-1 border border-amber-300 rounded text-xs bg-amber-50"
+                        />
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            );
+          })()}
 
           {/* Features gained + choices */}
           {featuresAtLevel.length > 0 && (

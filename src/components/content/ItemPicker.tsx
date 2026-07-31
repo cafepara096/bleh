@@ -58,6 +58,7 @@ export function ItemPicker({ items, onSelect, onClose, addLabel }: Props) {
     if (!selected) return;
     const inv: InventoryItem = {
       id: crypto.randomUUID(),
+      catalogId: selected.id,
       name: selected.name,
       quantity: quantity || 1,
       weight: selected.weight,

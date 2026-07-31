@@ -8,6 +8,8 @@ import {
   getSpellAttackBonus,
 } from '../../utils/character';
 import { useSpells } from '../../hooks/useSpells';
+import { useItems } from '../../hooks/useItems';
+import { resolveInventoryItem } from '../../utils/catalogResolve';
 import { useClasses } from '../../hooks/useClasses';
 import {
   getCasterKindFromClassId,
@@ -34,6 +36,7 @@ interface Props {
 
 export function CombatPanel({ character, onUpdate }: Props) {
   const { spells: catalog } = useSpells();
+  const { items: itemCatalog } = useItems();
   const { classes } = useClasses();
   const classData = classes.find(
     (c) => c.id === character.classId || c.name === character.class
@@ -58,7 +61,9 @@ export function CombatPanel({ character, onUpdate }: Props) {
   const [query, setQuery] = useState('');
   const [upcastLevel, setUpcastLevel] = useState<Record<string, number>>({});
 
-  const weapons = character.inventory.filter((i) => i.damage || i.equipped);
+  const weapons = character.inventory
+    .map((i) => resolveInventoryItem(i, itemCatalog))
+    .filter((i) => i.damage || i.equipped);
 
   const cantripIds = useMemo(() => {
     const fromKnown = character.cantripsKnown || [];
@@ -259,7 +264,14 @@ export function CombatPanel({ character, onUpdate }: Props) {
                   className="bg-white border border-ink-200 rounded-lg p-2.5 text-sm"
                 >
                   <div className="flex flex-wrap items-center gap-2">
-                    <span className="font-semibold">{w.name}</span>
+                    <span className="font-semibold">
+                      {w.name}
+                      {'nameEn' in w && (w as { nameEn?: string }).nameEn && (
+                        <span className="ml-1 text-[10px] font-normal text-ink-400">
+                          ({(w as { nameEn?: string }).nameEn})
+                        </span>
+                      )}
+                    </span>
                     {w.equipped && (
                       <span className="text-[10px] bg-amber-100 text-amber-800 px-1.5 rounded">
                         Equipado
@@ -321,7 +333,12 @@ export function CombatPanel({ character, onUpdate }: Props) {
               >
                 <div className="flex-1 min-w-0">
                   <div className="flex flex-wrap items-center gap-1.5">
-                    <span className="font-semibold">{s.name}</span>
+                    <span className="font-semibold">
+                      {s.name}
+                      {s.nameEn && (
+                        <span className="ml-1 text-[10px] font-normal text-ink-400">({s.nameEn})</span>
+                      )}
+                    </span>
                     {s.homebrew && (
                       <span className="text-[10px] bg-amber-200 text-amber-900 px-1 rounded">HB</span>
                     )}
@@ -386,7 +403,12 @@ export function CombatPanel({ character, onUpdate }: Props) {
               >
                 <div className="flex-1 min-w-0">
                   <div className="flex flex-wrap items-center gap-1.5">
-                    <span className="font-semibold">{s.name}</span>
+                    <span className="font-semibold">
+                      {s.name}
+                      {s.nameEn && (
+                        <span className="ml-1 text-[10px] font-normal text-ink-400">({s.nameEn})</span>
+                      )}
+                    </span>
                     <span className="text-[10px] bg-purple-100 text-purple-800 px-1 rounded">
                       Niv. {s.level}
                     </span>

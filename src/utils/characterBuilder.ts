@@ -541,16 +541,12 @@ export function applyLevelUp(
 /** Simple subclasses by class id for SRD-ish choices */
 /** Subclases PHB 2024 (nombres ES + resumen; desbloqueo típico nivel 3 salvo indicación) */
 
-export const ALIGNMENTS = [
-  'Legal bueno',
-  'Neutral bueno',
-  'Caótico bueno',
-  'Legal neutral',
-  'Neutral',
-  'Caótico neutral',
-  'Legal maligno',
-  'Neutral maligno',
-  'Caótico maligno',
+export { ALIGNMENTS } from './alignments';
+// re-export names for convenience
+export const ALIGNMENT_NAMES = [
+  'Legal bueno', 'Neutral bueno', 'Caótico bueno',
+  'Legal neutral', 'Neutral', 'Caótico neutral',
+  'Legal maligno', 'Neutral maligno', 'Caótico maligno',
   'Sin alineamiento',
 ] as const;
 

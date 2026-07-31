@@ -29,6 +29,7 @@ import {
   X,
 } from 'lucide-react';
 import { LevelUpModal } from './LevelUpModal';
+import { ALIGNMENTS, getAlignmentInfo } from '../../utils/alignments';
 import { CombatPanel } from './CombatPanel';
 import { ActionsPanel } from './ActionsPanel';
 
@@ -404,14 +405,18 @@ export function CharacterSheet({ character: initial, onSave, onBack, onExport }:
                 </div>
               </div>
 
-              {/* Hit Dice */}
-              <div className="bg-parchment-100 border-2 border-ink-800 rounded-lg p-3 shadow-sm flex items-center gap-4">
-                <span className="font-bold text-sm">Ataque / HD:</span>
+              {/* Hit Dice (HD) — no confundir con el bonus de ataque */}
+              <div className="bg-parchment-100 border-2 border-ink-800 rounded-lg p-3 shadow-sm flex flex-wrap items-center gap-3">
+                <div>
+                  <span className="font-bold text-sm block">HD (dados de golpe)</span>
+                  <span className="text-[10px] text-ink-500">Vida al subir de nivel / curar en descansos — no es el bonus de ataque</span>
+                </div>
                 <input
                   type="text"
                   value={character.hitDice}
                   onChange={(e) => update({ hitDice: e.target.value })}
                   className="w-20 px-2 py-1 border border-ink-400 rounded text-center"
+                  title="Ej: 3d10"
                 />
                 <span className="text-sm text-ink-600">
                   Usados:
@@ -578,15 +583,15 @@ export function CharacterSheet({ character: initial, onSave, onBack, onExport }:
                   className="w-full px-3 py-2 border-2 border-ink-300 rounded-lg bg-white"
                 >
                   <option value="">— Elegir —</option>
-                  {[
-                    'Legal bueno', 'Neutral bueno', 'Caótico bueno',
-                    'Legal neutral', 'Neutral', 'Caótico neutral',
-                    'Legal maligno', 'Neutral maligno', 'Caótico maligno',
-                    'Sin alineamiento',
-                  ].map((a) => (
-                    <option key={a} value={a}>{a}</option>
+                  {ALIGNMENTS.map((a) => (
+                    <option key={a.id} value={a.name}>{a.name}</option>
                   ))}
                 </select>
+                {getAlignmentInfo(character.alignment) && (
+                  <p className="text-xs text-ink-600 mt-1.5 bg-parchment-100 border border-ink-200 rounded px-2 py-1.5">
+                    {getAlignmentInfo(character.alignment)!.description}
+                  </p>
+                )}
               </div>
               <div>
                 <label className="block text-sm font-bold mb-1">Rasgos de Personalidad</label>
