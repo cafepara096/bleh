@@ -11,6 +11,7 @@ import type {
 } from '../types/dnd';
 import { SKILLS } from '../types/dnd';
 import { getModifier, getProficiencyBonus, createEmptyCharacter } from './character';
+import { getFullCasterSlots, getPactSlots, getCasterKindFromClassId } from './spellLimits';
 import startingEquipment from '../data/starting-equipment.json';
 import backgroundsData from '../data/backgrounds.json';
 import type { BackgroundData } from '../types/dnd';
@@ -459,6 +460,45 @@ export function applyLevelUp(
 
   const refreshed = refreshFeatureUses(features, classData, newLevel);
 
+  // Spell slots scale with level (5e / 5.5 tables)
+  let spellSlots = { ...character.spellSlots };
+  const kind =
+    classData?.spellcasting?.type ||
+    getCasterKindFromClassId(classData?.id || character.classId) ||
+    (character.spellcastingAbility ? 'full' : 'none');
+
+  if (kind === 'full' || kind === 'half' || kind === 'third') {
+    // half/third casters lag behind; approximate with delayed full table
+    let casterLevel = newLevel;
+    if (kind === 'half') casterLevel = Math.max(0, Math.floor((newLevel - 1) / 2) * 1 + (newLevel >= 2 ? 1 : 0));
+    // simpler half: floor(level/2) from level 2
+    if (kind === 'half') casterLevel = newLevel < 2 ? 0 : Math.floor(newLevel / 2);
+    if (kind === 'third') casterLevel = newLevel < 3 ? 0 : Math.floor(newLevel / 3);
+    if (casterLevel > 0) {
+      const table = getFullCasterSlots(casterLevel);
+      const next: Record<number, { max: number; used: number }> = {};
+      for (const [lvlStr, max] of Object.entries(table)) {
+        const lvl = Number(lvlStr);
+        const prev = spellSlots[lvl];
+        next[lvl] = {
+          max,
+          used: prev ? Math.min(prev.used, max) : 0,
+        };
+      }
+      spellSlots = next;
+    }
+  } else if (kind === 'pact') {
+    const pact = getPactSlots(newLevel);
+    // Warlock: all slots same level
+    const prevUsed = Object.values(spellSlots).reduce((s, v) => s + (v?.used || 0), 0);
+    spellSlots = {
+      [pact.level]: {
+        max: pact.count,
+        used: Math.min(prevUsed, pact.count),
+      },
+    };
+  }
+
   return {
     ...character,
     level: newLevel,
@@ -468,6 +508,7 @@ export function applyLevelUp(
     hitPointCurrent: character.hitPointCurrent + opts.hpGain,
     hitDice: `${newLevel}d${dieNum}`,
     features: refreshed,
+    spellSlots,
     updatedAt: new Date().toISOString(),
   };
 }

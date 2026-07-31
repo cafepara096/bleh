@@ -178,25 +178,37 @@ export function FeaturesPanel({ character, onUpdate }: Props) {
             </div>
             {f.uses && (
               <div className="flex flex-col items-center gap-0.5 shrink-0">
-                <div className="flex gap-0.5">
+                <div className="flex flex-wrap gap-1 justify-center max-w-[72px]">
                   {Array.from({ length: f.uses.max }).map((_, i) => {
                     const used = f.uses!.max - f.uses!.current;
+                    const isUsed = i < used;
                     return (
                       <button
                         key={i}
                         type="button"
-                        onClick={() => (i < used ? restore(f.id) : spend(f.id))}
-                        className={`w-4 h-4 rounded-full border-2 border-ink-700 ${
-                          i < used ? 'bg-ink-700' : 'bg-white'
+                        title={isUsed ? 'Disponible' : 'Usado'}
+                        onClick={() => (isUsed ? restore(f.id) : spend(f.id))}
+                        className={`w-5 h-5 rounded border-2 flex items-center justify-center text-[10px] font-bold ${
+                          isUsed
+                            ? 'bg-ink-800 border-ink-900 text-white'
+                            : 'bg-white border-ink-600 hover:bg-ink-100'
                         }`}
-                      />
+                      >
+                        {isUsed ? '✓' : ''}
+                      </button>
                     );
                   })}
                 </div>
-                <span className="text-[10px] font-mono">
+                <span className="text-[10px] font-mono font-bold">
                   {f.uses.current}/{f.uses.max}
                 </span>
-                <span className="text-[9px] text-ink-500">{f.uses.recovery}</span>
+                <span className="text-[9px] text-ink-500 uppercase">
+                  {f.uses.recovery === 'short'
+                    ? 'Desc. corto'
+                    : f.uses.recovery === 'long'
+                    ? 'Desc. largo'
+                    : f.uses.recovery}
+                </span>
               </div>
             )}
             <button

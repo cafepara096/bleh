@@ -25,6 +25,8 @@ import {
   Zap,
   Star,
   TrendingUp,
+  AlertCircle,
+  X,
 } from 'lucide-react';
 import { LevelUpModal } from './LevelUpModal';
 import { CombatPanel } from './CombatPanel';
@@ -42,6 +44,42 @@ export function CharacterSheet({ character: initial, onSave, onBack, onExport }:
   const [activeTab, setActiveTab] = useState<'main' | 'combat' | 'inventory' | 'features' | 'notes'>('main');
   const [dirty, setDirty] = useState(false);
   const [showLevelUp, setShowLevelUp] = useState(false);
+  const [showPendingChoices, setShowPendingChoices] = useState(false);
+  const [pendingDrafts, setPendingDrafts] = useState<Record<string, string>>({});
+
+  const unresolvedPending = (character.pendingChoices || []).filter((p) => !p.resolution);
+
+  const resolvePending = () => {
+    const remaining = [];
+    let features = [...character.features];
+    const notes: string[] = [];
+    for (const p of character.pendingChoices || []) {
+      if (p.resolution) continue;
+      const answer = (pendingDrafts[p.id] || '').trim();
+      if (answer) {
+        notes.push(`${p.featureName}: ${answer}`);
+        features = features.map((f) =>
+          f.id === p.featureId || f.name === p.featureName
+            ? { ...f, description: `${f.description}\n\nElección: ${answer}` }
+            : f
+        );
+      } else {
+        remaining.push(p);
+      }
+    }
+    update({
+      features,
+      pendingChoices: remaining,
+      notes: notes.length
+        ? [character.notes || '', '— Elecciones pendientes resueltas —', ...notes]
+            .filter(Boolean)
+            .join('\n')
+        : character.notes,
+    });
+    setPendingDrafts({});
+    if (remaining.length === 0) setShowPendingChoices(false);
+  };
+
 
   const update = useCallback((partial: Partial<Character>) => {
     setCharacter((prev) => ({ ...prev, ...partial }));
@@ -146,7 +184,23 @@ export function CharacterSheet({ character: initial, onSave, onBack, onExport }:
           </div>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-wrap">
+
+          {unresolvedPending.length > 0 && (
+            <button
+              type="button"
+              onClick={() => {
+                setPendingDrafts({});
+                setShowPendingChoices(true);
+              }}
+              className="flex items-center gap-1 px-2 py-1 bg-amber-500 hover:bg-amber-400 text-ink-900 rounded-lg text-xs font-bold animate-pulse"
+              title="Hay elecciones de subida de nivel sin resolver"
+            >
+              <AlertCircle className="w-3.5 h-3.5" />
+              Faltan características a seleccionar ({unresolvedPending.length})
+            </button>
+          )}
+
           {dirty && (
             <span className="text-xs text-amber-400 animate-pulse">Sin guardar</span>
           )}
@@ -579,6 +633,69 @@ export function CharacterSheet({ character: initial, onSave, onBack, onExport }:
           </div>
         )}
       </div>
+
+
+      {showPendingChoices && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className="absolute inset-0 bg-black/50" onClick={() => setShowPendingChoices(false)} />
+          <div className="relative bg-parchment-50 border-2 border-ink-900 rounded-xl p-5 w-full max-w-lg max-h-[85vh] overflow-y-auto shadow-2xl space-y-3">
+            <div className="flex items-center justify-between">
+              <h2 className="text-lg font-display font-bold flex items-center gap-2">
+                <AlertCircle className="w-5 h-5 text-amber-600" />
+                Características por seleccionar
+              </h2>
+              <button type="button" onClick={() => setShowPendingChoices(false)} className="p-1 hover:bg-ink-100 rounded">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            <p className="text-sm text-ink-600">
+              Estas opciones se desbloquean al subir de nivel. Elige y anota qué tomas; se guardará en el rasgo correspondiente.
+            </p>
+            {unresolvedPending.map((p) => (
+              <div key={p.id} className="bg-white border-2 border-amber-300 rounded-lg p-3 space-y-2">
+                <div className="flex flex-wrap items-center gap-2">
+                  <strong className="text-sm">{p.featureName}</strong>
+                  <span className="text-[10px] bg-ink-100 px-1.5 rounded">Nivel {p.levelGained}</span>
+                  {p.source && (
+                    <span className="text-[10px] bg-purple-100 text-purple-800 px-1.5 rounded capitalize">{p.source}</span>
+                  )}
+                </div>
+                <p className="text-xs text-ink-700 whitespace-pre-wrap">{p.description}</p>
+                {p.choiceHint && (
+                  <p className="text-xs text-amber-900 bg-amber-50 border border-amber-200 rounded px-2 py-1">
+                    {p.choiceHint}
+                  </p>
+                )}
+                <input
+                  type="text"
+                  placeholder="Tu elección…"
+                  value={pendingDrafts[p.id] || ''}
+                  onChange={(e) =>
+                    setPendingDrafts((prev) => ({ ...prev, [p.id]: e.target.value }))
+                  }
+                  className="w-full px-2 py-1.5 border-2 border-ink-300 rounded-lg text-sm"
+                />
+              </div>
+            ))}
+            <div className="flex gap-2 pt-1">
+              <button
+                type="button"
+                onClick={resolvePending}
+                className="flex-1 py-2 bg-crimson-600 hover:bg-crimson-700 text-white rounded-lg font-medium"
+              >
+                Guardar elecciones
+              </button>
+              <button
+                type="button"
+                onClick={() => setShowPendingChoices(false)}
+                className="px-4 py-2 bg-ink-200 hover:bg-ink-300 rounded-lg"
+              >
+                Más tarde
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {showLevelUp && (
         <LevelUpModal
