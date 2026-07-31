@@ -551,11 +551,12 @@ export function CharacterSheet({ character: initial, onSave, onBack, onExport }:
 
         {activeTab === 'combat' && (
           <div className="space-y-6">
-            <ActionsPanel
+            {/* Arriba: espacios, hechicería/metamagia, conjuros — abajo: acciones (ActionsPanel) */}
+            <CombatPanel
               character={character}
               onUpdate={(partial) => update(partial)}
             />
-            <CombatPanel
+            <ActionsPanel
               character={character}
               onUpdate={(partial) => update(partial)}
             />

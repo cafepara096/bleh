@@ -1,6 +1,8 @@
 import type { Character } from '../../types/dnd';
 import { useClasses } from '../../hooks/useClasses';
 import { Crown } from 'lucide-react';
+import { WILD_MAGIC_SURGE } from '../../data/featureTables';
+import { useState } from 'react';
 
 interface Props {
   character: Character;
@@ -9,6 +11,7 @@ interface Props {
 
 export function SubclassPanel({ character, onUpdate }: Props) {
   const { classes } = useClasses();
+  const [showWildTable, setShowWildTable] = useState(true);
   const classData = classes.find(
     (c) => c.id === character.classId || c.name === character.class
   );
@@ -135,6 +138,70 @@ export function SubclassPanel({ character, onUpdate }: Props) {
           </div>
         )}
       </div>
+
+
+      {(character.subclassId === 'wild-magic' ||
+        (character.subclass || '').toLowerCase().includes('magia salvaje')) && (
+        <div className="bg-pink-50 border-2 border-pink-400 rounded-xl p-3">
+          <div className="flex flex-wrap items-center gap-2 mb-2">
+            <h4 className="font-bold text-sm text-pink-950">Tabla de oleada / sobrecarga de magia salvaje</h4>
+            <button
+              type="button"
+              onClick={() => setShowWildTable((v) => !v)}
+              className="text-[10px] underline text-pink-800"
+            >
+              {showWildTable ? 'Ocultar' : 'Mostrar'}
+            </button>
+            {onUpdate && (
+              <button
+                type="button"
+                onClick={() => {
+                  const entry = WILD_MAGIC_SURGE[Math.floor(Math.random() * WILD_MAGIC_SURGE.length)];
+                  const text = `${entry.roll}: ${entry.effect}`;
+                  const sp = character.sorceryPoints;
+                  let gain = 0;
+                  if (character.level >= 6 && sp) {
+                    gain = 1 + Math.floor(Math.random() * 4);
+                  }
+                  onUpdate({
+                    lastWildSurge: text,
+                    ...(sp
+                      ? {
+                          sorceryPoints: {
+                            max: sp.max,
+                            current: Math.min(sp.max, sp.current + gain),
+                          },
+                        }
+                      : {}),
+                  });
+                }}
+                className="px-2 py-0.5 bg-pink-200 border border-pink-500 rounded text-[10px] font-bold"
+              >
+                Tirar oleada
+              </button>
+            )}
+          </div>
+          {character.lastWildSurge && (
+            <p className="text-xs bg-white border border-pink-200 rounded px-2 py-1 mb-2">
+              <strong>Última oleada:</strong> {character.lastWildSurge}
+            </p>
+          )}
+          {showWildTable && (
+            <div className="max-h-64 overflow-y-auto text-[10px] space-y-0.5 bg-white/80 border border-pink-100 rounded p-2">
+              {WILD_MAGIC_SURGE.map((e) => (
+                <div key={e.roll} className="flex gap-2 border-b border-pink-50 py-0.5">
+                  <span className="font-mono shrink-0 w-12 text-pink-900">{e.roll}</span>
+                  <span className="text-ink-700">{e.effect}</span>
+                </div>
+              ))}
+            </div>
+          )}
+          <p className="text-[10px] text-pink-900/80 mt-2">
+            <strong>Sobrecarga de caos (niv. 18):</strong> gasta 5 SP para forzar una oleada tras un conjuro.
+            <strong> Doblegar suerte (niv. 6):</strong> reacción + 2 SP → ±1d4 a una tirada a 60 ft.
+          </p>
+        </div>
+      )}
 
       {upcoming.length > 0 && (
         <div className="bg-ink-50 border border-ink-200 rounded-xl p-3">
