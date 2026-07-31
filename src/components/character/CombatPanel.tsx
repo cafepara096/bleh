@@ -34,9 +34,12 @@ import {
 interface Props {
   character: Character;
   onUpdate?: (partial: Partial<Character>) => void;
+  sections?: Array<'slots' | 'spells' | 'weapons' | 'features'>;
 }
 
-export function CombatPanel({ character, onUpdate }: Props) {
+export function CombatPanel({ character, onUpdate, sections }: Props) {
+  const show = (s: 'slots' | 'spells' | 'weapons' | 'features') =>
+    !sections || sections.includes(s);
   const { spells: catalog } = useSpells();
   const { items: itemCatalog } = useItems();
   const { classes } = useClasses();
@@ -196,7 +199,7 @@ export function CombatPanel({ character, onUpdate }: Props) {
   return (
     <div className="space-y-4">
       {/* Spell slots */}
-      <div className="bg-purple-50 border-2 border-purple-400 rounded-lg p-3">
+      {show('slots') && <div className="bg-purple-50 border-2 border-purple-400 rounded-lg p-3">
         <h3 className="font-bold text-sm mb-2 flex items-center gap-2">
           <Zap className="w-4 h-4 text-purple-700" /> Espacios de conjuro
         </h3>
@@ -242,16 +245,18 @@ export function CombatPanel({ character, onUpdate }: Props) {
             {spellAbility?.toUpperCase()})
           </div>
         )}
-      </div>
+      </div>}
 
-      {onUpdate && (
+      {(show('slots')) && onUpdate && (
         <div className="space-y-1.5">
           <SorceryPointsPanel character={character} onUpdate={onUpdate} />
           <FeatureTablesPanel character={character} onUpdate={onUpdate} />
         </div>
       )}
 
-      {/* Cantrips */}
+      {/* Cantrips + leveled spells */}
+      {show('spells') && (
+      <>
       <div className="bg-parchment-100 border-2 border-ink-800 rounded-lg p-3">
         <div className="flex items-center justify-between mb-2">
           <h3 className="font-bold text-sm flex items-center gap-2">
@@ -443,9 +448,11 @@ export function CombatPanel({ character, onUpdate }: Props) {
           conocidos con menos frecuencia (reglas de cada clase).
         </p>
       </div>
+      </>
+      )}
 
       {/* Attacks */}
-      <div className="bg-parchment-100 border-2 border-ink-800 rounded-lg p-3">
+      {show('weapons') && <div className="bg-parchment-100 border-2 border-ink-800 rounded-lg p-3">
         <h3 className="font-bold text-sm mb-2 flex items-center gap-2">
           <Swords className="w-4 h-4" /> Ataques y armas
         </h3>
@@ -501,10 +508,10 @@ export function CombatPanel({ character, onUpdate }: Props) {
         <p className="mt-2 text-xs text-ink-500">
           Desarmado: ataque {formatModifier(strMod + prof)} (Fue+comp) · daño 1{formatModifier(strMod)} contundente
         </p>
-      </div>
+      </div>}
 
       {/* Features */}
-      <div className="bg-parchment-100 border-2 border-ink-800 rounded-lg p-3">
+      {show('features') && <div className="bg-parchment-100 border-2 border-ink-800 rounded-lg p-3">
         <h3 className="font-bold text-sm mb-2 flex items-center gap-2">
           <Sparkles className="w-4 h-4" /> Features &amp; Traits
         </h3>
@@ -527,7 +534,7 @@ export function CombatPanel({ character, onUpdate }: Props) {
             ))}
           </div>
         )}
-      </div>
+      </div>}
 
       {/* Actions reminder */}
       <div className="bg-ink-900 text-parchment-100 rounded-lg p-3 text-xs">

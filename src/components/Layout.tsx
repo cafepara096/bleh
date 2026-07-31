@@ -1,5 +1,5 @@
 import { NavLink, Outlet } from 'react-router-dom';
-import { Users, BookOpen, Swords, Scroll, Home, Shield, Crown } from 'lucide-react';
+import { Users, BookOpen, Swords, Scroll, Home, Shield, Crown, FileText, Save } from 'lucide-react';
 
 const navItems = [
   { to: '/', label: 'Inicio', icon: Home },
@@ -9,6 +9,8 @@ const navItems = [
   { to: '/spells', label: 'Conjuros', icon: BookOpen },
   { to: '/items', label: 'Objetos', icon: Scroll },
   { to: '/monsters', label: 'Monstruos', icon: Swords },
+  { to: '/pdfs', label: 'PDFs', icon: FileText },
+  { to: '/campaña', label: 'Campaña', icon: Save },
 ];
 
 export function Layout() {
@@ -28,13 +30,13 @@ export function Layout() {
             </div>
           </div>
 
-          <nav className="hidden sm:flex items-center gap-1">
+          <nav className="hidden lg:flex items-center gap-1">
             {navItems.map(({ to, label, icon: Icon }) => (
               <NavLink
                 key={to}
                 to={to}
                 className={({ isActive }) =>
-                  `flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  `flex items-center gap-1.5 px-2.5 py-2 rounded-lg text-sm font-medium transition-colors ${
                     isActive
                       ? 'bg-crimson-700 text-white'
                       : 'text-parchment-300 hover:bg-ink-800 hover:text-parchment-50'
@@ -48,8 +50,7 @@ export function Layout() {
           </nav>
         </div>
 
-        {/* Mobile nav */}
-        <nav className="sm:hidden flex overflow-x-auto border-t border-ink-800 px-2 py-1 gap-1">
+        <nav className="lg:hidden flex overflow-x-auto border-t border-ink-800 px-2 py-1 gap-1">
           {navItems.map(({ to, label, icon: Icon }) => (
             <NavLink
               key={to}
@@ -74,7 +75,7 @@ export function Layout() {
       </main>
 
       <footer className="bg-ink-900 text-parchment-400 text-center text-xs py-3 border-t border-ink-800">
-        Contenido gestionado vía GitHub · Datos locales en tu navegador · SRD 5.1 compatible
+        Contenido gestionado vía GitHub · Datos locales en tu navegador · SRD / resúmenes 2024
       </footer>
     </div>
   );

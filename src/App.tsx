@@ -6,7 +6,9 @@ import { ItemsPage } from './pages/ItemsPage'
 import { SpellsPage } from './pages/SpellsPage'
 import { RacesPage } from './pages/RacesPage'
 import { ClassesPage } from './pages/ClassesPage'
-import { PlaceholderPage } from './pages/PlaceholderPage'
+import { MonstersPage } from './pages/MonstersPage'
+import { PdfVaultPage } from './pages/PdfVaultPage'
+import { CampaignBackupPage } from './pages/CampaignBackupPage'
 
 export default function App() {
   return (
@@ -18,15 +20,10 @@ export default function App() {
         <Route path="spells" element={<SpellsPage />} />
         <Route path="races" element={<RacesPage />} />
         <Route path="classes" element={<ClassesPage />} />
-        <Route
-          path="monsters"
-          element={
-            <PlaceholderPage
-              title="Monstruos"
-              description="Bestiario completo con estadísticas y acciones editables."
-            />
-          }
-        />
+        <Route path="monsters" element={<MonstersPage />} />
+        <Route path="pdfs" element={<PdfVaultPage />} />
+        <Route path="campaña" element={<CampaignBackupPage />} />
+        <Route path="campaign" element={<CampaignBackupPage />} />
       </Route>
     </Routes>
   )
