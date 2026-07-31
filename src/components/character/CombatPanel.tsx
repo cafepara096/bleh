@@ -8,6 +8,8 @@ import {
   getSpellAttackBonus,
 } from '../../utils/character';
 import { useSpells } from '../../hooks/useSpells';
+import { SorceryPointsPanel } from './SorceryPointsPanel';
+import { FeatureTablesPanel } from './FeatureTablesPanel';
 import { useItems } from '../../hooks/useItems';
 import { resolveInventoryItem } from '../../utils/catalogResolve';
 import { useClasses } from '../../hooks/useClasses';
@@ -241,6 +243,13 @@ export function CombatPanel({ character, onUpdate }: Props) {
           </div>
         )}
       </div>
+
+      {onUpdate && (
+        <div className="space-y-1.5">
+          <SorceryPointsPanel character={character} onUpdate={onUpdate} />
+          <FeatureTablesPanel character={character} onUpdate={onUpdate} />
+        </div>
+      )}
 
       {/* Attacks */}
       <div className="bg-parchment-100 border-2 border-ink-800 rounded-lg p-3">

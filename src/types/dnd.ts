@@ -195,6 +195,12 @@ export interface Character {
   cantripsKnown: string[];
   /** Sorcerer (2024): puntos de hechicería — intercambiables con espacios */
   sorceryPoints?: { current: number; max: number };
+  /** Metamagia conocida (ids de METAMAGIC_OPTIONS / homebrew) */
+  metamagicKnown?: string[];
+  /** Maniobras del Maestro de Batalla conocidas */
+  maneuversKnown?: string[];
+  /** Último resultado de oleada de magia salvaje (texto) */
+  lastWildSurge?: string;
 
   // Equipment
   inventory: InventoryItem[];
