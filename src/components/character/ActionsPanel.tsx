@@ -427,30 +427,6 @@ export function ActionsPanel({ character, onUpdate }: Props) {
         </div>
       </section>
 
-      {/* ===== STANDARD ACTIONS (muted) ===== */}
-      <section className="border border-ink-200 rounded-xl bg-ink-50/40 overflow-hidden opacity-90">
-        <div className="px-3 py-1.5 border-b border-ink-200 flex items-center gap-2 bg-ink-100/50">
-          <List className="w-3.5 h-3.5 text-ink-500" />
-          <h3 className="font-semibold text-xs uppercase tracking-wide text-ink-600">
-            Acciones comunes
-          </h3>
-          <span className="text-[10px] text-ink-400 flex-1">
-            Siempre disponibles (menos prioritarias)
-          </span>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-0 divide-y sm:divide-y-0">
-          {standardActions.map(([title, body]) => (
-            <div
-              key={title}
-              className="px-3 py-1.5 text-xs border-ink-100 sm:border-b sm:odd:border-r"
-            >
-              <span className="font-medium text-ink-700">{title}</span>
-              <span className="text-ink-500"> — {body}</span>
-            </div>
-          ))}
-        </div>
-      </section>
-
       {/* ===== FEATURE BUCKETS ===== */}
       {(['bonus', 'reaction', 'special', 'passive'] as Bucket[]).map((key) => {
         const items = buckets[key];
@@ -484,6 +460,31 @@ export function ActionsPanel({ character, onUpdate }: Props) {
           </section>
         );
       })}
+
+      {/* ===== STANDARD ACTIONS (muted) ===== */}
+      <section className="border border-ink-200 rounded-xl bg-ink-50/40 overflow-hidden opacity-90">
+        <div className="px-3 py-1.5 border-b border-ink-200 flex items-center gap-2 bg-ink-100/50">
+          <List className="w-3.5 h-3.5 text-ink-500" />
+          <h3 className="font-semibold text-xs uppercase tracking-wide text-ink-600">
+            Acciones comunes
+          </h3>
+          <span className="text-[10px] text-ink-400 flex-1">
+            Siempre disponibles (menos prioritarias)
+          </span>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-0 divide-y sm:divide-y-0">
+          {standardActions.map(([title, body]) => (
+            <div
+              key={title}
+              className="px-3 py-1.5 text-xs border-ink-100 sm:border-b sm:odd:border-r"
+            >
+              <span className="font-medium text-ink-700">{title}</span>
+              <span className="text-ink-500"> — {body}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
     </div>
   );
 }

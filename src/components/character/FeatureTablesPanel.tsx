@@ -27,7 +27,7 @@ export function FeatureTablesPanel({ character, onUpdate }: Props) {
   const [manCatalog, setManCatalog] = useState<TableOption[]>(BATTLE_MASTER_MANEUVERS);
   const [metaOpen, setMetaOpen] = useState(false);
   const [manOpen, setManOpen] = useState(false);
-  const [wildOpen, setWildOpen] = useState(false);
+  const [wildOpen, setWildOpen] = useState(true);
   const [pickMeta, setPickMeta] = useState(false);
   const [pickMan, setPickMan] = useState(false);
 
@@ -223,7 +223,7 @@ export function FeatureTablesPanel({ character, onUpdate }: Props) {
       {isWildMagic && (
         <div className="bg-pink-50 border border-pink-300 rounded-lg px-2.5 py-1.5 text-xs">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="font-bold text-pink-900">Oleada de magia salvaje</span>
+            <span className="font-bold text-pink-900">Oleada / sobrecarga de magia salvaje</span>
             <button
               type="button"
               onClick={rollWildSurge}

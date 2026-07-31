@@ -251,65 +251,6 @@ export function CombatPanel({ character, onUpdate }: Props) {
         </div>
       )}
 
-      {/* Attacks */}
-      <div className="bg-parchment-100 border-2 border-ink-800 rounded-lg p-3">
-        <h3 className="font-bold text-sm mb-2 flex items-center gap-2">
-          <Swords className="w-4 h-4" /> Ataques y armas
-        </h3>
-        {weapons.length === 0 ? (
-          <p className="text-sm text-ink-500 italic">Sin armas con daño o equipadas en el inventario.</p>
-        ) : (
-          <div className="space-y-2">
-            {weapons.map((w) => {
-              const text = w.name + (w.description || '') + (w.properties || []).join(' ');
-              const isRanged = /arco|ballesta|dardo|flecha|arrojadiza|jabalina/i.test(text);
-              const isFinesse = /sutil|finesse|estoque|daga|cimitarra|espada corta/i.test(text);
-              const abilityLabel = isRanged ? 'Des' : isFinesse ? 'Fue o Des' : 'Fue';
-              const mod = isRanged || isFinesse ? Math.max(strMod, dexMod) : strMod;
-              const atk = mod + prof;
-              return (
-                <div
-                  key={w.id}
-                  className="bg-white border border-ink-200 rounded-lg p-2.5 text-sm"
-                >
-                  <div className="flex flex-wrap items-center gap-2">
-                    <span className="font-semibold">
-                      {w.name}
-                      {'nameEn' in w && (w as { nameEn?: string }).nameEn && (
-                        <span className="ml-1 text-[10px] font-normal text-ink-400">
-                          ({(w as { nameEn?: string }).nameEn})
-                        </span>
-                      )}
-                    </span>
-                    {w.equipped && (
-                      <span className="text-[10px] bg-amber-100 text-amber-800 px-1.5 rounded">
-                        Equipado
-                      </span>
-                    )}
-                  </div>
-                  <div className="flex flex-wrap gap-2 mt-1.5 text-xs">
-                    <span className="bg-ink-100 px-2 py-0.5 rounded">
-                      Ataque <strong>{formatModifier(atk)}</strong>
-                      <span className="text-ink-500"> = {abilityLabel} {formatModifier(mod)} + comp. {formatModifier(prof)}</span>
-                    </span>
-                    {w.damage && (
-                      <span className="bg-red-50 text-red-900 px-2 py-0.5 rounded">
-                        Daño <strong>{w.damage}{mod !== 0 ? formatModifier(mod) : ''}</strong>{' '}
-                        {w.damageType}
-                        <span className="text-red-700/70"> (dado + {abilityLabel})</span>
-                      </span>
-                    )}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        )}
-        <p className="mt-2 text-xs text-ink-500">
-          Desarmado: ataque {formatModifier(strMod + prof)} (Fue+comp) · daño 1{formatModifier(strMod)} contundente
-        </p>
-      </div>
-
       {/* Cantrips */}
       <div className="bg-parchment-100 border-2 border-ink-800 rounded-lg p-3">
         <div className="flex items-center justify-between mb-2">
@@ -500,6 +441,65 @@ export function CombatPanel({ character, onUpdate }: Props) {
           Según tu clase puedes conocer o preparar un número limitado de conjuros. Al descansar largo,
           clases como clérigo/druida/mago suelen cambiar preparados; bardos/hechiceros/brujos cambian
           conocidos con menos frecuencia (reglas de cada clase).
+        </p>
+      </div>
+
+      {/* Attacks */}
+      <div className="bg-parchment-100 border-2 border-ink-800 rounded-lg p-3">
+        <h3 className="font-bold text-sm mb-2 flex items-center gap-2">
+          <Swords className="w-4 h-4" /> Ataques y armas
+        </h3>
+        {weapons.length === 0 ? (
+          <p className="text-sm text-ink-500 italic">Sin armas con daño o equipadas en el inventario.</p>
+        ) : (
+          <div className="space-y-2">
+            {weapons.map((w) => {
+              const text = w.name + (w.description || '') + (w.properties || []).join(' ');
+              const isRanged = /arco|ballesta|dardo|flecha|arrojadiza|jabalina/i.test(text);
+              const isFinesse = /sutil|finesse|estoque|daga|cimitarra|espada corta/i.test(text);
+              const abilityLabel = isRanged ? 'Des' : isFinesse ? 'Fue o Des' : 'Fue';
+              const mod = isRanged || isFinesse ? Math.max(strMod, dexMod) : strMod;
+              const atk = mod + prof;
+              return (
+                <div
+                  key={w.id}
+                  className="bg-white border border-ink-200 rounded-lg p-2.5 text-sm"
+                >
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="font-semibold">
+                      {w.name}
+                      {'nameEn' in w && (w as { nameEn?: string }).nameEn && (
+                        <span className="ml-1 text-[10px] font-normal text-ink-400">
+                          ({(w as { nameEn?: string }).nameEn})
+                        </span>
+                      )}
+                    </span>
+                    {w.equipped && (
+                      <span className="text-[10px] bg-amber-100 text-amber-800 px-1.5 rounded">
+                        Equipado
+                      </span>
+                    )}
+                  </div>
+                  <div className="flex flex-wrap gap-2 mt-1.5 text-xs">
+                    <span className="bg-ink-100 px-2 py-0.5 rounded">
+                      Ataque <strong>{formatModifier(atk)}</strong>
+                      <span className="text-ink-500"> = {abilityLabel} {formatModifier(mod)} + comp. {formatModifier(prof)}</span>
+                    </span>
+                    {w.damage && (
+                      <span className="bg-red-50 text-red-900 px-2 py-0.5 rounded">
+                        Daño <strong>{w.damage}{mod !== 0 ? formatModifier(mod) : ''}</strong>{' '}
+                        {w.damageType}
+                        <span className="text-red-700/70"> (dado + {abilityLabel})</span>
+                      </span>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+        <p className="mt-2 text-xs text-ink-500">
+          Desarmado: ataque {formatModifier(strMod + prof)} (Fue+comp) · daño 1{formatModifier(strMod)} contundente
         </p>
       </div>
 

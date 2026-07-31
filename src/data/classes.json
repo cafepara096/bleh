@@ -16,39 +16,107 @@
       {
         "id": "barb-rage",
         "name": "Furia",
-        "description": "Entras en furia: ventaja Fue, dano extra, resistencia.",
         "level": 1,
-        "source": "class",
+        "description": "En combate entras en Furia (bonus action). Resistencia a físico, bonus al daño cuerpo a cuerpo, ventaja en Fue. Usos limitados; se recuperan en descanso largo. Más usos al subir de nivel.",
+        "actionType": "bonus",
         "uses": {
           "max": 2,
           "recovery": "long",
           "perLevels": 3,
           "gainAmount": 1
-        },
-        "actionType": "bonus"
+        }
       },
       {
-        "id": "barb-defense",
+        "id": "barb-unarmored",
         "name": "Defensa sin armadura",
-        "description": "CA = 10+Des+Con sin armadura.",
         "level": 1,
-        "source": "class"
+        "description": "Sin armadura, CA = 10 + Des + Con (puedes usar escudo).",
+        "actionType": "passive"
       },
       {
-        "id": "barb-path",
+        "id": "barb-weapon-mastery",
+        "name": "Maestría con armas",
+        "level": 1,
+        "description": "Puedes usar propiedades de maestría de armas (2024) con armas elegidas.",
+        "actionType": "passive"
+      },
+      {
+        "id": "barb-reckless",
+        "name": "Ataque temerario",
+        "level": 2,
+        "description": "En tu turno, ventaja en ataques cuerpo a cuerpo de Fuerza; los ataques contra ti tienen ventaja hasta tu próximo turno.",
+        "actionType": "passive"
+      },
+      {
+        "id": "barb-sense",
+        "name": "Sentido del peligro",
+        "level": 2,
+        "description": "Ventaja en salvaciones de Destreza si no estás incapacitado.",
+        "actionType": "passive"
+      },
+      {
+        "id": "barb-subclass",
         "name": "Camino primigenio",
-        "description": "Eliges subclase.",
         "level": 3,
-        "source": "class",
-        "requiresChoice": true,
-        "choiceHint": "Elige tu subclase / camino / dominio / tradición."
+        "description": "Elige subclase (Senda). Ganas rasgos de subclase a 3, 6, 10 y 14.",
+        "actionType": "passive",
+        "requiresChoice": true
       },
       {
         "id": "barb-extra",
         "name": "Ataque extra",
-        "description": "Atacas dos veces.",
         "level": 5,
-        "source": "class"
+        "description": "Cuando tomas la acción Atacar, puedes atacar dos veces.",
+        "actionType": "passive"
+      },
+      {
+        "id": "barb-fast",
+        "name": "Movimiento rápido",
+        "level": 5,
+        "description": "+10 ft de velocidad si no llevas armadura pesada.",
+        "actionType": "passive"
+      },
+      {
+        "id": "barb-feral",
+        "name": "Instinto feral",
+        "level": 7,
+        "description": "Ventaja en iniciativa; no puedes ser sorprendido si no estás incapacitado.",
+        "actionType": "passive"
+      },
+      {
+        "id": "barb-crit",
+        "name": "Crítico brutal",
+        "level": 9,
+        "description": "Extra dado de arma en críticos cuerpo a cuerpo (mejora a niveles superiores).",
+        "actionType": "passive"
+      },
+      {
+        "id": "barb-relentless",
+        "name": "Furia implacable",
+        "level": 11,
+        "description": "Si caes a 0 PG en Furia y no mueres de golpe, puedes hacer salvación de Con para quedar a 1 PG.",
+        "actionType": "passive"
+      },
+      {
+        "id": "barb-persistent",
+        "name": "Furia persistente",
+        "level": 15,
+        "description": "Tu Furia solo termina si estás inconsciente o la terminas voluntariamente.",
+        "actionType": "passive"
+      },
+      {
+        "id": "barb-might",
+        "name": "Poder indomable",
+        "level": 18,
+        "description": "Si una prueba de Fuerza es menor que tu Fuerza, puedes usar tu puntuación de Fuerza en su lugar.",
+        "actionType": "passive"
+      },
+      {
+        "id": "barb-primal",
+        "name": "Campeón primigenio",
+        "level": 20,
+        "description": "Fue y Con +4 (máx. 24).",
+        "actionType": "passive"
       }
     ]
   },
@@ -74,33 +142,97 @@
     },
     "features": [
       {
-        "id": "bard-cast",
+        "id": "bard-spell",
         "name": "Lanzamiento de conjuros",
-        "description": "Carisma. 2 trucos, 4 conjuros nivel 1.",
         "level": 1,
-        "source": "class"
+        "description": "Lanzas conjuros de bardo (Carisma). Trucos y conjuros conocidos según nivel. Rituales si tienen la etiqueta.",
+        "actionType": "passive"
       },
       {
         "id": "bard-insp",
-        "name": "Inspiracion bardica",
-        "description": "Das d6 de inspiracion a un aliado.",
+        "name": "Inspiración bárdica",
         "level": 1,
-        "source": "class",
-        "uses": {
-          "max": 1,
-          "recovery": "long"
-        },
+        "description": "Acción adicional: das un d6 de inspiración a un aliado (1 uso por criatura hasta descanso). Usos = mod. Carisma (mín. 1). El dado mejora a niveles altos.",
         "actionType": "bonus",
-        "requiresChoice": false
+        "uses": {
+          "max": 3,
+          "recovery": "long"
+        }
       },
       {
-        "id": "bard-college",
-        "name": "Colegio bardico",
-        "description": "Eliges subclase.",
+        "id": "bard-mastery",
+        "name": "Maestría con armas",
+        "level": 1,
+        "description": "Maestría con armas simples o las de tu equipo inicial (2024).",
+        "actionType": "passive"
+      },
+      {
+        "id": "bard-jack",
+        "name": "Polímata (Jack of All Trades)",
+        "level": 2,
+        "description": "Añades la mitad de tu bonificación de competencia (redondeada abajo) a pruebas de característica en las que no seas competente.",
+        "actionType": "passive"
+      },
+      {
+        "id": "bard-rest",
+        "name": "Canción de descanso",
+        "level": 2,
+        "description": "En un descanso corto, aliados que oigan tu música recuperan dados de golpe extra.",
+        "actionType": "passive"
+      },
+      {
+        "id": "bard-sub",
+        "name": "Colegio bárdico",
         "level": 3,
-        "source": "class",
+        "description": "Elige subclase. Rasgos a 3, 6 y 14 (según colegio).",
+        "actionType": "passive",
+        "requiresChoice": true
+      },
+      {
+        "id": "bard-expertise",
+        "name": "Pericia",
+        "level": 3,
+        "description": "Elige 2 habilidades competentes: duplicas la competencia.",
+        "actionType": "passive",
         "requiresChoice": true,
-        "choiceHint": "Elige tu subclase / camino / dominio / tradición."
+        "choiceHint": "2 habilidades para pericia"
+      },
+      {
+        "id": "bard-extra",
+        "name": "Ataque extra",
+        "level": 6,
+        "description": "Algunos colegios (Valor/Danza) otorgan ataque extra; el Saber obtiene Secretos mágicos.",
+        "actionType": "passive"
+      },
+      {
+        "id": "bard-font",
+        "name": "Fuente de inspiración",
+        "level": 5,
+        "description": "Recuperas usos de Inspiración bárdica en descanso corto o largo.",
+        "actionType": "passive"
+      },
+      {
+        "id": "bard-counter",
+        "name": "Contraencanto",
+        "level": 7,
+        "description": "Reacción: gastas un uso de inspiración para intentar interrumpir un efecto de miedo o hechizo sobre un aliado.",
+        "actionType": "reaction"
+      },
+      {
+        "id": "bard-expertise2",
+        "name": "Pericia mejorada",
+        "level": 10,
+        "description": "Elige 2 habilidades más para pericia. Secretos mágicos adicionales según nivel.",
+        "actionType": "passive",
+        "requiresChoice": true
+      },
+      {
+        "id": "bard-secrets",
+        "name": "Secretos mágicos",
+        "level": 10,
+        "description": "Aprendes conjuros de cualquier clase (cantidad según nivel 2024).",
+        "actionType": "passive",
+        "requiresChoice": true
       }
     ]
   },
@@ -127,27 +259,69 @@
     },
     "features": [
       {
-        "id": "cleric-cast",
+        "id": "cler-spell",
         "name": "Lanzamiento de conjuros",
-        "description": "Sabiduria. Preparas conjuros.",
         "level": 1,
-        "source": "class"
+        "description": "Conjuros de clérigo (Sabiduría). Preparas conjuros de tu lista cada día. Trucos según nivel.",
+        "actionType": "passive"
       },
       {
-        "id": "cleric-domain",
-        "name": "Dominio divino",
-        "description": "Eliges subclase. (desbloqueo típico nivel 3 en PHB 2024).",
-        "level": 3,
-        "source": "class",
-        "requiresChoice": true,
-        "choiceHint": "Elige tu subclase / camino / dominio / tradición."
+        "id": "cler-divine",
+        "name": "Orden divina / Thaumaturgia",
+        "level": 1,
+        "description": "Rasgos de fe iniciales y competencia con armas/armaduras de clérigo (2024).",
+        "actionType": "passive"
       },
       {
-        "id": "cleric-channel",
+        "id": "cler-channel",
         "name": "Canalizar divinidad",
-        "description": "Energia divina.",
         "level": 2,
-        "source": "class"
+        "description": "Canalizas poder divino (usos limitados; se recuperan en descanso corto o largo). Incluye Expulsar no muertos u opciones de dominio.",
+        "actionType": "action",
+        "uses": {
+          "max": 1,
+          "recovery": "short"
+        }
+      },
+      {
+        "id": "cler-sub",
+        "name": "Dominio divino",
+        "level": 3,
+        "description": "Elige dominio (subclase). Conjuros de dominio siempre preparados y rasgos a 3, 6, 17…",
+        "actionType": "passive",
+        "requiresChoice": true
+      },
+      {
+        "id": "cler-improve-channel",
+        "name": "Canalizar divinidad mejorado",
+        "level": 6,
+        "description": "Más usos de Canalizar divinidad.",
+        "actionType": "passive"
+      },
+      {
+        "id": "cler-blessed",
+        "name": "Golpes bendecidos",
+        "level": 7,
+        "description": "Tus ataques de arma infligen daño radiante extra (escala con nivel).",
+        "actionType": "passive"
+      },
+      {
+        "id": "cler-divine-int",
+        "name": "Intervención divina",
+        "level": 10,
+        "description": "Suplicas a tu dios (porcentaje de éxito = nivel de clérigo); se recupera en descanso largo.",
+        "actionType": "action",
+        "uses": {
+          "max": 1,
+          "recovery": "long"
+        }
+      },
+      {
+        "id": "cler-supreme",
+        "name": "Intervención suprema",
+        "level": 20,
+        "description": "La Intervención divina se perfecciona (éxito automático 1/largo según reglas 2024).",
+        "actionType": "passive"
       }
     ]
   },
@@ -170,27 +344,58 @@
     },
     "features": [
       {
-        "id": "druid-cast",
+        "id": "dru-spell",
         "name": "Lanzamiento de conjuros",
-        "description": "Sabiduria.",
         "level": 1,
-        "source": "class"
+        "description": "Conjuros de druida (Sabiduría). Preparas conjuros; puedes usar un foco druídico.",
+        "actionType": "passive"
       },
       {
-        "id": "druid-wild",
+        "id": "dru-order",
+        "name": "Orden de los druidas",
+        "level": 1,
+        "description": "Idioma druídico / rasgos de orden (2024).",
+        "actionType": "passive"
+      },
+      {
+        "id": "dru-wild",
         "name": "Forma salvaje",
-        "description": "Forma de bestia.",
         "level": 2,
-        "source": "class"
+        "description": "Acción (o bonus según 2024) para transformarte en bestia. Usos limitados; se recuperan en descanso corto o largo. Mejoras al subir de nivel.",
+        "actionType": "bonus",
+        "uses": {
+          "max": 2,
+          "recovery": "short"
+        }
       },
       {
-        "id": "druid-circle",
-        "name": "Circulo druidico",
-        "description": "Eliges subclase. (desbloqueo típico nivel 3 en PHB 2024).",
+        "id": "dru-sub",
+        "name": "Círculo druídico",
         "level": 3,
-        "source": "class",
-        "requiresChoice": true,
-        "choiceHint": "Elige tu subclase / camino / dominio / tradición."
+        "description": "Elige círculo (subclase). Rasgos a 3, 6, 10, 14…",
+        "actionType": "passive",
+        "requiresChoice": true
+      },
+      {
+        "id": "dru-wild-imp",
+        "name": "Forma salvaje mejorada",
+        "level": 6,
+        "description": "Mejores formas o beneficios según círculo.",
+        "actionType": "passive"
+      },
+      {
+        "id": "dru-elemental",
+        "name": "Forma elemental / mejoras",
+        "level": 10,
+        "description": "Opciones potentes de forma o resistencia natural.",
+        "actionType": "passive"
+      },
+      {
+        "id": "dru-arch",
+        "name": "Archidruida",
+        "level": 20,
+        "description": "Forma salvaje ilimitada y rejuvenecimiento (2024).",
+        "actionType": "passive"
       }
     ]
   },
@@ -209,53 +414,82 @@
     "skillChoices": "Elige 2 habilidades",
     "features": [
       {
-        "id": "fighter-style",
+        "id": "fig-style",
         "name": "Estilo de combate",
-        "description": "Adoptas un estilo.",
         "level": 1,
-        "source": "class",
+        "description": "Elige un estilo (Arquería, Defensa, Duelista, Protección, etc.).",
+        "actionType": "passive",
         "requiresChoice": true,
-        "choiceHint": "Elige un estilo de combate (Arquería, Defensa, Duelo, etc.)."
+        "choiceHint": "Estilo de combate"
       },
       {
-        "id": "fighter-second",
+        "id": "fig-second",
         "name": "Segundo aliento",
-        "description": "En tu turno, puedes usar una acción adicional para recuperar puntos de golpe iguales a 1d10 + tu nivel de guerrero. Una vez por descanso corto o largo.",
         "level": 1,
-        "source": "class",
+        "description": "Acción adicional: recuperas 1d10 + nivel de guerrero PG. 1 uso por descanso corto o largo.",
+        "actionType": "bonus",
         "uses": {
           "max": 1,
           "recovery": "short"
-        },
-        "actionType": "bonus"
+        }
       },
       {
-        "id": "fighter-surge",
-        "name": "Oleada de accion",
-        "description": "Accion adicional.",
+        "id": "fig-mastery",
+        "name": "Maestría con armas",
+        "level": 1,
+        "description": "Usas maestrías de armas (2024) con armas competentes.",
+        "actionType": "passive"
+      },
+      {
+        "id": "fig-action-surge",
+        "name": "Oleada de acción",
         "level": 2,
-        "source": "class",
+        "description": "En tu turno, una acción adicional. 1 uso (luego más) por descanso corto o largo.",
+        "actionType": "special",
         "uses": {
           "max": 1,
           "recovery": "short"
-        },
-        "actionType": "special"
+        }
       },
       {
-        "id": "fighter-archetype",
+        "id": "fig-sub",
         "name": "Arquetipo marcial",
-        "description": "Eliges subclase.",
         "level": 3,
-        "source": "class",
-        "requiresChoice": true,
-        "choiceHint": "Elige tu subclase / camino / dominio / tradición."
+        "description": "Elige subclase. Rasgos a 3, 7, 10, 15, 18…",
+        "actionType": "passive",
+        "requiresChoice": true
       },
       {
-        "id": "fighter-extra",
+        "id": "fig-extra",
         "name": "Ataque extra",
-        "description": "Atacas dos veces.",
         "level": 5,
-        "source": "class"
+        "description": "Dos ataques con la acción Atacar. Más ataques a niveles 11 y 20.",
+        "actionType": "passive"
+      },
+      {
+        "id": "fig-indom",
+        "name": "Indomable",
+        "level": 9,
+        "description": "Reroleas una salvación fallida. Usos limitados por descanso largo.",
+        "actionType": "special",
+        "uses": {
+          "max": 1,
+          "recovery": "long"
+        }
+      },
+      {
+        "id": "fig-extra2",
+        "name": "Ataque extra (2)",
+        "level": 11,
+        "description": "Tres ataques con la acción Atacar.",
+        "actionType": "passive"
+      },
+      {
+        "id": "fig-extra3",
+        "name": "Ataque extra (3)",
+        "level": 20,
+        "description": "Cuatro ataques con la acción Atacar.",
+        "actionType": "passive"
       }
     ]
   },
@@ -274,34 +508,75 @@
     "skillChoices": "Elige 2 habilidades",
     "features": [
       {
-        "id": "monk-defense",
+        "id": "mnk-unarmored",
         "name": "Defensa sin armadura",
-        "description": "CA=10+Des+Sab.",
         "level": 1,
-        "source": "class"
+        "description": "Sin armadura ni escudo, CA = 10 + Des + Sab.",
+        "actionType": "passive"
       },
       {
-        "id": "monk-arts",
+        "id": "mnk-martial",
         "name": "Artes marciales",
-        "description": "Des en ataques sin arma.",
         "level": 1,
-        "source": "class"
+        "description": "Dado de artes marciales en ataques desarmados/armas de monje; acción adicional para golpe desarmado.",
+        "actionType": "bonus"
       },
       {
-        "id": "monk-ki",
+        "id": "mnk-focus",
         "name": "Puntos de enfoque (Focus)",
-        "description": "Recurso monástico (antes Ki). Se gastan en técnicas; se recuperan en descanso corto. (2024)",
         "level": 2,
-        "source": "class"
+        "description": "Puntos de enfoque = nivel de monje. Se gastan en Técnicas (Ráfaga, Defensa paciente, Paso del viento…). Se recuperan en descanso corto o largo.",
+        "actionType": "special"
       },
       {
-        "id": "monk-tradition",
-        "name": "Tradicion monastica",
-        "description": "Eliges subclase.",
+        "id": "mnk-sub",
+        "name": "Tradición monástica",
         "level": 3,
-        "source": "class",
-        "requiresChoice": true,
-        "choiceHint": "Elige tu subclase / camino / dominio / tradición."
+        "description": "Elige subclase. Rasgos a 3, 6, 11, 17.",
+        "actionType": "passive",
+        "requiresChoice": true
+      },
+      {
+        "id": "mnk-extra",
+        "name": "Ataque extra",
+        "level": 5,
+        "description": "Dos ataques con la acción Atacar.",
+        "actionType": "passive"
+      },
+      {
+        "id": "mnk-stunning",
+        "name": "Golpe aturdidor",
+        "level": 5,
+        "description": "Gasta enfoque para forzar salvación de Con o aturdir.",
+        "actionType": "passive"
+      },
+      {
+        "id": "mnk-evasion",
+        "name": "Evasión",
+        "level": 7,
+        "description": "Salvaciones de Des: daño 0 o mitad.",
+        "actionType": "passive"
+      },
+      {
+        "id": "mnk-stillness",
+        "name": "Quietud de la mente",
+        "level": 7,
+        "description": "Acción para terminar el efecto de hechizado sobre ti.",
+        "actionType": "action"
+      },
+      {
+        "id": "mnk-diamond",
+        "name": "Alma de diamante",
+        "level": 14,
+        "description": "Competencia en todas las salvaciones; gasta enfoque para rerolear.",
+        "actionType": "passive"
+      },
+      {
+        "id": "mnk-empty",
+        "name": "Cuerpo vacío",
+        "level": 18,
+        "description": "Invisibilidad o resistencia a todo daño gastando enfoque.",
+        "actionType": "action"
       }
     ]
   },
@@ -326,32 +601,74 @@
       {
         "id": "pal-sense",
         "name": "Sentido divino",
-        "description": "Detectas celestiales, infernales, no muertos.",
         "level": 1,
-        "source": "class"
+        "description": "Detectas celestiales, fiends y no muertos cercanos (usos = 1 + mod. Carisma).",
+        "actionType": "action"
       },
       {
         "id": "pal-hands",
-        "name": "Imposicion de manos",
-        "description": "Curacion = nivel x 5.",
+        "name": "Imposición de manos",
         "level": 1,
-        "source": "class"
+        "description": "Reserva de PG = nivel × 5 para curar o limpiar enfermedades/venenos.",
+        "actionType": "action"
+      },
+      {
+        "id": "pal-spell",
+        "name": "Lanzamiento de conjuros",
+        "level": 2,
+        "description": "Conjuros de paladín (Carisma). Preparación diaria. Espacios de medio lanzador.",
+        "actionType": "passive"
       },
       {
         "id": "pal-smite",
         "name": "Castigo divino",
-        "description": "Dano radiante extra al impactar.",
         "level": 2,
-        "source": "class"
+        "description": "Al golpear con arma, gastas un espacio para daño radiante extra.",
+        "actionType": "passive"
       },
       {
-        "id": "pal-oath",
+        "id": "pal-style",
+        "name": "Estilo de combate",
+        "level": 2,
+        "description": "Elige estilo de combate.",
+        "actionType": "passive",
+        "requiresChoice": true
+      },
+      {
+        "id": "pal-sub",
         "name": "Juramento sagrado",
-        "description": "Eliges subclase.",
         "level": 3,
-        "source": "class",
-        "requiresChoice": true,
-        "choiceHint": "Elige tu subclase / camino / dominio / tradición."
+        "description": "Elige juramento (subclase). Canalizar divinidad y rasgos de juramento.",
+        "actionType": "passive",
+        "requiresChoice": true
+      },
+      {
+        "id": "pal-extra",
+        "name": "Ataque extra",
+        "level": 5,
+        "description": "Dos ataques con la acción Atacar.",
+        "actionType": "passive"
+      },
+      {
+        "id": "pal-aura",
+        "name": "Aura de protección",
+        "level": 6,
+        "description": "Tú y aliados en el aura añaden tu mod. Carisma a las salvaciones.",
+        "actionType": "passive"
+      },
+      {
+        "id": "pal-aura2",
+        "name": "Aura de valor / mejora",
+        "level": 10,
+        "description": "Inmunidad al miedo en el aura (u otra mejora de aura).",
+        "actionType": "passive"
+      },
+      {
+        "id": "pal-radiant",
+        "name": "Toque radiante / mejoras",
+        "level": 11,
+        "description": "Daño radiante extra en ataques de arma.",
+        "actionType": "passive"
       }
     ]
   },
@@ -374,27 +691,69 @@
     },
     "features": [
       {
-        "id": "ranger-enemy",
-        "name": "Enemigo predilecto",
-        "description": "Ventaja vs tu enemigo.",
+        "id": "ran-spell",
+        "name": "Lanzamiento de conjuros",
         "level": 1,
-        "source": "class"
+        "description": "Conjuros de explorador (Sabiduría). Medio lanzador; conjuros conocidos.",
+        "actionType": "passive"
       },
       {
-        "id": "ranger-explorer",
-        "name": "Explorador natural",
-        "description": "Terreno predilecto.",
+        "id": "ran-favored",
+        "name": "Enemigo predilecto / Experto del explorador",
         "level": 1,
-        "source": "class"
+        "description": "Ventajas contra tipos de criatura o exploración (2024: rasgos de cazador iniciales).",
+        "actionType": "passive"
       },
       {
-        "id": "ranger-archetype",
-        "name": "Arquetipo",
-        "description": "Eliges subclase.",
+        "id": "ran-weapon",
+        "name": "Maestría con armas",
+        "level": 1,
+        "description": "Maestría con armas de explorador (2024).",
+        "actionType": "passive"
+      },
+      {
+        "id": "ran-depletion",
+        "name": "Explorador de terreno / Deft Explorer",
+        "level": 2,
+        "description": "Expertise, movimiento o idiomas según implementación 2024.",
+        "actionType": "passive"
+      },
+      {
+        "id": "ran-style",
+        "name": "Estilo de combate",
+        "level": 2,
+        "description": "Elige estilo de combate.",
+        "actionType": "passive",
+        "requiresChoice": true
+      },
+      {
+        "id": "ran-sub",
+        "name": "Arquetipo de explorador",
         "level": 3,
-        "source": "class",
-        "requiresChoice": true,
-        "choiceHint": "Elige tu subclase / camino / dominio / tradición."
+        "description": "Elige subclase. Rasgos a 3, 7, 11, 15.",
+        "actionType": "passive",
+        "requiresChoice": true
+      },
+      {
+        "id": "ran-extra",
+        "name": "Ataque extra",
+        "level": 5,
+        "description": "Dos ataques con la acción Atacar.",
+        "actionType": "passive"
+      },
+      {
+        "id": "ran-land",
+        "name": "Paso sin rastro / movilidad",
+        "level": 6,
+        "description": "Mejoras de movimiento y sigilo en el campo.",
+        "actionType": "passive"
+      },
+      {
+        "id": "ran-veil",
+        "name": "Velo de la naturaleza / mejoras",
+        "level": 10,
+        "description": "Camuflaje y utilidad de exploración avanzada.",
+        "actionType": "passive"
       }
     ]
   },
@@ -414,36 +773,110 @@
     "skillChoices": "Elige 4 habilidades",
     "features": [
       {
-        "id": "rogue-expertise",
+        "id": "rog-expertise",
         "name": "Pericia",
-        "description": "Duplicas competencia en 2 habilidades.",
         "level": 1,
-        "source": "class",
+        "description": "Elige 2 competencias (habilidades o herramientas): duplicas la competencia.",
+        "actionType": "passive",
         "requiresChoice": true,
-        "choiceHint": "Elige habilidades para Pericia (duplicar competencia)."
+        "choiceHint": "2 pericias"
       },
       {
-        "id": "rogue-sneak",
+        "id": "rog-sneak",
         "name": "Ataque furtivo",
-        "description": "Dano extra con ventaja o aliado cerca.",
         "level": 1,
-        "source": "class"
+        "description": "1d6 extra (escala) con arma sutil o a distancia si tienes ventaja o un aliado adyacente al objetivo.",
+        "actionType": "passive"
       },
       {
-        "id": "rogue-cunning",
-        "name": "Accion astuta",
-        "description": "Dash, Disengage o Hide como accion adicional.",
+        "id": "rog-thieves",
+        "name": "Lenguaje de ladrón / herramientas",
+        "level": 1,
+        "description": "Herramientas de ladrón y jerga.",
+        "actionType": "passive"
+      },
+      {
+        "id": "rog-weapon",
+        "name": "Maestría con armas",
+        "level": 1,
+        "description": "Maestría con armas de pícaro (2024).",
+        "actionType": "passive"
+      },
+      {
+        "id": "rog-cunning",
+        "name": "Acción astuta",
         "level": 2,
-        "source": "class"
+        "description": "Acción adicional: Dash, Desengancharse o Esconderse.",
+        "actionType": "bonus"
       },
       {
-        "id": "rogue-archetype",
-        "name": "Arquetipo",
-        "description": "Eliges subclase.",
+        "id": "rog-sub",
+        "name": "Arquetipo de pícaro",
         "level": 3,
-        "source": "class",
-        "requiresChoice": true,
-        "choiceHint": "Elige tu subclase / camino / dominio / tradición."
+        "description": "Elige subclase. Rasgos a 3, 9, 13, 17.",
+        "actionType": "passive",
+        "requiresChoice": true
+      },
+      {
+        "id": "rog-uncanny",
+        "name": "Esquiva asombrosa",
+        "level": 5,
+        "description": "Reacción: halves damage de un ataque que puedas ver.",
+        "actionType": "reaction"
+      },
+      {
+        "id": "rog-expertise2",
+        "name": "Pericia (2)",
+        "level": 6,
+        "description": "2 competencias más con pericia.",
+        "actionType": "passive",
+        "requiresChoice": true
+      },
+      {
+        "id": "rog-evasion",
+        "name": "Evasión",
+        "level": 7,
+        "description": "Salvaciones de Des: daño 0 o mitad.",
+        "actionType": "passive"
+      },
+      {
+        "id": "rog-reliable",
+        "name": "Talento fiable",
+        "level": 11,
+        "description": "En pruebas competentes, trata d20 de 1–9 como 10.",
+        "actionType": "passive"
+      },
+      {
+        "id": "rog-blindsense",
+        "name": "Sentido ciego",
+        "level": 14,
+        "description": "Notas criaturas ocultas o invisibles a 10 ft.",
+        "actionType": "passive"
+      },
+      {
+        "id": "rog-slippery",
+        "name": "Mente escurridiza",
+        "level": 15,
+        "description": "Competencia en salvaciones de Carisma/Sabiduría (según 2024).",
+        "actionType": "passive"
+      },
+      {
+        "id": "rog-elusive",
+        "name": "Elusivo",
+        "level": 18,
+        "description": "Los ataques no tienen ventaja contra ti si no estás incapacitado.",
+        "actionType": "passive"
+      },
+      {
+        "id": "rog-stroke",
+        "name": "Golpe de suerte",
+        "level": 20,
+        "description": "Convierte un fallo en golpe o una prueba fallida en 20 (1/corto).",
+        "actionType": "special",
+        "uses": {
+          "max": 1,
+          "recovery": "short"
+        }
       }
     ]
   },
@@ -469,36 +902,62 @@
     },
     "features": [
       {
-        "id": "sorc-cast",
+        "id": "sor-spell",
         "name": "Lanzamiento de conjuros",
-        "description": "Carisma.",
         "level": 1,
-        "source": "class"
+        "description": "Conjuros de hechicero (Carisma). Conjuros conocidos (no preparados). Más trucos que otros lanzadores.",
+        "actionType": "passive"
       },
       {
-        "id": "sorc-points",
+        "id": "sor-innate",
+        "name": "Magia innata",
+        "level": 1,
+        "description": "Rasgos innatos de hechicero (2024).",
+        "actionType": "passive"
+      },
+      {
+        "id": "sor-font",
         "name": "Fuente de magia",
-        "description": "Ganas puntos de hechicería iguales a tu nivel de hechicero. Puedes convertir espacios en SP y SP en espacios (niv. 1–5).",
         "level": 2,
-        "source": "class"
+        "description": "Puntos de hechicería = nivel. Convierte espacios ↔ SP (niv. 1–5).",
+        "actionType": "special"
       },
       {
-        "id": "sorc-metamagic",
+        "id": "sor-meta",
         "name": "Metamagia",
-        "description": "Aprendes opciones de metamagia. Gastas puntos de hechicería al aplicarlas. A nivel 2 conoces 2; aprendes más al subir de nivel (2024).",
         "level": 2,
-        "source": "class",
+        "description": "Aprendes opciones de metamagia; gastas SP al aplicarlas. Más opciones al subir de nivel.",
         "actionType": "special",
         "optionsChoose": 2
       },
       {
-        "id": "sorc-origin",
-        "name": "Origen",
-        "description": "Eliges subclase. (desbloqueo típico nivel 3 en PHB 2024).",
+        "id": "sor-sub",
+        "name": "Origen de hechicería",
         "level": 3,
-        "source": "class",
-        "requiresChoice": true,
-        "choiceHint": "Elige tu subclase / camino / dominio / tradición."
+        "description": "Elige subclase (origen). Rasgos a 3, 6, 14, 18.",
+        "actionType": "passive",
+        "requiresChoice": true
+      },
+      {
+        "id": "sor-meta2",
+        "name": "Metamagia adicional",
+        "level": 10,
+        "description": "Aprendes más opciones de metamagia.",
+        "actionType": "passive"
+      },
+      {
+        "id": "sor-meta3",
+        "name": "Metamagia mayor",
+        "level": 17,
+        "description": "Aprendes más opciones de metamagia.",
+        "actionType": "passive"
+      },
+      {
+        "id": "sor-fountain",
+        "name": "Alma de hechicería",
+        "level": 20,
+        "description": "Recuperas 4 SP al iniciar un turno con 0 SP (1/corto) o rasgo equivalente 2024.",
+        "actionType": "passive"
       }
     ]
   },
@@ -524,27 +983,57 @@
     },
     "features": [
       {
-        "id": "warlock-patron",
-        "name": "Patron",
-        "description": "Eliges subclase. (desbloqueo típico nivel 3 en PHB 2024).",
-        "level": 3,
-        "source": "class",
-        "requiresChoice": true,
-        "choiceHint": "Elige tu subclase / camino / dominio / tradición."
-      },
-      {
-        "id": "warlock-cast",
+        "id": "war-pact-magic",
         "name": "Magia de pacto",
-        "description": "Espacios se recuperan con descanso corto.",
         "level": 1,
-        "source": "class"
+        "description": "Espacios de pacto (todos del mismo nivel); se recuperan en descanso corto o largo. Conjuros conocidos (Carisma).",
+        "actionType": "passive"
       },
       {
-        "id": "warlock-invocations",
-        "name": "Invocaciones",
-        "description": "Habilidades magicas permanentes.",
+        "id": "war-patron",
+        "name": "Patrón de otro mundo",
+        "level": 1,
+        "description": "Elige patrón (subclase) — en 2024 a menudo a nivel 1 o 3 según mesa; aquí desbloquea rasgos de patrón.",
+        "actionType": "passive",
+        "requiresChoice": true
+      },
+      {
+        "id": "war-inv",
+        "name": "Invocaciones místicas",
         "level": 2,
-        "source": "class"
+        "description": "Elige invocaciones; más al subir de nivel. Algunas requieren nivel o pacto.",
+        "actionType": "passive",
+        "requiresChoice": true,
+        "choiceHint": "Invocaciones"
+      },
+      {
+        "id": "war-pact-boon",
+        "name": "Bendiición de pacto",
+        "level": 3,
+        "description": "Cadena, Hoja o Libro (u opciones 2024 equivalentes).",
+        "actionType": "passive",
+        "requiresChoice": true
+      },
+      {
+        "id": "war-slot5",
+        "name": "Espacios de pacto superiores",
+        "level": 9,
+        "description": "Tus espacios de pacto suben de nivel según la tabla de brujo.",
+        "actionType": "passive"
+      },
+      {
+        "id": "war-arcanum",
+        "name": "Arcanum místico",
+        "level": 11,
+        "description": "Conjuros de nivel 6+ 1/largo (más a 13, 15, 17).",
+        "actionType": "passive"
+      },
+      {
+        "id": "war-master",
+        "name": "Maestro de lo místico",
+        "level": 20,
+        "description": "Recuperas espacios de pacto en 1 minuto 1/largo.",
+        "actionType": "passive"
       }
     ]
   },
@@ -571,27 +1060,58 @@
     },
     "features": [
       {
-        "id": "wizard-cast",
+        "id": "wiz-spell",
         "name": "Lanzamiento de conjuros",
-        "description": "Libro de conjuros. Inteligencia.",
         "level": 1,
-        "source": "class"
+        "description": "Libro de conjuros; preparas Int + nivel cada día. Inteligencia. Rituales del libro sin preparar.",
+        "actionType": "passive"
       },
       {
-        "id": "wizard-recovery",
-        "name": "Recuperacion arcana",
-        "description": "Recuperas espacios tras descanso corto.",
+        "id": "wiz-arcane-rec",
+        "name": "Recuperación arcana",
         "level": 1,
-        "source": "class"
+        "description": "1/día en descanso corto recuperas espacios (suma ≤ mitad de nivel, ningún espacio de nivel 6+).",
+        "actionType": "special",
+        "uses": {
+          "max": 1,
+          "recovery": "long"
+        }
       },
       {
-        "id": "wizard-tradition",
-        "name": "Tradicion arcana",
-        "description": "Eliges subclase. (desbloqueo típico nivel 3 en PHB 2024).",
+        "id": "wiz-sub",
+        "name": "Tradición arcana",
         "level": 3,
-        "source": "class",
-        "requiresChoice": true,
-        "choiceHint": "Elige tu subclase / camino / dominio / tradición."
+        "description": "Elige escuela/tradición (subclase). Rasgos a 3, 6, 10, 14.",
+        "actionType": "passive",
+        "requiresChoice": true
+      },
+      {
+        "id": "wiz-expert",
+        "name": "Experto en conjuros",
+        "level": 6,
+        "description": "Mejoras de tradición o libreta (según 2024).",
+        "actionType": "passive"
+      },
+      {
+        "id": "wiz-memorize",
+        "name": "Memorizar conjuros / flexibilidad",
+        "level": 10,
+        "description": "Cambias conjuros preparados con más facilidad (rasgos 2024).",
+        "actionType": "passive"
+      },
+      {
+        "id": "wiz-signature",
+        "name": "Conjuros insignia",
+        "level": 18,
+        "description": "Conjuros de nivel 1–2 sin gastar espacio (1 de cada) según reglas.",
+        "actionType": "passive"
+      },
+      {
+        "id": "wiz-master",
+        "name": "Maestro de conjuros",
+        "level": 20,
+        "description": "Espacios de nivel 3 con usos diarios sin gastar casilla (según 2024).",
+        "actionType": "passive"
       }
     ]
   }
