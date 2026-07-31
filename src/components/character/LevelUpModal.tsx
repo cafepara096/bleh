@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import type { AbilityScore, AbilityScores, Character } from '../../types/dnd';
+import type { AbilityScore, AbilityScores, Character, PendingChoice } from '../../types/dnd';
 import { ABILITY_LABELS } from '../../types/dnd';
 import { useClasses } from '../../hooks/useClasses';
 import {
@@ -81,47 +81,84 @@ export function LevelUpModal({ character, onConfirm, onClose }: Props) {
       asi: needsAsi ? asi : undefined,
     });
 
-    // Subclass pick
+    // Subclass pick + its features at this level
+    let subclassFeaturesAtLevel: typeof featuresAtLevel = [];
     if (needsSubclass && subclassId) {
       const sub = subclassOptions.find((s) => s.id === subclassId);
       if (sub) {
+        subclassFeaturesAtLevel = sub.features.filter((f) => f.level <= newLevel);
         updated = {
           ...updated,
           subclass: sub.name,
           subclassId: sub.id,
           features: [
             ...updated.features,
-            ...toCharacterFeatures(
-              sub.features.filter((f) => f.level <= newLevel),
-              'subclass',
-              newLevel
-            ),
+            ...toCharacterFeatures(subclassFeaturesAtLevel, 'subclass', newLevel),
           ],
         };
       }
-    }
-
-    // Append choice notes into features descriptions or notes
-    const notes: string[] = [];
-    for (const f of featuresAtLevel) {
-      if (f.requiresChoice && choiceNotes[f.id]?.trim()) {
-        notes.push(`${f.name}: ${choiceNotes[f.id].trim()}`);
+    } else if (character.subclassId && classData) {
+      const sub = (SUBCLASSES[classData.id] || []).find((s) => s.id === character.subclassId);
+      if (sub) {
+        const atLvl = sub.features.filter((f) => f.level === newLevel);
+        subclassFeaturesAtLevel = atLvl;
+        const already = new Set(updated.features.map((f) => f.id));
+        const toAdd = toCharacterFeatures(
+          atLvl.filter((f) => !already.has(f.id)),
+          'subclass',
+          newLevel
+        );
+        if (toAdd.length) {
+          updated = { ...updated, features: [...updated.features, ...toAdd] };
+        }
       }
     }
+
+    // Resolve / defer choices (class + subclass features that require selection)
+    const choiceSources = [...featuresAtLevel, ...subclassFeaturesAtLevel];
+    const pending: PendingChoice[] = [...(character.pendingChoices || [])];
+    const notes: string[] = [];
+
+    for (const f of choiceSources) {
+      if (!f.requiresChoice) continue;
+      const answer = choiceNotes[f.id]?.trim();
+      if (answer) {
+        notes.push(`${f.name}: ${answer}`);
+        updated = {
+          ...updated,
+          features: updated.features.map((feat) =>
+            feat.id === f.id || feat.name === f.name
+              ? { ...feat, description: `${feat.description}\n\nElección: ${answer}` }
+              : feat
+          ),
+        };
+      } else {
+        // Keep as pending unless explicitly acknowledged without text — still pending
+        if (!pending.some((p) => p.featureId === f.id && !p.resolution)) {
+          pending.push({
+            id: crypto.randomUUID(),
+            featureId: f.id,
+            featureName: f.name,
+            description: f.description,
+            choiceHint: f.choiceHint,
+            levelGained: newLevel,
+            source: f.source || 'class',
+          });
+        }
+      }
+    }
+
+    updated = {
+      ...updated,
+      pendingChoices: pending.filter((p) => !p.resolution),
+    };
+
     if (notes.length) {
       updated = {
         ...updated,
         notes: [updated.notes || '', '— Elecciones al subir de nivel —', ...notes]
           .filter(Boolean)
           .join('\n'),
-        features: updated.features.map((feat) => {
-          const note = choiceNotes[feat.id];
-          if (!note?.trim()) return feat;
-          return {
-            ...feat,
-            description: `${feat.description}\n\nElección: ${note.trim()}`,
-          };
-        }),
       };
     }
 
@@ -329,6 +366,28 @@ export function LevelUpModal({ character, onConfirm, onClose }: Props) {
                   >
                     <strong>{s.name}</strong>
                     <p className="text-xs text-ink-600">{s.description}</p>
+                    {subclassId === s.id && s.features.filter((f) => f.level <= newLevel).length > 0 && (
+                      <ul className="mt-2 space-y-1 border-t border-purple-100 pt-2">
+                        {s.features.filter((f) => f.level <= newLevel).map((f) => (
+                          <li key={f.id} className="text-xs bg-white/80 rounded p-1.5 border border-purple-100">
+                            <strong>{f.name}</strong>
+                            <span className="text-ink-500"> (niv. {f.level})</span>
+                            <p className="text-ink-600 mt-0.5">{f.description}</p>
+                            {f.requiresChoice && (
+                              <input
+                                placeholder={f.choiceHint || 'Anota tu elección…'}
+                                value={choiceNotes[f.id] || ''}
+                                onChange={(e) =>
+                                  setChoiceNotes((prev) => ({ ...prev, [f.id]: e.target.value }))
+                                }
+                                onClick={(e) => e.stopPropagation()}
+                                className="mt-1 w-full px-2 py-1 border border-amber-300 rounded text-xs bg-amber-50"
+                              />
+                            )}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
                   </button>
                 ))}
               </div>

@@ -68,6 +68,18 @@ export interface FeatureUses {
   gainAmount?: number;
 }
 
+export interface PendingChoice {
+  id: string;
+  featureId: string;
+  featureName: string;
+  description: string;
+  choiceHint?: string;
+  levelGained: number;
+  source?: string;
+  /** Player resolution text once chosen */
+  resolution?: string;
+}
+
 export interface CharacterFeature {
   id: string;
   name: string;
@@ -167,6 +179,8 @@ export interface Character {
 
   // Features & Traits
   features: CharacterFeature[];
+  /** Unresolved choices from level-up / subclass (skill picks, fighting style, etc.) */
+  pendingChoices?: PendingChoice[];
 
   // Spells
   spellcastingAbility?: AbilityScore;
