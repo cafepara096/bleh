@@ -193,6 +193,8 @@ export interface Character {
   spellSlots: Record<number, SpellSlot>; // level 1-9
   spells: CharacterSpell[];
   cantripsKnown: string[];
+  /** Sorcerer (2024): puntos de hechicería — intercambiables con espacios */
+  sorceryPoints?: { current: number; max: number };
 
   // Equipment
   inventory: InventoryItem[];

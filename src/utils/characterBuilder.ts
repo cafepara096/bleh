@@ -11,7 +11,8 @@ import type {
 } from '../types/dnd';
 import { SKILLS } from '../types/dnd';
 import { getModifier, getProficiencyBonus, createEmptyCharacter } from './character';
-import { getFullCasterSlots, getPactSlots, getCasterKindFromClassId } from './spellLimits';
+import { getFullCasterSlots, getPactSlots, getCasterKindFromClassId, getSorceryPointsMax } from './spellLimits';
+import { SUBCLASSES_2024 } from '../data/subclasses2024';
 import startingEquipment from '../data/starting-equipment.json';
 import backgroundsData from '../data/backgrounds.json';
 import type { BackgroundData } from '../types/dnd';
@@ -524,6 +525,19 @@ export function applyLevelUp(
     };
   }
 
+  let sorceryPoints = character.sorceryPoints;
+  const isSorcerer =
+    classData?.id === 'sorcerer' ||
+    character.classId === 'sorcerer' ||
+    (character.class || '').toLowerCase().includes('hechic');
+  if (isSorcerer) {
+    const spMax = getSorceryPointsMax(newLevel);
+    sorceryPoints = {
+      max: spMax,
+      current: Math.min(spMax, (character.sorceryPoints?.current ?? spMax) + Math.max(0, spMax - (character.sorceryPoints?.max ?? 0))),
+    };
+  }
+
   return {
     ...character,
     level: newLevel,
@@ -534,6 +548,7 @@ export function applyLevelUp(
     hitDice: `${newLevel}d${dieNum}`,
     features: refreshed,
     spellSlots,
+    sorceryPoints,
     updatedAt: new Date().toISOString(),
   };
 }
@@ -550,413 +565,18 @@ export const ALIGNMENT_NAMES = [
   'Sin alineamiento',
 ] as const;
 
-export const SUBCLASSES: Record<string, { id: string; name: string; description: string; features: FeatureEntry[] }[]> = {
-  barbarian: [
-    {
-      id: 'berserker',
-      name: 'Senda del Berserker',
-      description: 'Furia que culmina en frenesí violento (2024).',
-      features: [
-        { id: 'berserk-frenzy', name: 'Frenesí', description: 'Mientras estás en furia puedes hacer un ataque cuerpo a cuerpo como acción adicional; al terminar la furia sufres un nivel de agotamiento (según tu mesa/reglas 2024).', level: 3, source: 'subclass', actionType: 'bonus' },
-      ],
-    },
-    {
-      id: 'wild-heart',
-      name: 'Senda del Corazón Salvaje',
-      description: 'Vínculo animal y poderes tótem (antes Senda del Tótem; 2024).',
-      features: [
-        { id: 'wild-heart-3', name: 'Aspecto animal', description: 'Elige un aspecto animal que otorga un beneficio pasivo o en furia.', level: 3, source: 'subclass', requiresChoice: true, choiceHint: 'Elige el aspecto animal (oso, águila, lobo, etc.).', actionType: 'passive' },
-      ],
-    },
-    {
-      id: 'world-tree',
-      name: 'Senda del Árbol del Mundo',
-      description: 'Conexión con Yggdrasil: teletransporte y protección (2024).',
-      features: [
-        { id: 'world-tree-3', name: 'Raíces del Árbol del Mundo', description: 'Mientras estás en furia, ganas opciones de anclar o moverte por raíces místicas.', level: 3, source: 'subclass', actionType: 'bonus' },
-      ],
-    },
-    {
-      id: 'zealot',
-      name: 'Senda del Zelote',
-      description: 'Furia sagrada alimentada por un dios o ideal (2024).',
-      features: [
-        { id: 'zealot-3', name: 'Furia divina', description: 'Mientras estás en furia, tu arma inflige daño radiante o necrótico extra.', level: 3, source: 'subclass', actionType: 'passive' },
-      ],
-    },
-  ],
-  bard: [
-    {
-      id: 'dance',
-      name: 'Colegio de la Danza',
-      description: 'Performance marcial y movilidad (2024).',
-      features: [
-        { id: 'dance-3', name: 'Derviche inspirado', description: 'Usas la danza para potenciar movimiento y ataques fluidos.', level: 3, source: 'subclass', actionType: 'bonus' },
-      ],
-    },
-    {
-      id: 'glamour',
-      name: 'Colegio del Glamour',
-      description: 'Magia feérica de asombro y mando (2024).',
-      features: [
-        { id: 'glamour-3', name: 'Manto de inspiración', description: 'Repartes inspiración con un toque de glamour feérico.', level: 3, source: 'subclass', actionType: 'bonus' },
-      ],
-    },
-    {
-      id: 'lore',
-      name: 'Colegio del Saber',
-      description: 'Erudición, secretos y corte de palabras (2024).',
-      features: [
-        { id: 'lore-3', name: 'Competencias adicionales', description: 'Ganas competencia en 3 habilidades a tu elección.', level: 3, source: 'subclass', requiresChoice: true, choiceHint: 'Indica las 3 habilidades.', actionType: 'passive' },
-      ],
-    },
-    {
-      id: 'valor',
-      name: 'Colegio del Valor',
-      description: 'Bardo de batalla: armas, armadura media y combos (2024).',
-      features: [
-        { id: 'valor-3', name: 'Entrenamiento de combate', description: 'Competencia con armadura media, escudos y armas marciales.', level: 3, source: 'subclass', actionType: 'passive' },
-      ],
-    },
-  ],
-  cleric: [
-    {
-      id: 'life',
-      name: 'Dominio de la Vida',
-      description: 'Curación potenciada y preservación (2024; dominio desde nivel 3 en PHB 2024).',
-      features: [
-        { id: 'life-3', name: 'Discípulo de la vida', description: 'Tus curaciones restauran PG adicionales (2 + nivel del conjuro).', level: 3, source: 'subclass', actionType: 'passive' },
-      ],
-    },
-    {
-      id: 'light',
-      name: 'Dominio de la Luz',
-      description: 'Fuego sagrado y revelación (2024).',
-      features: [
-        { id: 'light-3', name: 'Destello protector', description: 'Canalizas luz para imponer desventaja a un ataque o cegar temporalmente.', level: 3, source: 'subclass', actionType: 'reaction' },
-      ],
-    },
-    {
-      id: 'trickery',
-      name: 'Dominio de la Travesura',
-      description: 'Engaño, duplicados y sigilo divino (2024).',
-      features: [
-        { id: 'trickery-3', name: 'Bendición del embaucador', description: 'Otorgan ventaja en Sigilo a un aliado como acción.', level: 3, source: 'subclass', actionType: 'action' },
-      ],
-    },
-    {
-      id: 'war',
-      name: 'Dominio de la Guerra',
-      description: 'Clérigo marcial y golpes guiados (2024).',
-      features: [
-        { id: 'war-3', name: 'Sacerdote de guerra', description: 'Cuando usas la acción Atacar, puedes hacer un arma extra como acción adicional un número limitado de veces.', level: 3, source: 'subclass', actionType: 'bonus', uses: { max: 1, recovery: 'short' } },
-      ],
-    },
-  ],
-  druid: [
-    {
-      id: 'land',
-      name: 'Círculo de la Tierra',
-      description: 'Magia de terrenos y recuperación de espacios (2024).',
-      features: [
-        { id: 'land-3', name: 'Recuperación natural', description: 'En un descanso corto recuperas espacios de conjuro (como Recuperación arcana).', level: 3, source: 'subclass', actionType: 'special' },
-      ],
-    },
-    {
-      id: 'moon',
-      name: 'Círculo de la Luna',
-      description: 'Formas salvajes de combate potentes (2024).',
-      features: [
-        { id: 'moon-3', name: 'Forma de combate', description: 'Puedes adoptar formas más peligrosas y atacar mejor en forma salvaje.', level: 3, source: 'subclass', actionType: 'bonus' },
-      ],
-    },
-    {
-      id: 'sea',
-      name: 'Círculo del Mar',
-      description: 'Oleaje, frío y poderes oceánicos (2024).',
-      features: [
-        { id: 'sea-3', name: 'Furia de las mareas', description: 'Opciones de daño de frío/rayo y movilidad acuática.', level: 3, source: 'subclass', actionType: 'bonus' },
-      ],
-    },
-    {
-      id: 'stars',
-      name: 'Círculo de las Estrellas',
-      description: 'Constelaciones y forma de estrellas (2024).',
-      features: [
-        { id: 'stars-3', name: 'Mapa estelar', description: 'Elige una constelación que altera tu forma o conjuros.', level: 3, source: 'subclass', requiresChoice: true, choiceHint: 'Elige constelación: Arquero, Cáliz o Dragón (u homebrew).', actionType: 'bonus' },
-      ],
-    },
-  ],
-  fighter: [
-    {
-      id: 'battle-master',
-      name: 'Maestro de Batalla',
-      description: 'Maniobras y dados de superioridad (2024).',
-      features: [
-        { id: 'bm-3', name: 'Maniobras', description: 'Aprendes maniobras y ganas dados de superioridad. Elige 3 maniobras iniciales.', level: 3, source: 'subclass', requiresChoice: true, choiceHint: 'Anota las 3 maniobras elegidas.', actionType: 'special', uses: { max: 4, recovery: 'short' } },
-      ],
-    },
-    {
-      id: 'champion',
-      name: 'Campeón',
-      description: 'Críticos mejorados y atleta superior (2024).',
-      features: [
-        { id: 'champ-3', name: 'Crítico mejorado', description: 'Tus ataques con armas puntúan crítico en 19–20.', level: 3, source: 'subclass', actionType: 'passive' },
-      ],
-    },
-    {
-      id: 'eldritch-knight',
-      name: 'Caballero Arcano',
-      description: 'Combate con magia de mago limitada (2024).',
-      features: [
-        { id: 'ek-3', name: 'Lanzamiento de conjuros', description: 'Ganas conjuros de mago (trucos y espacios). Elige trucos y conjuros conocidos.', level: 3, source: 'subclass', requiresChoice: true, choiceHint: 'Indica trucos y conjuros de mago elegidos.', actionType: 'passive' },
-      ],
-    },
-    {
-      id: 'psi-warrior',
-      name: 'Guerrero Psi',
-      description: 'Telequinesia y escudos psiónicos (2024).',
-      features: [
-        { id: 'psi-3', name: 'Poder psiónico', description: 'Ganas dados de energía psiónica para potenciar ataques o defensa.', level: 3, source: 'subclass', actionType: 'special', uses: { max: 4, recovery: 'long' } },
-      ],
-    },
-  ],
-  monk: [
-    {
-      id: 'mercy',
-      name: 'Guerrero de la Misericordia',
-      description: 'Toques que curan o dañan (2024).',
-      features: [
-        { id: 'mercy-3', name: 'Mano de la misericordia', description: 'Puedes gastar focos para curar o infligir daño necrótico con un toque.', level: 3, source: 'subclass', actionType: 'bonus' },
-      ],
-    },
-    {
-      id: 'elements',
-      name: 'Guerrero de los Elementos',
-      description: 'Puños y técnicas elementales (2024).',
-      features: [
-        { id: 'elements-3', name: 'Sintonía elemental', description: 'Imbuyes golpes con daño elemental a tu elección.', level: 3, source: 'subclass', requiresChoice: true, choiceHint: 'Elige el elemento preferido (fuego, frío, rayo, etc.).', actionType: 'bonus' },
-      ],
-    },
-    {
-      id: 'open-hand',
-      name: 'Guerrero de la Mano Abierta',
-      description: 'Técnicas clásicas de empujar, derribar e impedir (2024).',
-      features: [
-        { id: 'open-3', name: 'Técnica de mano abierta', description: 'Al golpear con Ráfaga de golpes puedes empujar, derribar o impedir reacciones.', level: 3, source: 'subclass', actionType: 'passive' },
-      ],
-    },
-    {
-      id: 'shadow',
-      name: 'Guerrero de la Sombra',
-      description: 'Sigilo, oscuridad y teletransporte sombrío (2024).',
-      features: [
-        { id: 'shadow-3', name: 'Artes de la sombra', description: 'Conjuros menores de oscuridad/silencio y movimiento entre sombras.', level: 3, source: 'subclass', actionType: 'action' },
-      ],
-    },
-  ],
-  paladin: [
-    {
-      id: 'devotion',
-      name: 'Juramento de Devoción',
-      description: 'Justicia, honestidad y arma sagrada (2024).',
-      features: [
-        { id: 'devotion-3', name: 'Canalizar divinidad: Arma sagrada', description: 'Imbuyes tu arma (+mod. Carisma al ataque) durante 1 minuto.', level: 3, source: 'subclass', actionType: 'action' },
-      ],
-    },
-    {
-      id: 'glory',
-      name: 'Juramento de Gloria',
-      description: 'Hazañas heroicas y presencia atlética (2024).',
-      features: [
-        { id: 'glory-3', name: 'Presencia inspiradora', description: 'Canalizas divinidad para potenciar atletismo o velocidad de aliados.', level: 3, source: 'subclass', actionType: 'action' },
-      ],
-    },
-    {
-      id: 'ancients',
-      name: 'Juramento de los Ancestros',
-      description: 'Luz primordial contra la oscuridad (2024).',
-      features: [
-        { id: 'ancients-3', name: 'Canalizar divinidad: Ira de la naturaleza', description: 'Enredas enemigos con enredaderas espectrales.', level: 3, source: 'subclass', actionType: 'action' },
-      ],
-    },
-    {
-      id: 'vengeance',
-      name: 'Juramento de Venganza',
-      description: 'Cazar villanos sin descanso (2024).',
-      features: [
-        { id: 'vengeance-3', name: 'Canalizar divinidad: Voto de enemistad', description: 'Ventaja en ataques contra una criatura marcada.', level: 3, source: 'subclass', actionType: 'bonus' },
-      ],
-    },
-  ],
-  ranger: [
-    {
-      id: 'beast-master',
-      name: 'Maestro de Bestias',
-      description: 'Compañero animal leal (2024).',
-      features: [
-        { id: 'bm-ranger-3', name: 'Compañero primigenio', description: 'Ganas un compañero bestia. Elige el tipo de compañero.', level: 3, source: 'subclass', requiresChoice: true, choiceHint: 'Elige el compañero (bestia de la tierra, mar o cielo).', actionType: 'passive' },
-      ],
-    },
-    {
-      id: 'fey-wanderer',
-      name: 'Errante Feérico',
-      description: 'Encanto y magia del Reino Feérico (2024).',
-      features: [
-        { id: 'fey-3', name: 'Regalos feéricos', description: 'Bonus a Carisma y opciones de teletransporte corto o daño psíquico.', level: 3, source: 'subclass', actionType: 'passive' },
-      ],
-    },
-    {
-      id: 'gloom-stalker',
-      name: 'Acechador de la Penumbra',
-      description: 'Emboscadas en oscuridad (2024).',
-      features: [
-        { id: 'gloom-3', name: 'Emboscada umbría', description: 'En el primer turno de combate ganas velocidad y un ataque extra.', level: 3, source: 'subclass', actionType: 'passive' },
-      ],
-    },
-    {
-      id: 'hunter',
-      name: 'Cazador',
-      description: 'Tácticas contra amenazas peligrosas (2024).',
-      features: [
-        { id: 'hunter-3', name: 'Presa del cazador', description: 'Elige una opción de combate (coloso, horda, etc.).', level: 3, source: 'subclass', requiresChoice: true, choiceHint: 'Elige la opción de Presa del cazador.', actionType: 'passive' },
-      ],
-    },
-  ],
-  rogue: [
-    {
-      id: 'arcane-trickster',
-      name: 'Bribón Arcano',
-      description: 'Magia de mago e ilusiones sutiles (2024).',
-      features: [
-        { id: 'at-3', name: 'Lanzamiento de conjuros', description: 'Ganas trucos y conjuros de mago. Elige tus conjuros iniciales.', level: 3, source: 'subclass', requiresChoice: true, choiceHint: 'Indica trucos y conjuros elegidos.', actionType: 'passive' },
-      ],
-    },
-    {
-      id: 'assassin',
-      name: 'Asesino',
-      description: 'Identidades falsas y golpes letales (2024).',
-      features: [
-        { id: 'assassin-3', name: 'Asesinar', description: 'Ventaja contra criaturas que no han actuado; críticos en sorpresa.', level: 3, source: 'subclass', actionType: 'passive' },
-      ],
-    },
-    {
-      id: 'soulknife',
-      name: 'Cuchilla del Alma',
-      description: 'Hojas psíquicas y dados psiónicos (2024).',
-      features: [
-        { id: 'soul-3', name: 'Hojas psíquicas', description: 'Manifestas armas de energía psíquica; ganas dados psiónicos.', level: 3, source: 'subclass', actionType: 'special' },
-      ],
-    },
-    {
-      id: 'thief',
-      name: 'Ladrón',
-      description: 'Manos rápidas y uso de objetos (2024).',
-      features: [
-        { id: 'thief-3', name: 'Manos rápidas', description: 'Puedes usar Acción astuta para Usar un objeto.', level: 3, source: 'subclass', actionType: 'bonus' },
-      ],
-    },
-  ],
-  sorcerer: [
-    {
-      id: 'aberrant',
-      name: 'Hechicería Aberrante',
-      description: 'Poderes telepáticos del Vacío (2024).',
-      features: [
-        { id: 'aberrant-3', name: 'Telepatía psiónica', description: 'Comunicación telepática y conjuros psiónicos bonus.', level: 3, source: 'subclass', actionType: 'passive' },
-      ],
-    },
-    {
-      id: 'clockwork',
-      name: 'Hechicería de Mecanismos',
-      description: 'Orden del Plano Mecanus (2024).',
-      features: [
-        { id: 'clock-3', name: 'Restaurar equilibrio', description: 'Puedes anular ventaja o desventaja en una tirada cercana.', level: 3, source: 'subclass', actionType: 'reaction', uses: { max: 1, recovery: 'long' } },
-      ],
-    },
-    {
-      id: 'draconic',
-      name: 'Hechicería Dracónica',
-      description: 'Sangre de dragón: resiliencia y afinidad elemental (2024).',
-      features: [
-        { id: 'draconic-3', name: 'Linaje dracónico', description: 'Elige un tipo de dragón; CA y PG mejorados; afinidad de daño.', level: 3, source: 'subclass', requiresChoice: true, choiceHint: 'Elige el color/tipo de dragón ancestral.', actionType: 'passive' },
-      ],
-    },
-    {
-      id: 'wild-magic',
-      name: 'Magia Salvaje',
-      description: 'Oleadas impredecibles de magia (2024).',
-      features: [
-        { id: 'wild-3', name: 'Oleada de magia salvaje', description: 'Al lanzar conjuros de hechicero puede activarse una oleada aleatoria.', level: 3, source: 'subclass', actionType: 'passive' },
-      ],
-    },
-  ],
-  warlock: [
-    {
-      id: 'archfey',
-      name: 'Patrón: El Archifeérico',
-      description: 'Señor feérico del engaño y el encanto (2024).',
-      features: [
-        { id: 'archfey-3', name: 'Presencia feérica', description: 'Puedes encantar o asustar en un área corta.', level: 3, source: 'subclass', actionType: 'action', uses: { max: 1, recovery: 'short' } },
-      ],
-    },
-    {
-      id: 'celestial',
-      name: 'Patrón: El Celestial',
-      description: 'Ser de los planos superiores y curación (2024).',
-      features: [
-        { id: 'celestial-3', name: 'Luz sanadora', description: 'Dados de curación que puedes repartir a criaturas cercanas.', level: 3, source: 'subclass', actionType: 'bonus' },
-      ],
-    },
-    {
-      id: 'fiend',
-      name: 'Patrón: El Infernal',
-      description: 'Pacto con un señor de los Nueve Infiernos (2024).',
-      features: [
-        { id: 'fiend-3', name: 'Bendición del oscuro', description: 'Al reducir a un hostil a 0 PG ganas PG temporales.', level: 3, source: 'subclass', actionType: 'passive' },
-      ],
-    },
-    {
-      id: 'great-old-one',
-      name: 'Patrón: El Gran Antiguo',
-      description: 'Entidad incomprensible y telepatía (2024).',
-      features: [
-        { id: 'goo-3', name: 'Mente desperdigada', description: 'Telepatía y resistencia a ser encantado.', level: 3, source: 'subclass', actionType: 'passive' },
-      ],
-    },
-  ],
-  wizard: [
-    {
-      id: 'abjurer',
-      name: 'Abjurador',
-      description: 'Escudos mágicos y protección (2024).',
-      features: [
-        { id: 'abj-3', name: 'Resguardo arcano', description: 'Ganas un escudo mágico de PG que se recarga con abjuraciones.', level: 3, source: 'subclass', actionType: 'passive' },
-      ],
-    },
-    {
-      id: 'diviner',
-      name: 'Adivino',
-      description: 'Portentos y visión del futuro (2024).',
-      features: [
-        { id: 'div-3', name: 'Portento', description: 'Tiras 2d20 al descanso largo y puedes sustituir tiradas con esos resultados.', level: 3, source: 'subclass', actionType: 'special', uses: { max: 2, recovery: 'long' } },
-      ],
-    },
-    {
-      id: 'evoker',
-      name: 'Evocador',
-      description: 'Explosiones potentes y esculpir conjuros (2024).',
-      features: [
-        { id: 'evo-3', name: 'Esculpir conjuros', description: 'Proteges aliados de tus evocaciones de área.', level: 3, source: 'subclass', actionType: 'passive' },
-      ],
-    },
-    {
-      id: 'illusionist',
-      name: 'Ilusionista',
-      description: 'Ilusiones mejoradas y engaño sensorial (2024).',
-      features: [
-        { id: 'illu-3', name: 'Ilusión mejorada', description: 'Mejoras Minor Illusion y puedes alterar ilusiones con una acción adicional.', level: 3, source: 'subclass', actionType: 'bonus' },
-      ],
-    },
-  ],
-};
+/** @deprecated use SUBCLASSES_2024 — kept as alias for wizard/level-up */
+export const SUBCLASSES = Object.fromEntries(
+  Object.entries(SUBCLASSES_2024).map(([classId, list]) => [
+    classId,
+    list.map((s) => ({
+      id: s.id,
+      name: s.name,
+      description: s.description,
+      features: s.features,
+    })),
+  ])
+) as Record<
+  string,
+  { id: string; name: string; description: string; features: import('../types/dnd').FeatureEntry[] }[]
+>;

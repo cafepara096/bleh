@@ -123,14 +123,21 @@ export function ActionsPanel({ character, onUpdate }: Props) {
       }
       return f;
     });
-    // long rest also restores spell slots
+    // long rest also restores spell slots + sorcery points
     let spellSlots = character.spellSlots;
+    let sorceryPoints = character.sorceryPoints;
     if (recovery === 'long') {
       spellSlots = Object.fromEntries(
         Object.entries(character.spellSlots).map(([k, v]) => [k, { ...v, used: 0 }])
       );
+      if (character.sorceryPoints) {
+        sorceryPoints = {
+          ...character.sorceryPoints,
+          current: character.sorceryPoints.max,
+        };
+      }
     }
-    onUpdate({ features, spellSlots });
+    onUpdate({ features, spellSlots, sorceryPoints });
   };
 
   type FeatureItem = {
