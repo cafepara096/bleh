@@ -2,20 +2,19 @@ import { useState } from 'react';
 import { useClasses } from '../hooks/useClasses';
 import { useSpells } from '../hooks/useSpells';
 import type { ClassData, FeatureEntry } from '../types/dnd';
+import { FeatureTablesEditor } from '../components/content/FeatureTablesEditor';
 import { dualizeDescription } from '../utils/units';
 import { Plus, Trash2, Swords, X, Sparkles, BookOpen } from 'lucide-react';
 
 export function ClassesPage() {
-  const {
-    classes,
+  const {classes,
     loading,
     addHomebrew,
     deleteHomebrew,
     addFeature,
     removeFeature,
     addSpellId,
-    removeSpellId,
-  } = useClasses();
+    removeSpellId, updateHomebrew} = useClasses();
   const { spells } = useSpells();
   const [selected, setSelected] = useState<ClassData | null>(null);
   const [showForm, setShowForm] = useState(false);
@@ -208,6 +207,74 @@ export function ClassesPage() {
               </div>
 
               {/* Features */}
+
+              
+              <div className="mt-3">
+                <button
+                  type="button"
+                  onClick={() => {
+                    const name = prompt('Nombre de la subclase homebrew');
+                    if (!name || !selected) return;
+                    const desc = prompt('Descripción breve') || '';
+                    const sub = {
+                      id: `hb-sub-${crypto.randomUUID().slice(0, 8)}`,
+                      name,
+                      description: desc,
+                      features: [
+                        {
+                          id: `hb-f-${crypto.randomUUID().slice(0, 8)}`,
+                          name: 'Rasgo inicial',
+                          description: 'Describe el rasgo de nivel 3…',
+                          level: 3,
+                          source: 'homebrew-subclass' as const,
+                        },
+                      ],
+                    };
+                    const updated = {
+                      ...selected,
+                      homebrew: true,
+                      subclasses: [...(selected.subclasses || []), sub],
+                    };
+                    updateHomebrew(updated);
+                    setSelected(updated);
+                  }}
+                  className="text-xs px-2 py-1 bg-purple-700 text-white rounded"
+                >
+                  + Añadir subclase homebrew
+                </button>
+                {(selected?.subclasses || []).map((s) => (
+                  <div key={s.id} className="mt-2 text-xs">
+                    <button
+                      type="button"
+                      className="text-purple-800 underline"
+                      onClick={() => {
+                        const fname = prompt('Nombre del nuevo rasgo de subclase');
+                        if (!fname || !selected) return;
+                        const flvl = parseInt(prompt('Nivel del rasgo', '3') || '3', 10);
+                        const fdesc = prompt('Descripción') || '';
+                        const feat = {
+                          id: `hb-f-${crypto.randomUUID().slice(0, 8)}`,
+                          name: fname,
+                          description: fdesc,
+                          level: flvl || 3,
+                          source: 'homebrew-subclass' as const,
+                        };
+                        const updated = {
+                          ...selected,
+                          homebrew: true,
+                          subclasses: selected.subclasses!.map((ss) =>
+                            ss.id === s.id ? { ...ss, features: [...ss.features, feat] } : ss
+                          ),
+                        };
+                        updateHomebrew(updated);
+                        setSelected(updated);
+                      }}
+                    >
+                      + Rasgo a {s.name}
+                    </button>
+                  </div>
+                ))}
+              </div>
 
               {current.subclasses && current.subclasses.length > 0 && (
                 <div className="mt-4">
@@ -499,6 +566,10 @@ export function ClassesPage() {
           </div>
         </div>
       )}
+
+      <div className="mt-8">
+        <FeatureTablesEditor />
+      </div>
     </div>
   );
 }

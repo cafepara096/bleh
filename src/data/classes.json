@@ -476,6 +476,22 @@
         "source": "class"
       },
       {
+        "id": "sorc-points",
+        "name": "Fuente de magia",
+        "description": "Ganas puntos de hechicería iguales a tu nivel de hechicero. Puedes convertir espacios en SP y SP en espacios (niv. 1–5).",
+        "level": 2,
+        "source": "class"
+      },
+      {
+        "id": "sorc-metamagic",
+        "name": "Metamagia",
+        "description": "Aprendes opciones de metamagia. Gastas puntos de hechicería al aplicarlas. A nivel 2 conoces 2; aprendes más al subir de nivel (2024).",
+        "level": 2,
+        "source": "class",
+        "actionType": "special",
+        "optionsChoose": 2
+      },
+      {
         "id": "sorc-origin",
         "name": "Origen",
         "description": "Eliges subclase. (desbloqueo típico nivel 3 en PHB 2024).",
@@ -483,13 +499,6 @@
         "source": "class",
         "requiresChoice": true,
         "choiceHint": "Elige tu subclase / camino / dominio / tradición."
-      },
-      {
-        "id": "sorc-points",
-        "name": "Fuente de magia",
-        "description": "Puntos de hechiceria y metamagia.",
-        "level": 2,
-        "source": "class"
       }
     ]
   },

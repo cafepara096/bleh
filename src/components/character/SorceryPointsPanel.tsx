@@ -1,146 +1,93 @@
 import type { Character } from '../../types/dnd';
 import { spCostForSlot, spFromSlot } from '../../utils/spellLimits';
-import { Sparkles } from 'lucide-react';
+import { useState } from 'react';
 
 interface Props {
   character: Character;
   onUpdate: (partial: Partial<Character>) => void;
 }
 
-export function SorceryPointsPanel({ character, onUpdate }: Props) {
+export function SorceryPointsPanel({ character, onUpdate, }: Props) {
+  const [open, setOpen] = useState(false);
   const isSorcerer =
     character.classId === 'sorcerer' ||
     character.class.toLowerCase().includes('hechic') ||
-    character.class.toLowerCase().includes('sorcer');
+    character.class.toLowerCase().includes('sorcer') ||
+    !!character.sorceryPoints;
 
-  if (!isSorcerer && !character.sorceryPoints) return null;
+  if (!isSorcerer) return null;
 
   const max = character.sorceryPoints?.max ?? character.level;
   const current = character.sorceryPoints?.current ?? max;
 
-  const setSP = (next: number) => {
-    onUpdate({
-      sorceryPoints: {
-        max,
-        current: Math.max(0, Math.min(max, next)),
-      },
-    });
-  };
+  const setSP = (next: number) =>
+    onUpdate({ sorceryPoints: { max, current: Math.max(0, Math.min(max, next)) } });
 
   const convertSlotToSP = (level: number) => {
     const slot = character.spellSlots[level];
-    if (!slot || slot.used >= slot.max) {
-      alert(`No hay espacios de nivel ${level} disponibles.`);
-      return;
-    }
-    const gain = spFromSlot(level);
-    const slots = {
-      ...character.spellSlots,
-      [level]: { ...slot, used: slot.used + 1 },
-    };
+    if (!slot || slot.used >= slot.max) return;
     onUpdate({
-      spellSlots: slots,
-      sorceryPoints: {
-        max,
-        current: Math.min(max, current + gain),
+      spellSlots: {
+        ...character.spellSlots,
+        [level]: { ...slot, used: slot.used + 1 },
       },
+      sorceryPoints: { max, current: Math.min(max, current + spFromSlot(level)) },
     });
   };
 
   const convertSPToSlot = (level: number) => {
     const cost = spCostForSlot(level);
-    if (current < cost) {
-      alert(`Necesitas ${cost} puntos de hechicería para un espacio de nivel ${level}.`);
-      return;
-    }
+    if (current < cost) return;
     const slot = character.spellSlots[level] || { max: 0, used: 0 };
-    // Creating a slot: if at max, temporarily allow +1 max for this conversion (optional)
-    // Simpler: reduce used if any used, else increase max by 1 until long rest is complex.
-    // PHB: you create a slot that is not recovered on short rest - we add as available by decreasing used or adding to max.
     const slots = { ...character.spellSlots };
-    if (slot.used > 0) {
-      slots[level] = { ...slot, used: slot.used - 1 };
-    } else {
-      slots[level] = { max: slot.max + 1, used: 0 };
-    }
-    onUpdate({
-      spellSlots: slots,
-      sorceryPoints: { max, current: current - cost },
-    });
+    if (slot.used > 0) slots[level] = { ...slot, used: slot.used - 1 };
+    else slots[level] = { max: slot.max + 1, used: 0 };
+    onUpdate({ spellSlots: slots, sorceryPoints: { max, current: current - cost } });
   };
 
   const slotLevels = Object.keys(character.spellSlots)
     .map(Number)
-    .sort((a, b) => a - b)
-    .filter((l) => l >= 1 && l <= 5);
+    .filter((l) => l >= 1 && l <= 5)
+    .sort((a, b) => a - b);
 
   return (
-    <div className="bg-fuchsia-50 border-2 border-fuchsia-400 rounded-xl p-3 space-y-2">
-      <div className="flex items-center gap-2">
-        <Sparkles className="w-4 h-4 text-fuchsia-700" />
-        <h3 className="font-bold text-sm text-fuchsia-900">Puntos de hechicería (Font of Magic)</h3>
-      </div>
-      <p className="text-[11px] text-fuchsia-900/80">
-        Puedes convertir <strong>espacios de conjuro → SP</strong> y <strong>SP → espacios</strong> (niv. 1–5).
-        Máximo de SP = nivel de hechicero. Se recuperan en descanso largo.
-      </p>
-      <div className="flex items-center gap-3">
-        <div className="text-2xl font-mono font-bold text-fuchsia-900">
+    <div className="bg-fuchsia-50/90 border border-fuchsia-300 rounded-lg px-2.5 py-1.5">
+      <div className="flex flex-wrap items-center gap-2 text-xs">
+        <span className="font-bold text-fuchsia-900">SP</span>
+        <span className="font-mono font-bold text-fuchsia-950">
           {current}/{max}
-        </div>
-        <button
-          type="button"
-          onClick={() => setSP(current - 1)}
-          className="px-2 py-1 bg-white border border-fuchsia-300 rounded text-sm"
-        >
-          −1
-        </button>
-        <button
-          type="button"
-          onClick={() => setSP(current + 1)}
-          className="px-2 py-1 bg-white border border-fuchsia-300 rounded text-sm"
-        >
-          +1
-        </button>
-        <button
-          type="button"
-          onClick={() => setSP(max)}
-          className="px-2 py-1 bg-fuchsia-200 border border-fuchsia-400 rounded text-xs"
-        >
-          Recuperar todos
+        </span>
+        <button type="button" onClick={() => setSP(current - 1)} className="px-1.5 border border-fuchsia-300 rounded bg-white">−</button>
+        <button type="button" onClick={() => setSP(current + 1)} className="px-1.5 border border-fuchsia-300 rounded bg-white">+</button>
+        <button type="button" onClick={() => setSP(max)} className="px-1.5 border border-fuchsia-300 rounded bg-fuchsia-100 text-[10px]">Full</button>
+        <button type="button" onClick={() => setOpen((o) => !o)} className="ml-auto text-[10px] text-fuchsia-800 underline">
+          {open ? 'Ocultar conversión' : 'Convertir espacios ↔ SP'}
         </button>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
-        <div className="bg-white/80 border border-fuchsia-200 rounded p-2 space-y-1">
-          <div className="font-bold text-fuchsia-900">Espacio → SP</div>
-          {slotLevels.length === 0 && (
-            <p className="text-ink-500">Sin espacios cargados.</p>
-          )}
+      {open && (
+        <div className="mt-1.5 flex flex-wrap gap-1 text-[10px] border-t border-fuchsia-200 pt-1.5">
           {slotLevels.map((lv) => (
             <button
-              key={`to-sp-${lv}`}
+              key={`s-${lv}`}
               type="button"
               onClick={() => convertSlotToSP(lv)}
-              className="block w-full text-left px-2 py-1 rounded hover:bg-fuchsia-50 border border-transparent hover:border-fuchsia-200"
+              className="px-1.5 py-0.5 bg-white border border-fuchsia-200 rounded hover:bg-fuchsia-100"
             >
-              Gastar espacio niv. {lv} → +{spFromSlot(lv)} SP
+              Esp.{lv}→+{spFromSlot(lv)}SP
             </button>
           ))}
-        </div>
-        <div className="bg-white/80 border border-fuchsia-200 rounded p-2 space-y-1">
-          <div className="font-bold text-fuchsia-900">SP → Espacio</div>
           {[1, 2, 3, 4, 5].map((lv) => (
             <button
-              key={`to-slot-${lv}`}
+              key={`p-${lv}`}
               type="button"
               onClick={() => convertSPToSlot(lv)}
-              className="block w-full text-left px-2 py-1 rounded hover:bg-fuchsia-50 border border-transparent hover:border-fuchsia-200"
+              className="px-1.5 py-0.5 bg-white border border-fuchsia-200 rounded hover:bg-fuchsia-100"
             >
-              Crear espacio niv. {lv} (cuesta {spCostForSlot(lv)} SP)
+              {spCostForSlot(lv)}SP→Esp.{lv}
             </button>
           ))}
         </div>
-      </div>
+      )}
     </div>
   );
 }

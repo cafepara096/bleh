@@ -31,6 +31,7 @@ import {
 import { LevelUpModal } from './LevelUpModal';
 import { SubclassPanel } from './SubclassPanel';
 import { SorceryPointsPanel } from './SorceryPointsPanel';
+import { FeatureTablesPanel } from './FeatureTablesPanel';
 import { ALIGNMENTS, getAlignmentInfo } from '../../utils/alignments';
 import { CombatPanel } from './CombatPanel';
 import { ActionsPanel } from './ActionsPanel';
@@ -550,7 +551,6 @@ export function CharacterSheet({ character: initial, onSave, onBack, onExport }:
 
         {activeTab === 'combat' && (
           <div className="space-y-6">
-            <SorceryPointsPanel character={character} onUpdate={(partial) => update(partial)} />
             <ActionsPanel
               character={character}
               onUpdate={(partial) => update(partial)}
@@ -580,6 +580,7 @@ export function CharacterSheet({ character: initial, onSave, onBack, onExport }:
           <div className="space-y-4">
             <SubclassPanel character={character} onUpdate={(partial) => update(partial)} />
             <SorceryPointsPanel character={character} onUpdate={(partial) => update(partial)} />
+            <FeatureTablesPanel character={character} onUpdate={(partial) => update(partial)} />
           </div>
         )}
 
