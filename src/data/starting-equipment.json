@@ -5,24 +5,69 @@
         "id": "weapon",
         "label": "Arma principal",
         "options": [
-          {"name": "Hacha Grande", "quantity": 1, "damage": "1d12", "damageType": "cortante", "equipped": true},
-          {"name": "Arma marcial cuerpo a cuerpo", "quantity": 1, "damage": "1d8", "damageType": "cortante", "equipped": true, "description": "Cualquier arma marcial cuerpo a cuerpo."}
+          {
+            "name": "Hacha Grande",
+            "quantity": 1,
+            "damage": "1d12",
+            "damageType": "cortante",
+            "equipped": true,
+            "properties": [
+              "pesada",
+              "a dos manos"
+            ],
+            "proficient": true
+          },
+          {
+            "name": "Arma marcial cuerpo a cuerpo",
+            "quantity": 1,
+            "damage": "1d8",
+            "damageType": "cortante",
+            "equipped": true,
+            "description": "Cualquier arma marcial cuerpo a cuerpo.",
+            "proficient": true
+          }
         ]
       },
       {
         "id": "secondary",
         "label": "Armas secundarias",
         "options": [
-          {"name": "Hacha de Mano (x2)", "quantity": 2, "damage": "1d6", "damageType": "cortante"},
-          {"name": "Cualquier arma simple", "quantity": 1, "damage": "1d6", "damageType": "contundente"}
+          {
+            "name": "Hacha de Mano (x2)",
+            "quantity": 2,
+            "damage": "1d6",
+            "damageType": "cortante",
+            "properties": [
+              "ligera",
+              "arrojadiza (20/60)"
+            ],
+            "proficient": true
+          },
+          {
+            "name": "Cualquier arma simple",
+            "quantity": 1,
+            "damage": "1d6",
+            "damageType": "contundente",
+            "proficient": true
+          }
         ]
       },
       {
         "id": "pack",
         "label": "Equipo de viaje",
         "options": [
-          {"name": "Equipo de explorador", "quantity": 1, "description": "Mochila, saco de dormir, cubiertos, yesquero, 10 antorchas, 10 días de raciones, odre, 50 feet de cuerda."},
-          {"name": "Equipo de dungeoneer", "quantity": 1, "description": "Mochila, martillo, 10 pitones, 10 antorchas, yesquero, 10 días de raciones, odre, 50 feet de cuerda."}
+          {
+            "name": "Equipo de explorador",
+            "quantity": 1,
+            "description": "Mochila, saco de dormir, cubiertos, yesquero, 10 antorchas, 10 raciones, odre, cuerda 50 ft. (se desglosa en el inventario)",
+            "proficient": null
+          },
+          {
+            "name": "Equipo de dungeoneer",
+            "quantity": 1,
+            "description": "Mochila, martillo, 10 pitones, 10 antorchas, yesquero, 10 raciones, odre, cuerda 50 ft. (se desglosa en el inventario)",
+            "proficient": null
+          }
         ]
       }
     ],
@@ -35,24 +80,80 @@
         "id": "weapon",
         "label": "Arma",
         "options": [
-          {"name": "Estoque", "quantity": 1, "damage": "1d8", "damageType": "perforante", "equipped": true},
-          {"name": "Espada larga", "quantity": 1, "damage": "1d8", "damageType": "cortante", "equipped": true},
-          {"name": "Cualquier arma simple", "quantity": 1, "damage": "1d6", "damageType": "contundente", "equipped": true}
+          {
+            "name": "Estoque",
+            "quantity": 1,
+            "damage": "1d8",
+            "damageType": "perforante",
+            "equipped": true,
+            "properties": [
+              "sutil"
+            ],
+            "proficient": true
+          },
+          {
+            "name": "Espada larga",
+            "quantity": 1,
+            "damage": "1d8",
+            "damageType": "cortante",
+            "equipped": true,
+            "properties": [
+              "versátil (1d10)"
+            ],
+            "proficient": true
+          },
+          {
+            "name": "Cualquier arma simple",
+            "quantity": 1,
+            "damage": "1d6",
+            "damageType": "contundente",
+            "equipped": true,
+            "proficient": true
+          }
         ]
       },
       {
         "id": "pack",
         "label": "Equipo de viaje",
         "options": [
-          {"name": "Equipo de diplomático", "quantity": 1},
-          {"name": "Equipo de artista", "quantity": 1, "description": "Mochila, saco de dormir, disfraces, velas, raciones, odre."}
+          {
+            "name": "Equipo de diplomático",
+            "quantity": 1,
+            "description": "Cofre, estuches, ropa fina, tinta, pluma, lámpara, aceite, papel, perfume, cera, jabón (se desglosa)",
+            "proficient": null
+          },
+          {
+            "name": "Equipo de artista",
+            "quantity": 1,
+            "description": "Mochila, saco de dormir, disfraces, velas, raciones, odre (se desglosa)",
+            "proficient": null
+          }
         ]
       }
     ],
     "fixed": [
-      {"name": "Armadura de cuero", "quantity": 1, "description": "CA 11 + Des", "equipped": true},
-      {"name": "Daga", "quantity": 1, "damage": "1d4", "damageType": "perforante"},
-      {"name": "Instrumento musical", "quantity": 1}
+      {
+        "name": "Armadura de cuero",
+        "quantity": 1,
+        "description": "CA 11 + Des",
+        "equipped": true
+      },
+      {
+        "name": "Daga",
+        "quantity": 1,
+        "damage": "1d4",
+        "damageType": "perforante",
+        "properties": [
+          "sutil",
+          "ligera",
+          "arrojadiza (20/60)"
+        ],
+        "proficient": true
+      },
+      {
+        "name": "Instrumento musical",
+        "quantity": 1
+      }
     ],
     "gold": 0
   },
@@ -62,31 +163,82 @@
         "id": "weapon",
         "label": "Arma",
         "options": [
-          {"name": "Maza", "quantity": 1, "damage": "1d6", "damageType": "contundente", "equipped": true},
-          {"name": "Martillo de guerra", "quantity": 1, "damage": "1d8", "damageType": "contundente", "equipped": true, "description": "Si tu deidad te lo permite."}
+          {
+            "name": "Maza",
+            "quantity": 1,
+            "damage": "1d6",
+            "damageType": "contundente",
+            "equipped": true,
+            "proficient": true
+          },
+          {
+            "name": "Martillo de guerra",
+            "quantity": 1,
+            "damage": "1d8",
+            "damageType": "contundente",
+            "equipped": true,
+            "description": "Si tu deidad te lo permite.",
+            "proficient": true
+          }
         ]
       },
       {
         "id": "armor",
         "label": "Armadura",
         "options": [
-          {"name": "Cota de escamas", "quantity": 1, "description": "CA 14 + Des (máx 2)", "equipped": true},
-          {"name": "Armadura de cuero", "quantity": 1, "description": "CA 11 + Des", "equipped": true},
-          {"name": "Cota de mallas", "quantity": 1, "description": "CA 16 (si tienes competencia)", "equipped": true}
+          {
+            "name": "Cota de escamas",
+            "quantity": 1,
+            "description": "CA 14 + Des (máx 2)",
+            "equipped": true,
+            "proficient": null
+          },
+          {
+            "name": "Armadura de cuero",
+            "quantity": 1,
+            "description": "CA 11 + Des",
+            "equipped": true,
+            "proficient": null
+          },
+          {
+            "name": "Cota de mallas",
+            "quantity": 1,
+            "description": "CA 16 (si tienes competencia)",
+            "equipped": true,
+            "proficient": null
+          }
         ]
       },
       {
         "id": "pack",
         "label": "Equipo de viaje",
         "options": [
-          {"name": "Equipo de sacerdote", "quantity": 1},
-          {"name": "Equipo de explorador", "quantity": 1}
+          {
+            "name": "Equipo de sacerdote",
+            "quantity": 1,
+            "description": "Mochila, manta, 10 velas, yesquero, caja de limosnas, incienso, incensario, raciones, odre (se desglosa)",
+            "proficient": null
+          },
+          {
+            "name": "Equipo de explorador",
+            "quantity": 1,
+            "description": "Mochila, saco de dormir, cubiertos, yesquero, 10 antorchas, 10 raciones, odre, cuerda 50 ft. (se desglosa en el inventario)",
+            "proficient": null
+          }
         ]
       }
     ],
     "fixed": [
-      {"name": "Escudo", "quantity": 1, "description": "+2 CA", "equipped": true},
-      {"name": "Símbolo sagrado", "quantity": 1}
+      {
+        "name": "Escudo",
+        "quantity": 1,
+        "description": "+2 CA",
+        "equipped": true
+      },
+      {
+        "name": "Símbolo sagrado",
+        "quantity": 1
+      }
     ],
     "gold": 0
   },
@@ -96,23 +248,60 @@
         "id": "weapon",
         "label": "Arma cuerpo a cuerpo",
         "options": [
-          {"name": "Cimitarra", "quantity": 1, "damage": "1d6", "damageType": "cortante", "equipped": true},
-          {"name": "Cualquier arma simple cuerpo a cuerpo", "quantity": 1, "damage": "1d6", "damageType": "contundente", "equipped": true}
+          {
+            "name": "Cimitarra",
+            "quantity": 1,
+            "damage": "1d6",
+            "damageType": "cortante",
+            "equipped": true,
+            "proficient": true
+          },
+          {
+            "name": "Cualquier arma simple cuerpo a cuerpo",
+            "quantity": 1,
+            "damage": "1d6",
+            "damageType": "contundente",
+            "equipped": true,
+            "proficient": true
+          }
         ]
       },
       {
         "id": "offhand",
         "label": "Escudo u otra arma simple",
         "options": [
-          {"name": "Escudo de madera", "quantity": 1, "description": "+2 CA", "equipped": true},
-          {"name": "Cualquier arma simple", "quantity": 1, "damage": "1d6", "damageType": "contundente"}
+          {
+            "name": "Escudo de madera",
+            "quantity": 1,
+            "description": "+2 CA",
+            "equipped": true,
+            "proficient": null
+          },
+          {
+            "name": "Cualquier arma simple",
+            "quantity": 1,
+            "damage": "1d6",
+            "damageType": "contundente",
+            "proficient": true
+          }
         ]
       }
     ],
     "fixed": [
-      {"name": "Armadura de cuero", "quantity": 1, "description": "CA 11 + Des", "equipped": true},
-      {"name": "Equipo de explorador", "quantity": 1},
-      {"name": "Foco druídico", "quantity": 1}
+      {
+        "name": "Armadura de cuero",
+        "quantity": 1,
+        "description": "CA 11 + Des",
+        "equipped": true
+      },
+      {
+        "name": "Equipo de explorador",
+        "quantity": 1
+      },
+      {
+        "name": "Foco druídico",
+        "quantity": 1
+      }
     ],
     "gold": 0
   },
@@ -122,32 +311,92 @@
         "id": "armor",
         "label": "Armadura",
         "options": [
-          {"name": "Cota de mallas", "quantity": 1, "description": "CA 16", "equipped": true},
-          {"name": "Armadura de cuero + arco largo + 20 flechas", "quantity": 1, "description": "CA 11+Des; incluye arco largo", "equipped": true, "damage": "1d8", "damageType": "perforante"}
+          {
+            "name": "Cota de mallas",
+            "quantity": 1,
+            "description": "CA 16",
+            "equipped": true,
+            "proficient": null
+          },
+          {
+            "name": "Armadura de cuero + arco largo + 20 flechas",
+            "quantity": 1,
+            "description": "CA 11+Des; incluye arco largo",
+            "equipped": true,
+            "damage": "1d8",
+            "damageType": "perforante",
+            "proficient": true
+          }
         ]
       },
       {
         "id": "weapons",
         "label": "Armas",
         "options": [
-          {"name": "Arma marcial + escudo", "quantity": 1, "damage": "1d8", "damageType": "cortante", "equipped": true, "description": "Arma marcial y escudo (+2 CA)"},
-          {"name": "Dos armas marciales", "quantity": 2, "damage": "1d8", "damageType": "cortante", "equipped": true}
+          {
+            "name": "Arma marcial + escudo",
+            "quantity": 1,
+            "damage": "1d8",
+            "damageType": "cortante",
+            "equipped": true,
+            "description": "Arma marcial y escudo (+2 CA)",
+            "proficient": true
+          },
+          {
+            "name": "Dos armas marciales",
+            "quantity": 2,
+            "damage": "1d8",
+            "damageType": "cortante",
+            "equipped": true,
+            "proficient": true
+          }
         ]
       },
       {
         "id": "ranged",
         "label": "Arma a distancia",
         "options": [
-          {"name": "Ballesta ligera + 20 virotes", "quantity": 1, "damage": "1d8", "damageType": "perforante"},
-          {"name": "Dos hachas de mano", "quantity": 2, "damage": "1d6", "damageType": "cortante"}
+          {
+            "name": "Ballesta ligera + 20 virotes",
+            "quantity": 1,
+            "damage": "1d8",
+            "damageType": "perforante",
+            "properties": [
+              "munición (80/320)",
+              "de carga",
+              "a dos manos"
+            ],
+            "proficient": true
+          },
+          {
+            "name": "Dos hachas de mano",
+            "quantity": 2,
+            "damage": "1d6",
+            "damageType": "cortante",
+            "properties": [
+              "ligera",
+              "arrojadiza (20/60)"
+            ],
+            "proficient": true
+          }
         ]
       },
       {
         "id": "pack",
         "label": "Equipo de viaje",
         "options": [
-          {"name": "Equipo de dungeoneer", "quantity": 1},
-          {"name": "Equipo de explorador", "quantity": 1}
+          {
+            "name": "Equipo de dungeoneer",
+            "quantity": 1,
+            "description": "Mochila, martillo, 10 pitones, 10 antorchas, yesquero, 10 raciones, odre, cuerda 50 ft. (se desglosa en el inventario)",
+            "proficient": null
+          },
+          {
+            "name": "Equipo de explorador",
+            "quantity": 1,
+            "description": "Mochila, saco de dormir, cubiertos, yesquero, 10 antorchas, 10 raciones, odre, cuerda 50 ft. (se desglosa en el inventario)",
+            "proficient": null
+          }
         ]
       }
     ],
@@ -160,21 +409,51 @@
         "id": "weapon",
         "label": "Arma",
         "options": [
-          {"name": "Espada corta", "quantity": 1, "damage": "1d6", "damageType": "perforante", "equipped": true},
-          {"name": "Cualquier arma simple", "quantity": 1, "damage": "1d6", "damageType": "contundente", "equipped": true}
+          {
+            "name": "Espada corta",
+            "quantity": 1,
+            "damage": "1d6",
+            "damageType": "perforante",
+            "equipped": true,
+            "proficient": true
+          },
+          {
+            "name": "Cualquier arma simple",
+            "quantity": 1,
+            "damage": "1d6",
+            "damageType": "contundente",
+            "equipped": true,
+            "proficient": true
+          }
         ]
       },
       {
         "id": "pack",
         "label": "Equipo de viaje",
         "options": [
-          {"name": "Equipo de dungeoneer", "quantity": 1},
-          {"name": "Equipo de explorador", "quantity": 1}
+          {
+            "name": "Equipo de dungeoneer",
+            "quantity": 1,
+            "description": "Mochila, martillo, 10 pitones, 10 antorchas, yesquero, 10 raciones, odre, cuerda 50 ft. (se desglosa en el inventario)",
+            "proficient": null
+          },
+          {
+            "name": "Equipo de explorador",
+            "quantity": 1,
+            "description": "Mochila, saco de dormir, cubiertos, yesquero, 10 antorchas, 10 raciones, odre, cuerda 50 ft. (se desglosa en el inventario)",
+            "proficient": null
+          }
         ]
       }
     ],
     "fixed": [
-      {"name": "Dardos", "quantity": 10, "damage": "1d4", "damageType": "perforante"}
+      {
+        "name": "Dardos",
+        "quantity": 10,
+        "damage": "1d4",
+        "damageType": "perforante",
+        "proficient": true
+      }
     ],
     "gold": 0
   },
@@ -184,23 +463,62 @@
         "id": "weapons",
         "label": "Armas",
         "options": [
-          {"name": "Arma marcial + escudo", "quantity": 1, "damage": "1d8", "damageType": "cortante", "equipped": true, "description": "Incluye escudo (+2 CA)"},
-          {"name": "Dos armas marciales", "quantity": 2, "damage": "1d8", "damageType": "cortante", "equipped": true}
+          {
+            "name": "Arma marcial + escudo",
+            "quantity": 1,
+            "damage": "1d8",
+            "damageType": "cortante",
+            "equipped": true,
+            "description": "Incluye escudo (+2 CA)",
+            "proficient": true
+          },
+          {
+            "name": "Dos armas marciales",
+            "quantity": 2,
+            "damage": "1d8",
+            "damageType": "cortante",
+            "equipped": true,
+            "proficient": true
+          }
         ]
       },
       {
         "id": "pack",
         "label": "Equipo de viaje",
         "options": [
-          {"name": "Equipo de sacerdote", "quantity": 1},
-          {"name": "Equipo de explorador", "quantity": 1}
+          {
+            "name": "Equipo de sacerdote",
+            "quantity": 1,
+            "description": "Mochila, manta, 10 velas, yesquero, caja de limosnas, incienso, incensario, raciones, odre (se desglosa)",
+            "proficient": null
+          },
+          {
+            "name": "Equipo de explorador",
+            "quantity": 1,
+            "description": "Mochila, saco de dormir, cubiertos, yesquero, 10 antorchas, 10 raciones, odre, cuerda 50 ft. (se desglosa en el inventario)",
+            "proficient": null
+          }
         ]
       }
     ],
     "fixed": [
-      {"name": "Cota de mallas", "quantity": 1, "description": "CA 16", "equipped": true},
-      {"name": "Símbolo sagrado", "quantity": 1},
-      {"name": "Jabalinas", "quantity": 5, "damage": "1d6", "damageType": "perforante"}
+      {
+        "name": "Cota de mallas",
+        "quantity": 1,
+        "description": "CA 16",
+        "equipped": true
+      },
+      {
+        "name": "Símbolo sagrado",
+        "quantity": 1
+      },
+      {
+        "name": "Jabalinas",
+        "quantity": 5,
+        "damage": "1d6",
+        "damageType": "perforante",
+        "proficient": true
+      }
     ],
     "gold": 0
   },
@@ -210,30 +528,75 @@
         "id": "armor",
         "label": "Armadura",
         "options": [
-          {"name": "Cota de escamas", "quantity": 1, "description": "CA 14 + Des (máx 2)", "equipped": true},
-          {"name": "Armadura de cuero", "quantity": 1, "description": "CA 11 + Des", "equipped": true}
+          {
+            "name": "Cota de escamas",
+            "quantity": 1,
+            "description": "CA 14 + Des (máx 2)",
+            "equipped": true,
+            "proficient": null
+          },
+          {
+            "name": "Armadura de cuero",
+            "quantity": 1,
+            "description": "CA 11 + Des",
+            "equipped": true,
+            "proficient": null
+          }
         ]
       },
       {
         "id": "weapons",
         "label": "Armas cuerpo a cuerpo",
         "options": [
-          {"name": "Dos espadas cortas", "quantity": 2, "damage": "1d6", "damageType": "perforante", "equipped": true},
-          {"name": "Dos armas simples cuerpo a cuerpo", "quantity": 2, "damage": "1d6", "damageType": "contundente", "equipped": true}
+          {
+            "name": "Dos espadas cortas",
+            "quantity": 2,
+            "damage": "1d6",
+            "damageType": "perforante",
+            "equipped": true,
+            "proficient": true
+          },
+          {
+            "name": "Dos armas simples cuerpo a cuerpo",
+            "quantity": 2,
+            "damage": "1d6",
+            "damageType": "contundente",
+            "equipped": true,
+            "proficient": true
+          }
         ]
       },
       {
         "id": "pack",
         "label": "Equipo de viaje",
         "options": [
-          {"name": "Equipo de dungeoneer", "quantity": 1},
-          {"name": "Equipo de explorador", "quantity": 1}
+          {
+            "name": "Equipo de dungeoneer",
+            "quantity": 1,
+            "description": "Mochila, martillo, 10 pitones, 10 antorchas, yesquero, 10 raciones, odre, cuerda 50 ft. (se desglosa en el inventario)",
+            "proficient": null
+          },
+          {
+            "name": "Equipo de explorador",
+            "quantity": 1,
+            "description": "Mochila, saco de dormir, cubiertos, yesquero, 10 antorchas, 10 raciones, odre, cuerda 50 ft. (se desglosa en el inventario)",
+            "proficient": null
+          }
         ]
       }
     ],
     "fixed": [
-      {"name": "Arco largo", "quantity": 1, "damage": "1d8", "damageType": "perforante"},
-      {"name": "Flechas", "quantity": 20}
+      {
+        "name": "Arco largo",
+        "quantity": 1,
+        "damage": "1d8",
+        "damageType": "perforante",
+        "proficient": true
+      },
+      {
+        "name": "Flechas",
+        "quantity": 20
+      }
     ],
     "gold": 0
   },
@@ -243,32 +606,98 @@
         "id": "weapon",
         "label": "Arma principal",
         "options": [
-          {"name": "Estoque", "quantity": 1, "damage": "1d8", "damageType": "perforante", "equipped": true},
-          {"name": "Espada corta", "quantity": 1, "damage": "1d6", "damageType": "perforante", "equipped": true}
+          {
+            "name": "Estoque",
+            "quantity": 1,
+            "damage": "1d8",
+            "damageType": "perforante",
+            "equipped": true,
+            "properties": [
+              "sutil"
+            ],
+            "proficient": true
+          },
+          {
+            "name": "Espada corta",
+            "quantity": 1,
+            "damage": "1d6",
+            "damageType": "perforante",
+            "equipped": true,
+            "proficient": true
+          }
         ]
       },
       {
         "id": "ranged",
         "label": "Arma a distancia",
         "options": [
-          {"name": "Arco corto + 20 flechas", "quantity": 1, "damage": "1d6", "damageType": "perforante"},
-          {"name": "Espada corta", "quantity": 1, "damage": "1d6", "damageType": "perforante"}
+          {
+            "name": "Arco corto + 20 flechas",
+            "quantity": 1,
+            "damage": "1d6",
+            "damageType": "perforante",
+            "properties": [
+              "munición (80/320)",
+              "a dos manos"
+            ],
+            "proficient": true
+          },
+          {
+            "name": "Espada corta",
+            "quantity": 1,
+            "damage": "1d6",
+            "damageType": "perforante",
+            "proficient": true
+          }
         ]
       },
       {
         "id": "pack",
         "label": "Equipo de viaje",
         "options": [
-          {"name": "Equipo de ladrón", "quantity": 1},
-          {"name": "Equipo de dungeoneer", "quantity": 1},
-          {"name": "Equipo de explorador", "quantity": 1}
+          {
+            "name": "Equipo de ladrón",
+            "quantity": 1,
+            "proficient": null
+          },
+          {
+            "name": "Equipo de dungeoneer",
+            "quantity": 1,
+            "description": "Mochila, martillo, 10 pitones, 10 antorchas, yesquero, 10 raciones, odre, cuerda 50 ft. (se desglosa en el inventario)",
+            "proficient": null
+          },
+          {
+            "name": "Equipo de explorador",
+            "quantity": 1,
+            "description": "Mochila, saco de dormir, cubiertos, yesquero, 10 antorchas, 10 raciones, odre, cuerda 50 ft. (se desglosa en el inventario)",
+            "proficient": null
+          }
         ]
       }
     ],
     "fixed": [
-      {"name": "Armadura de cuero", "quantity": 1, "description": "CA 11 + Des", "equipped": true},
-      {"name": "Daga", "quantity": 2, "damage": "1d4", "damageType": "perforante"},
-      {"name": "Herramientas de ladrón", "quantity": 1}
+      {
+        "name": "Armadura de cuero",
+        "quantity": 1,
+        "description": "CA 11 + Des",
+        "equipped": true
+      },
+      {
+        "name": "Daga",
+        "quantity": 2,
+        "damage": "1d4",
+        "damageType": "perforante",
+        "properties": [
+          "sutil",
+          "ligera",
+          "arrojadiza (20/60)"
+        ],
+        "proficient": true
+      },
+      {
+        "name": "Herramientas de ladrón",
+        "quantity": 1
+      }
     ],
     "gold": 0
   },
@@ -278,29 +707,75 @@
         "id": "weapon",
         "label": "Arma",
         "options": [
-          {"name": "Ballesta ligera + 20 virotes", "quantity": 1, "damage": "1d8", "damageType": "perforante"},
-          {"name": "Cualquier arma simple", "quantity": 1, "damage": "1d6", "damageType": "contundente"}
+          {
+            "name": "Ballesta ligera + 20 virotes",
+            "quantity": 1,
+            "damage": "1d8",
+            "damageType": "perforante",
+            "properties": [
+              "munición (80/320)",
+              "de carga",
+              "a dos manos"
+            ],
+            "proficient": true
+          },
+          {
+            "name": "Cualquier arma simple",
+            "quantity": 1,
+            "damage": "1d6",
+            "damageType": "contundente",
+            "proficient": true
+          }
         ]
       },
       {
         "id": "focus",
         "label": "Foco o componente",
         "options": [
-          {"name": "Foco arcano", "quantity": 1},
-          {"name": "Bolsa de componentes", "quantity": 1}
+          {
+            "name": "Foco arcano",
+            "quantity": 1,
+            "proficient": null
+          },
+          {
+            "name": "Bolsa de componentes",
+            "quantity": 1,
+            "proficient": null
+          }
         ]
       },
       {
         "id": "pack",
         "label": "Equipo de viaje",
         "options": [
-          {"name": "Equipo de dungeoneer", "quantity": 1},
-          {"name": "Equipo de explorador", "quantity": 1}
+          {
+            "name": "Equipo de dungeoneer",
+            "quantity": 1,
+            "description": "Mochila, martillo, 10 pitones, 10 antorchas, yesquero, 10 raciones, odre, cuerda 50 ft. (se desglosa en el inventario)",
+            "proficient": null
+          },
+          {
+            "name": "Equipo de explorador",
+            "quantity": 1,
+            "description": "Mochila, saco de dormir, cubiertos, yesquero, 10 antorchas, 10 raciones, odre, cuerda 50 ft. (se desglosa en el inventario)",
+            "proficient": null
+          }
         ]
       }
     ],
     "fixed": [
-      {"name": "Daga", "quantity": 2, "damage": "1d4", "damageType": "perforante"}
+      {
+        "name": "Daga",
+        "quantity": 2,
+        "damage": "1d4",
+        "damageType": "perforante",
+        "properties": [
+          "sutil",
+          "ligera",
+          "arrojadiza (20/60)"
+        ],
+        "proficient": true
+      }
     ],
     "gold": 0
   },
@@ -310,31 +785,88 @@
         "id": "weapon",
         "label": "Arma",
         "options": [
-          {"name": "Ballesta ligera + 20 virotes", "quantity": 1, "damage": "1d8", "damageType": "perforante"},
-          {"name": "Cualquier arma simple", "quantity": 1, "damage": "1d6", "damageType": "contundente"}
+          {
+            "name": "Ballesta ligera + 20 virotes",
+            "quantity": 1,
+            "damage": "1d8",
+            "damageType": "perforante",
+            "properties": [
+              "munición (80/320)",
+              "de carga",
+              "a dos manos"
+            ],
+            "proficient": true
+          },
+          {
+            "name": "Cualquier arma simple",
+            "quantity": 1,
+            "damage": "1d6",
+            "damageType": "contundente",
+            "proficient": true
+          }
         ]
       },
       {
         "id": "focus",
         "label": "Foco o componente",
         "options": [
-          {"name": "Foco arcano", "quantity": 1},
-          {"name": "Bolsa de componentes", "quantity": 1}
+          {
+            "name": "Foco arcano",
+            "quantity": 1,
+            "proficient": null
+          },
+          {
+            "name": "Bolsa de componentes",
+            "quantity": 1,
+            "proficient": null
+          }
         ]
       },
       {
         "id": "pack",
         "label": "Equipo de viaje",
         "options": [
-          {"name": "Equipo de erudito", "quantity": 1},
-          {"name": "Equipo de dungeoneer", "quantity": 1}
+          {
+            "name": "Equipo de erudito",
+            "quantity": 1,
+            "description": "Mochila, libro, tinta, pluma, pergaminos, arena, cuchillo (se desglosa)",
+            "proficient": null
+          },
+          {
+            "name": "Equipo de dungeoneer",
+            "quantity": 1,
+            "description": "Mochila, martillo, 10 pitones, 10 antorchas, yesquero, 10 raciones, odre, cuerda 50 ft. (se desglosa en el inventario)",
+            "proficient": null
+          }
         ]
       }
     ],
     "fixed": [
-      {"name": "Armadura de cuero", "quantity": 1, "description": "CA 11 + Des", "equipped": true},
-      {"name": "Daga", "quantity": 2, "damage": "1d4", "damageType": "perforante"},
-      {"name": "Armas simples (x2)", "quantity": 2, "damage": "1d6", "damageType": "contundente"}
+      {
+        "name": "Armadura de cuero",
+        "quantity": 1,
+        "description": "CA 11 + Des",
+        "equipped": true
+      },
+      {
+        "name": "Daga",
+        "quantity": 2,
+        "damage": "1d4",
+        "damageType": "perforante",
+        "properties": [
+          "sutil",
+          "ligera",
+          "arrojadiza (20/60)"
+        ],
+        "proficient": true
+      },
+      {
+        "name": "Armas simples (x2)",
+        "quantity": 2,
+        "damage": "1d6",
+        "damageType": "contundente",
+        "proficient": true
+      }
     ],
     "gold": 0
   },
@@ -344,29 +876,70 @@
         "id": "weapon",
         "label": "Arma",
         "options": [
-          {"name": "Bastón", "quantity": 1, "damage": "1d6", "damageType": "contundente", "equipped": true},
-          {"name": "Daga", "quantity": 1, "damage": "1d4", "damageType": "perforante", "equipped": true}
+          {
+            "name": "Bastón",
+            "quantity": 1,
+            "damage": "1d6",
+            "damageType": "contundente",
+            "equipped": true,
+            "proficient": true
+          },
+          {
+            "name": "Daga",
+            "quantity": 1,
+            "damage": "1d4",
+            "damageType": "perforante",
+            "equipped": true,
+            "properties": [
+              "sutil",
+              "ligera",
+              "arrojadiza (20/60)"
+            ],
+            "proficient": true
+          }
         ]
       },
       {
         "id": "focus",
         "label": "Foco o componente",
         "options": [
-          {"name": "Foco arcano", "quantity": 1},
-          {"name": "Bolsa de componentes", "quantity": 1}
+          {
+            "name": "Foco arcano",
+            "quantity": 1,
+            "proficient": null
+          },
+          {
+            "name": "Bolsa de componentes",
+            "quantity": 1,
+            "proficient": null
+          }
         ]
       },
       {
         "id": "pack",
         "label": "Equipo de viaje",
         "options": [
-          {"name": "Equipo de erudito", "quantity": 1},
-          {"name": "Equipo de explorador", "quantity": 1}
+          {
+            "name": "Equipo de erudito",
+            "quantity": 1,
+            "description": "Mochila, libro, tinta, pluma, pergaminos, arena, cuchillo (se desglosa)",
+            "proficient": null
+          },
+          {
+            "name": "Equipo de explorador",
+            "quantity": 1,
+            "description": "Mochila, saco de dormir, cubiertos, yesquero, 10 antorchas, 10 raciones, odre, cuerda 50 ft. (se desglosa en el inventario)",
+            "proficient": null
+          }
         ]
       }
     ],
     "fixed": [
-      {"name": "Libro de conjuros", "quantity": 1, "description": "Contiene 6 conjuros de nivel 1."}
+      {
+        "name": "Libro de conjuros",
+        "quantity": 1,
+        "description": "Contiene 6 conjuros de nivel 1."
+      }
     ],
     "gold": 0
   }

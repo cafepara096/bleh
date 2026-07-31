@@ -259,7 +259,8 @@ export function ActionsPanel({ character, onUpdate }: Props) {
           )}
           {weapons.map((w) => {
             const ab = weaponAbility(w.name, w.description, w.properties, strMod, dexMod);
-            const atk = ab.mod + prof;
+            const isProf = w.proficient !== false; // default proficient for weapons
+            const atk = ab.mod + (isProf ? prof : 0);
             const dmgBonus = ab.mod;
             return (
               <div key={w.id} className="px-3 py-2.5 bg-white/70">
@@ -270,13 +271,21 @@ export function ActionsPanel({ character, onUpdate }: Props) {
                       En mano
                     </span>
                   )}
+                  {!isProf && (
+                    <span className="text-[10px] bg-ink-200 text-ink-700 px-1.5 rounded">
+                      Sin competencia
+                    </span>
+                  )}
                 </div>
                 <div className="mt-1.5 flex flex-wrap gap-2 text-xs">
                   <span className="font-mono bg-white border border-ink-200 px-2 py-0.5 rounded">
                     Ataque <strong>{formatModifier(atk)}</strong>
                     <span className="text-ink-500">
                       {' '}
-                      = {ab.label} {formatModifier(ab.mod)} + comp. {formatModifier(prof)}
+                      = {ab.label} {formatModifier(ab.mod)}
+                      {isProf
+                        ? ` + comp. ${formatModifier(prof)}`
+                        : ' (sin bonif. de competencia)'}
                     </span>
                   </span>
                   {w.damage && (
@@ -289,11 +298,16 @@ export function ActionsPanel({ character, onUpdate }: Props) {
                       {w.damageType ? ` ${w.damageType}` : ''}
                       <span className="text-red-800/70">
                         {' '}
-                        ← {w.damage}
+                        ← dado {w.damage}
                         {dmgBonus !== 0
-                          ? ` + ${Math.abs(dmgBonus)} (${ab.label})`
-                          : ` (${ab.label} 0)`}
+                          ? ` + ${dmgBonus > 0 ? dmgBonus : dmgBonus} (${ab.label})`
+                          : ` + 0 (${ab.label})`}
                       </span>
+                    </span>
+                  )}
+                  {w.properties && w.properties.length > 0 && (
+                    <span className="text-[10px] text-ink-500">
+                      {w.properties.join(', ')}
                     </span>
                   )}
                 </div>

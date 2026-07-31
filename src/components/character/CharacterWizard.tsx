@@ -13,7 +13,9 @@ import {
   SUBCLASSES,
   countExtraLanguageChoices,
   COMMON_LANGUAGES,
+  CLASS_SKILL_OPTIONS,
 } from '../../utils/characterBuilder';
+import { expandPackItems, packSummary } from '../../utils/equipmentPacks';
 import startingEquipment from '../../data/starting-equipment.json';
 import type { InventoryItem } from '../../types/dnd';
 import { getModifier, formatModifier } from '../../utils/character';
@@ -27,7 +29,7 @@ interface Props {
   onCancel: () => void;
 }
 
-type Step = 'identity' | 'race' | 'class' | 'subclass' | 'abilities' | 'background' | 'choices' | 'equipment' | 'review';
+type Step = 'identity' | 'race' | 'class' | 'subclass' | 'abilities' | 'background' | 'skills' | 'choices' | 'equipment' | 'review';
 
 const STEPS: { id: Step; label: string }[] = [
   { id: 'identity', label: 'Nombre' },
@@ -36,6 +38,7 @@ const STEPS: { id: Step; label: string }[] = [
   { id: 'subclass', label: 'Subclase' },
   { id: 'abilities', label: 'Atributos' },
   { id: 'background', label: 'Trasfondo' },
+  { id: 'skills', label: 'Habilidades' },
   { id: 'choices', label: 'Elecciones' },
   { id: 'equipment', label: 'Equipo' },
   { id: 'review', label: 'Resumen' },
@@ -58,6 +61,7 @@ export function CharacterWizard({ onComplete, onCancel }: Props) {
   const [arrayAssign, setArrayAssign] = useState<Partial<Record<AbilityScore, number>>>({});
   const [background, setBackground] = useState('Soldado');
   const [chosenLanguages, setChosenLanguages] = useState<string[]>([]);
+  const [chosenClassSkills, setChosenClassSkills] = useState<string[]>([]);
   const [equipChoices, setEquipChoices] = useState<Record<string, number>>({});
 
   const race = races.find((r) => r.id === raceId) || null;
@@ -102,6 +106,12 @@ export function CharacterWizard({ onComplete, onCancel }: Props) {
         return true;
       case 'background':
         return background.trim().length > 0;
+      case 'skills': {
+        if (!classId) return true;
+        const opt = CLASS_SKILL_OPTIONS[classId];
+        if (!opt) return true;
+        return chosenClassSkills.length >= opt.count;
+      }
       case 'choices': {
         if (!race) return false;
         const bg = backgrounds.find(
@@ -172,13 +182,32 @@ export function CharacterWizard({ onComplete, onCancel }: Props) {
     let customInventory: InventoryItem[] | undefined;
     if (pack) {
       const items: InventoryItem[] = [];
-      for (const fixed of pack.fixed || []) {
-        items.push({ ...fixed, id: crypto.randomUUID(), quantity: fixed.quantity || 1 });
-      }
+      const pushItem = (raw: any) => {
+        const expanded = expandPackItems(raw.name || '');
+        if (expanded) {
+          for (const part of expanded) {
+            items.push({
+              ...part,
+              id: crypto.randomUUID(),
+              quantity: part.quantity || 1,
+              proficient: !!part.damage,
+            });
+          }
+          return;
+        }
+        items.push({
+          ...raw,
+          id: crypto.randomUUID(),
+          quantity: raw.quantity || 1,
+          proficient: raw.proficient ?? !!raw.damage,
+          properties: raw.properties,
+        });
+      };
+      for (const fixed of pack.fixed || []) pushItem(fixed);
       for (const choice of pack.choices || []) {
         const idx = equipChoices[choice.id] ?? 0;
         const opt = choice.options[idx];
-        if (opt) items.push({ ...opt, id: crypto.randomUUID(), quantity: opt.quantity || 1 });
+        if (opt) pushItem(opt);
       }
       customInventory = items;
     }
@@ -192,6 +221,7 @@ export function CharacterWizard({ onComplete, onCancel }: Props) {
       baseScores: scores,
       level: 1,
       chosenLanguages: chosenLanguages.filter(Boolean),
+      chosenSkills: chosenClassSkills,
       customInventory,
     });
     // Add subclass features if any at level 1-3 that apply at 1... typically 3
@@ -300,6 +330,7 @@ export function CharacterWizard({ onComplete, onCancel }: Props) {
                   onClick={() => {
                     setClassId(c.id);
                     setSubclassId(null);
+                    setChosenClassSkills([]);
                   }}
                   className={`text-left p-3 rounded-lg border-2 transition-colors ${
                     classId === c.id
@@ -316,8 +347,42 @@ export function CharacterWizard({ onComplete, onCancel }: Props) {
                   <div className="text-xs text-ink-500 mt-1">
                     {c.hitDie} · {c.primaryAbility}
                     {c.spellcasting && ' · Lanzador de conjuros'}
+                    {' · '}{c.skillChoices}
                   </div>
-                  <p className="text-sm text-ink-700 mt-1 line-clamp-2">{c.description}</p>
+                  <p className="text-sm text-ink-700 mt-1">{c.description}</p>
+                  {classId === c.id && (
+                    <div className="mt-2 space-y-1 border-t border-ink-200 pt-2 text-left">
+                      <div className="text-[11px] font-bold text-ink-600 uppercase">Al crear (nivel 1)</div>
+                      {c.features.filter((f) => f.level <= 1).map((f) => (
+                        <div key={f.id} className="text-xs bg-white/90 border border-ink-100 rounded px-2 py-1">
+                          <strong>{f.name}</strong>
+                          {f.uses && (
+                            <span className="ml-1 text-[10px] bg-amber-100 px-1 rounded">
+                              {f.uses.max} uso(s)/{f.uses.recovery}
+                            </span>
+                          )}
+                          {f.requiresChoice && (
+                            <span className="ml-1 text-[10px] bg-amber-200 px-1 rounded">Requiere elección</span>
+                          )}
+                          <p className="text-ink-600 mt-0.5">{f.description}</p>
+                        </div>
+                      ))}
+                      {c.features.some((f) => f.level > 1) && (
+                        <>
+                          <div className="text-[11px] font-bold text-ink-500 uppercase mt-1">Más adelante</div>
+                          {c.features.filter((f) => f.level > 1).slice(0, 6).map((f) => (
+                            <div key={f.id} className="text-xs text-ink-600">
+                              <strong>Niv. {f.level}:</strong> {f.name}
+                              {f.requiresChoice ? ' (elección)' : ''}
+                            </div>
+                          ))}
+                        </>
+                      )}
+                      <div className="text-[11px] text-ink-500 mt-1">
+                        Salvaciones: {c.savingThrows.join(', ')} · Armadura: {c.armorProficiencies}
+                      </div>
+                    </div>
+                  )}
                 </button>
               ))}
             </div>
@@ -576,6 +641,57 @@ export function CharacterWizard({ onComplete, onCancel }: Props) {
           </div>
         )}
 
+
+        {step === 'skills' && classData && (
+          <div className="space-y-3">
+            {(() => {
+              const opt = CLASS_SKILL_OPTIONS[classData.id];
+              if (!opt) {
+                return (
+                  <p className="text-sm text-ink-500">
+                    Esta clase no tiene lista de competencias cargada. Continúa.
+                  </p>
+                );
+              }
+              return (
+                <>
+                  <p className="text-sm text-ink-600">
+                    Elige <strong>{opt.count}</strong> habilidad{opt.count > 1 ? 'es' : ''} de clase
+                    ({chosenClassSkills.length}/{opt.count}). El trasfondo puede añadir otras.
+                  </p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-1 max-h-80 overflow-y-auto">
+                    {opt.skills.map((sk) => {
+                      const selected = chosenClassSkills.includes(sk);
+                      const full = chosenClassSkills.length >= opt.count && !selected;
+                      return (
+                        <button
+                          key={sk}
+                          type="button"
+                          disabled={full}
+                          onClick={() => {
+                            setChosenClassSkills((prev) =>
+                              selected ? prev.filter((x) => x !== sk) : [...prev, sk]
+                            );
+                          }}
+                          className={`text-left px-3 py-2 rounded-lg border-2 text-sm ${
+                            selected
+                              ? 'border-crimson-600 bg-parchment-200'
+                              : full
+                              ? 'border-ink-100 bg-ink-50 text-ink-400'
+                              : 'border-ink-200 bg-white hover:border-ink-400'
+                          }`}
+                        >
+                          {sk}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </>
+              );
+            })()}
+          </div>
+        )}
+
         {step === 'choices' && race && (
           <div className="space-y-4">
             <p className="text-sm text-ink-600">
@@ -681,6 +797,17 @@ export function CharacterWizard({ onComplete, onCancel }: Props) {
                             )}
                             {opt.description && (
                               <p className="text-xs text-ink-600 mt-0.5">{opt.description}</p>
+                            )}
+                            {packSummary(opt.name) && (
+                              <p className="text-[11px] text-ink-500 mt-1 bg-ink-50 border border-ink-100 rounded px-1.5 py-1">
+                                <strong>Contiene:</strong> {packSummary(opt.name)}
+                              </p>
+                            )}
+                            {opt.damage && (
+                              <p className="text-[11px] text-red-800 mt-0.5 font-mono">
+                                {opt.damage} {opt.damageType || ''}
+                                {opt.properties ? ` · ${(opt.properties as string[]).join(', ')}` : ''}
+                              </p>
                             )}
                           </button>
                         ))}

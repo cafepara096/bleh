@@ -65,6 +65,7 @@ export function ItemPicker({ items, onSelect, onClose, addLabel }: Props) {
       damageType: selected.damageType,
       properties: selected.properties,
       equipped: false,
+      proficient: !!selected.damage,
     };
     onSelect(inv);
     setSelected(null);

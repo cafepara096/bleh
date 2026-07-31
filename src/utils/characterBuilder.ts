@@ -77,6 +77,23 @@ export const COMMON_LANGUAGES = [
   'Gigante', 'Infracomún', 'Subcomún',
 ];
 
+
+/** PHB skill lists by class id — player picks N from these */
+export const CLASS_SKILL_OPTIONS: Record<string, { count: number; skills: string[] }> = {
+  barbarian: { count: 2, skills: ['Trato con Animales', 'Atletismo', 'Intimidación', 'Naturaleza', 'Percepción', 'Supervivencia'] },
+  bard: { count: 3, skills: ['Acrobacias', 'Arcanos', 'Atletismo', 'Engaño', 'Historia', 'Perspicacia', 'Intimidación', 'Investigación', 'Medicina', 'Naturaleza', 'Percepción', 'Interpretación', 'Persuasión', 'Religión', 'Juego de Manos', 'Sigilo', 'Supervivencia', 'Trato con Animales'] },
+  cleric: { count: 2, skills: ['Historia', 'Perspicacia', 'Medicina', 'Persuasión', 'Religión'] },
+  druid: { count: 2, skills: ['Arcanos', 'Trato con Animales', 'Perspicacia', 'Medicina', 'Naturaleza', 'Percepción', 'Religión', 'Supervivencia'] },
+  fighter: { count: 2, skills: ['Acrobacias', 'Trato con Animales', 'Atletismo', 'Historia', 'Perspicacia', 'Intimidación', 'Percepción', 'Supervivencia'] },
+  monk: { count: 2, skills: ['Acrobacias', 'Atletismo', 'Historia', 'Perspicacia', 'Religión', 'Sigilo'] },
+  paladin: { count: 2, skills: ['Atletismo', 'Perspicacia', 'Intimidación', 'Medicina', 'Persuasión', 'Religión'] },
+  ranger: { count: 3, skills: ['Trato con Animales', 'Atletismo', 'Perspicacia', 'Investigación', 'Naturaleza', 'Percepción', 'Sigilo', 'Supervivencia'] },
+  rogue: { count: 4, skills: ['Acrobacias', 'Atletismo', 'Engaño', 'Perspicacia', 'Intimidación', 'Investigación', 'Percepción', 'Interpretación', 'Persuasión', 'Juego de Manos', 'Sigilo'] },
+  sorcerer: { count: 2, skills: ['Arcanos', 'Engaño', 'Perspicacia', 'Intimidación', 'Persuasión', 'Religión'] },
+  warlock: { count: 2, skills: ['Arcanos', 'Engaño', 'Historia', 'Intimidación', 'Investigación', 'Naturaleza', 'Religión'] },
+  wizard: { count: 2, skills: ['Arcanos', 'Historia', 'Perspicacia', 'Investigación', 'Medicina', 'Religión'] },
+};
+
 export const STANDARD_ARRAY = [15, 14, 13, 12, 10, 8] as const;
 
 /** Point-buy: total 27 points. Costs from PHB. */
@@ -223,6 +240,8 @@ export function buildCharacterFromWizard(opts: {
   chosenLanguages?: string[];
   /** Override starting inventory (player equipment choices) */
   customInventory?: InventoryItem[];
+  /** Class skill proficiency picks (Spanish or English names) */
+  chosenSkills?: string[];
 }): Character {
   const level = opts.level ?? 1;
   let scores = applyRaceASI(opts.baseScores, opts.race.abilityScoreIncrease);
@@ -295,10 +314,16 @@ export function buildCharacterFromWizard(opts: {
     }
   }
 
-  // Skills from background
+  // Skills from background + class choices
   const skills: Character['skills'] = {};
   if (bg?.skillProficiencies) {
     for (const sk of bg.skillProficiencies) {
+      const id = mapSkillName(sk);
+      if (id) skills[id] = { proficient: true, expertise: false };
+    }
+  }
+  if (opts.chosenSkills) {
+    for (const sk of opts.chosenSkills) {
       const id = mapSkillName(sk);
       if (id) skills[id] = { proficient: true, expertise: false };
     }
@@ -521,7 +546,7 @@ export const SUBCLASSES: Record<string, { id: string; name: string; description:
       name: "Campeón",
       description: "Mejora los aspectos marciales básicos: críticos mejorados y atleta superior.",
       features: [
-        { id: "champ-crit", name: "Crítico mejorado", description: "Tus ataques con armas puntúan crítico en 19-20.", level: 3, source: "subclass" },
+        { id: "champ-crit", name: "Crítico mejorado", description: "Tus ataques con armas puntúan crítico en 19-20.", level: 3, source: "subclass", actionType: "passive" },
       ],
     },
   ],
@@ -591,7 +616,7 @@ export const SUBCLASSES: Record<string, { id: string; name: string; description:
       name: "Colegio del Saber",
       description: "Eruditos y maestros del conocimiento.",
       features: [
-        { id: "lore-skills", name: "Competencias adicionales", description: "Ganas competencia en 3 habilidades a tu elección.", level: 3, source: "subclass" },
+        { id: "lore-skills", name: "Competencias adicionales", description: "Ganas competencia en 3 habilidades a tu elección.", level: 3, source: "subclass", requiresChoice: true, choiceHint: "Indica las 3 habilidades elegidas." },
       ],
     },
   ],
@@ -611,7 +636,7 @@ export const SUBCLASSES: Record<string, { id: string; name: string; description:
       name: "Cazador",
       description: "Especialista en abatir amenazas peligrosas.",
       features: [
-        { id: "hunter-prey", name: "Presa del cazador", description: "Elige una opción de combate contra tu presa (Coloso, Horda, etc.).", level: 3, source: "subclass" },
+        { id: "hunter-prey", name: "Presa del cazador", description: "Elige una opción de combate contra tu presa (Coloso, Horda, etc.).", level: 3, source: "subclass", requiresChoice: true, choiceHint: "Elige: Matador de colosos, Matador de hordas o Matador de gigantes (u opción homebrew)." },
       ],
     },
   ],

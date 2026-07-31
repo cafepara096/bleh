@@ -42,7 +42,15 @@ export function InventoryPanel({ character, onUpdate }: Props) {
   const [addTarget, setAddTarget] = useState<AddTarget>('backpack');
   const [showManual, setShowManual] = useState(false);
   const [manualTarget, setManualTarget] = useState<AddTarget>('backpack');
-  const [newItem, setNewItem] = useState({ name: '', quantity: 1, description: '' });
+  const [newItem, setNewItem] = useState({
+    name: '',
+    quantity: 1,
+    description: '',
+    damage: '',
+    damageType: '',
+    properties: '',
+    proficient: true,
+  });
 
   const [coinAmounts, setCoinAmounts] = useState<Record<string, string>>({
     pp: '',
@@ -69,15 +77,31 @@ export function InventoryPanel({ character, onUpdate }: Props) {
 
   const addManual = () => {
     if (!newItem.name.trim()) return;
+    const props = newItem.properties
+      .split(',')
+      .map((s) => s.trim())
+      .filter(Boolean);
     const item: InventoryItem = {
       id: crypto.randomUUID(),
       name: newItem.name.trim(),
       quantity: newItem.quantity || 1,
       description: newItem.description || undefined,
       equipped: manualTarget === 'hand',
+      damage: newItem.damage.trim() || undefined,
+      damageType: newItem.damageType.trim() || undefined,
+      properties: props.length ? props : undefined,
+      proficient: newItem.proficient,
     };
     setInventory([...character.inventory, item]);
-    setNewItem({ name: '', quantity: 1, description: '' });
+    setNewItem({
+      name: '',
+      quantity: 1,
+      description: '',
+      damage: '',
+      damageType: '',
+      properties: '',
+      proficient: true,
+    });
     setShowManual(false);
   };
 
@@ -88,6 +112,14 @@ export function InventoryPanel({ character, onUpdate }: Props) {
   const moveToHand = (id: string) => {
     setInventory(
       character.inventory.map((i) => (i.id === id ? { ...i, equipped: true } : i))
+    );
+  };
+
+  const toggleProf = (id: string) => {
+    setInventory(
+      character.inventory.map((i) =>
+        i.id === id ? { ...i, proficient: !(i.proficient !== false) } : i
+      )
     );
   };
 
@@ -187,9 +219,26 @@ export function InventoryPanel({ character, onUpdate }: Props) {
               {item.damage} {item.damageType}
             </span>
           )}
+          {item.damage && (
+            <button
+              type="button"
+              onClick={() => toggleProf(item.id)}
+              className={`text-[10px] px-1.5 rounded border ${
+                item.proficient !== false
+                  ? 'bg-green-100 border-green-400 text-green-900'
+                  : 'bg-ink-100 border-ink-300 text-ink-600'
+              }`}
+              title="Alternar competencia con el arma"
+            >
+              {item.proficient !== false ? 'Comp. sí' : 'Comp. no'}
+            </button>
+          )}
         </div>
         {item.description && (
           <p className="text-xs text-ink-600 mt-0.5 line-clamp-2">{item.description}</p>
+        )}
+        {item.properties && item.properties.length > 0 && (
+          <p className="text-[10px] text-ink-500 mt-0.5">{item.properties.join(', ')}</p>
         )}
       </div>
       <div className="flex items-center gap-1 flex-shrink-0">
@@ -416,6 +465,37 @@ export function InventoryPanel({ character, onUpdate }: Props) {
                 className="flex-1 px-2 py-1 border border-ink-400 rounded text-sm"
               />
             </div>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+              <input
+                type="text"
+                placeholder="Daño (1d8)"
+                value={newItem.damage}
+                onChange={(e) => setNewItem({ ...newItem, damage: e.target.value })}
+                className="px-2 py-1 border border-ink-400 rounded text-sm"
+              />
+              <input
+                type="text"
+                placeholder="Tipo (cortante)"
+                value={newItem.damageType}
+                onChange={(e) => setNewItem({ ...newItem, damageType: e.target.value })}
+                className="px-2 py-1 border border-ink-400 rounded text-sm"
+              />
+              <input
+                type="text"
+                placeholder="Props (sutil, ligera)"
+                value={newItem.properties}
+                onChange={(e) => setNewItem({ ...newItem, properties: e.target.value })}
+                className="px-2 py-1 border border-ink-400 rounded text-sm col-span-2"
+              />
+            </div>
+            <label className="flex items-center gap-2 text-xs">
+              <input
+                type="checkbox"
+                checked={newItem.proficient}
+                onChange={(e) => setNewItem({ ...newItem, proficient: e.target.checked })}
+              />
+              Competente con este arma (suma bonif. de competencia al ataque)
+            </label>
             <div className="flex gap-2 flex-wrap">
               <button
                 onClick={addManual}

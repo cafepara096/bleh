@@ -101,6 +101,8 @@ export interface InventoryItem {
   damage?: string;
   damageType?: string;
   properties?: string[];
+  /** Weapon attack uses proficiency bonus when true (default true for weapons) */
+  proficient?: boolean;
 }
 
 export interface Spell {
