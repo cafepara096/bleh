@@ -1,0 +1,567 @@
+[
+  {
+    "id": "goblin",
+    "name": "Goblin",
+    "nameEn": "Goblin",
+    "size": "Pequeño",
+    "type": "humanoide (goblinoide)",
+    "alignment": "Neutral maligno",
+    "armorClass": 15,
+    "hitPoints": "7 (2d6)",
+    "speed": "30 ft",
+    "skills": "Sigilo +6",
+    "senses": "visión en la oscuridad 60 ft, Percepción pasiva 9",
+    "languages": "Común, Goblin",
+    "proficiencyBonus": 2,
+    "traits": [
+      {
+        "name": "Escape ágil",
+        "description": "Puede Desengagerse o Esconderse como acción adicional."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Cimitarra",
+        "description": "Ataque con arma cuerpo a cuerpo",
+        "attackBonus": 4,
+        "damage": "1d6+2",
+        "damageType": "cortante"
+      },
+      {
+        "name": "Arco corto",
+        "description": "Ataque a distancia 80/320",
+        "attackBonus": 4,
+        "damage": "1d6+2",
+        "damageType": "perforante"
+      }
+    ],
+    "variants": [
+      {
+        "name": "Jefe goblin",
+        "description": "Más PG y posiblemente Multiataque."
+      }
+    ],
+    "abilityScores": {
+      "str": 8,
+      "dex": 14,
+      "con": 10,
+      "int": 10,
+      "wis": 8,
+      "cha": 8
+    },
+    "challengeRating": "1/4",
+    "savingThrows": "—"
+  },
+  {
+    "id": "owlbear",
+    "name": "Oso-búho",
+    "nameEn": "Owlbear",
+    "size": "Grande",
+    "type": "monstruosidad",
+    "alignment": "Sin alineamiento",
+    "armorClass": 13,
+    "hitPoints": "59 (7d10+21)",
+    "speed": "40 ft",
+    "skills": "Percepción +3",
+    "senses": "visión en la oscuridad 60 ft, Percepción pasiva 13",
+    "languages": "—",
+    "proficiencyBonus": 2,
+    "traits": [
+      {
+        "name": "Vista aguda",
+        "description": "Ventaja en Percepción basada en la vista."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Multiataque",
+        "description": "Un pico y una garras."
+      },
+      {
+        "name": "Pico",
+        "attackBonus": 7,
+        "damage": "1d10+5",
+        "damageType": "perforante",
+        "description": "Ataque cuerpo a cuerpo"
+      },
+      {
+        "name": "Garras",
+        "attackBonus": 7,
+        "damage": "2d8+5",
+        "damageType": "cortante",
+        "description": "Ataque cuerpo a cuerpo"
+      }
+    ],
+    "abilityScores": {
+      "str": 20,
+      "dex": 12,
+      "con": 17,
+      "int": 3,
+      "wis": 12,
+      "cha": 7
+    },
+    "challengeRating": "3"
+  },
+  {
+    "id": "adult-red-dragon",
+    "name": "Dragón rojo adulto",
+    "nameEn": "Adult Red Dragon",
+    "size": "Enorme",
+    "type": "dragón",
+    "alignment": "Caótico maligno",
+    "armorClass": 19,
+    "hitPoints": "256 (19d12+133)",
+    "speed": "40 ft, trepar 40 ft, volar 80 ft",
+    "skills": "Percepción +13, Sigilo +6",
+    "senses": "visión ciega 60 ft, visión en la oscuridad 120 ft, Percepción pasiva 23",
+    "languages": "Común, Dracónico",
+    "proficiencyBonus": 6,
+    "traits": [
+      {
+        "name": "Resistencia legendaria (3/día)",
+        "description": "Si falla una salvación, puede elegir tener éxito."
+      },
+      {
+        "name": "Armas legendarias",
+        "description": "Ataques de arma son mágicos."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Multiataque",
+        "description": "Ataque de asustar o tres ataques: mordisco y dos garras."
+      },
+      {
+        "name": "Mordisco",
+        "attackBonus": 14,
+        "damage": "2d10+8 perforante + 2d6 fuego",
+        "description": "Cuerpo a cuerpo"
+      },
+      {
+        "name": "Aliento de fuego (Recarga 5–6)",
+        "description": "Cono 60 ft; salvación de Des CD 21, 18d6 fuego o mitad."
+      }
+    ],
+    "legendaryActions": [
+      {
+        "name": "Detectar",
+        "description": "Prueba de Percepción"
+      },
+      {
+        "name": "Ataque de cola",
+        "description": "Un ataque de cola"
+      },
+      {
+        "name": "Ataque alado (cuesta 2)",
+        "description": "Vuela y puede derribar criaturas cercanas"
+      }
+    ],
+    "variants": [
+      {
+        "name": "Dragón rojo joven",
+        "description": "CR menor, menos PG y daño."
+      },
+      {
+        "name": "Dragón rojo ancestral",
+        "description": "CR mucho mayor."
+      }
+    ],
+    "abilityScores": {
+      "str": 27,
+      "dex": 10,
+      "con": 25,
+      "int": 16,
+      "wis": 13,
+      "cha": 21
+    },
+    "challengeRating": "17",
+    "savingThrows": "Des +6, Con +13, Sab +7, Car +11"
+  },
+  {
+    "id": "zombie",
+    "name": "Zombi",
+    "nameEn": "Zombie",
+    "size": "Mediano",
+    "type": "no muerto",
+    "alignment": "Neutral maligno",
+    "armorClass": 8,
+    "hitPoints": "22 (3d8+9)",
+    "speed": "20 ft",
+    "senses": "visión en la oscuridad 60 ft, Percepción pasiva 8",
+    "languages": "entiende los idiomas que conocía en vida pero no puede hablar",
+    "proficiencyBonus": 2,
+    "traits": [
+      {
+        "name": "Fortaleza de no muerto",
+        "description": "Si el daño lo reduce a 0 PG, hace salvación de Con CD 5 + daño (salvo radiante o crítico) para quedar a 1 PG."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Slam",
+        "attackBonus": 3,
+        "damage": "1d6+1",
+        "damageType": "contundente",
+        "description": "Ataque cuerpo a cuerpo"
+      }
+    ],
+    "abilityScores": {
+      "str": 13,
+      "dex": 6,
+      "con": 16,
+      "int": 3,
+      "wis": 6,
+      "cha": 5
+    },
+    "challengeRating": "1/4",
+    "savingThrows": "Sab +0"
+  },
+  {
+    "id": "wolf",
+    "name": "Lobo",
+    "nameEn": "Wolf",
+    "size": "Mediano",
+    "type": "bestia",
+    "alignment": "Sin alineamiento",
+    "armorClass": 13,
+    "hitPoints": "11 (2d8+2)",
+    "speed": "40 ft",
+    "skills": "Percepción +3, Sigilo +4",
+    "senses": "Percepción pasiva 13",
+    "languages": "—",
+    "proficiencyBonus": 2,
+    "traits": [
+      {
+        "name": "Tácticas de manada",
+        "description": "Ventaja en ataques si un aliado está a 5 ft del objetivo."
+      },
+      {
+        "name": "Olfato agudo",
+        "description": "Ventaja en Percepción por olfato."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Mordisco",
+        "attackBonus": 4,
+        "damage": "2d4+2",
+        "damageType": "perforante",
+        "description": "Si impacta, el objetivo hace salvación de Fue CD 11 o cae prono."
+      }
+    ],
+    "abilityScores": {
+      "str": 12,
+      "dex": 15,
+      "con": 12,
+      "int": 3,
+      "wis": 12,
+      "cha": 6
+    },
+    "challengeRating": "1/4"
+  },
+  {
+    "id": "bandit",
+    "name": "Bandido",
+    "nameEn": "Bandit",
+    "size": "Mediano",
+    "type": "humanoide",
+    "alignment": "Cualquier no legal",
+    "armorClass": 12,
+    "hitPoints": "11 (2d8+2)",
+    "speed": "30 ft",
+    "senses": "Percepción pasiva 10",
+    "languages": "Cualquier idioma (normalmente Común)",
+    "proficiencyBonus": 2,
+    "actions": [
+      {
+        "name": "Cimitarra",
+        "attackBonus": 3,
+        "damage": "1d6+1",
+        "damageType": "cortante",
+        "description": "Cuerpo a cuerpo"
+      },
+      {
+        "name": "Ballesta ligera",
+        "attackBonus": 3,
+        "damage": "1d8+1",
+        "damageType": "perforante",
+        "description": "80/320 ft"
+      }
+    ],
+    "abilityScores": {
+      "str": 11,
+      "dex": 12,
+      "con": 12,
+      "int": 10,
+      "wis": 10,
+      "cha": 10
+    },
+    "challengeRating": "1/8"
+  },
+  {
+    "id": "skeleton",
+    "name": "Esqueleto",
+    "nameEn": "Skeleton",
+    "size": "Mediano",
+    "type": "no muerto",
+    "alignment": "Legal maligno",
+    "armorClass": 13,
+    "hitPoints": "13 (2d8+4)",
+    "speed": "30 ft",
+    "senses": "visión en la oscuridad 60 ft, Percepción pasiva 9",
+    "languages": "entiende los idiomas que conocía en vida pero no puede hablar",
+    "proficiencyBonus": 2,
+    "traits": [
+      {
+        "name": "Vulnerabilidad",
+        "description": "Vulnerabilidad a daño contundente."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Espada corta",
+        "attackBonus": 4,
+        "damage": "1d6+2",
+        "damageType": "perforante",
+        "description": "Cuerpo a cuerpo"
+      },
+      {
+        "name": "Arco corto",
+        "attackBonus": 4,
+        "damage": "1d6+2",
+        "damageType": "perforante",
+        "description": "80/320 ft"
+      }
+    ],
+    "abilityScores": {
+      "str": 10,
+      "dex": 14,
+      "con": 15,
+      "int": 6,
+      "wis": 8,
+      "cha": 5
+    },
+    "challengeRating": "1/4"
+  },
+  {
+    "id": "ogre",
+    "name": "Ogro",
+    "nameEn": "Ogre",
+    "size": "Grande",
+    "type": "gigante",
+    "alignment": "Caótico maligno",
+    "armorClass": 11,
+    "hitPoints": "59 (7d10+21)",
+    "speed": "40 ft",
+    "senses": "visión en la oscuridad 60 ft, Percepción pasiva 8",
+    "languages": "Común, Gigante",
+    "proficiencyBonus": 2,
+    "actions": [
+      {
+        "name": "Garrote grande",
+        "attackBonus": 6,
+        "damage": "2d8+4",
+        "damageType": "contundente",
+        "description": "Cuerpo a cuerpo"
+      },
+      {
+        "name": "Jabalina",
+        "attackBonus": 6,
+        "damage": "2d6+4",
+        "damageType": "perforante",
+        "description": "Cuerpo a cuerpo o 30/120 ft"
+      }
+    ],
+    "abilityScores": {
+      "str": 19,
+      "dex": 8,
+      "con": 16,
+      "int": 5,
+      "wis": 7,
+      "cha": 7
+    },
+    "challengeRating": "2"
+  },
+  {
+    "id": "beholder-zombie",
+    "name": "Zombi contemplador",
+    "nameEn": "Beholder Zombie",
+    "size": "Grande",
+    "type": "no muerto",
+    "alignment": "Neutral maligno",
+    "armorClass": 15,
+    "hitPoints": "93 (11d10+33)",
+    "speed": "0 ft, volar 20 ft (levitar)",
+    "senses": "visión en la oscuridad 60 ft, Percepción pasiva 9",
+    "languages": "entiende Profundo y Común pero no habla",
+    "proficiencyBonus": 3,
+    "traits": [
+      {
+        "name": "Fortaleza de no muerto",
+        "description": "Como el zombi."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Mordisco",
+        "attackBonus": 3,
+        "damage": "4d6",
+        "damageType": "perforante",
+        "description": "Cuerpo a cuerpo"
+      },
+      {
+        "name": "Rayo de ojo",
+        "description": "Dispara un rayo al azar (efectos de contorno, miedo, etc. según mesa)."
+      }
+    ],
+    "variants": [
+      {
+        "name": "Contemplador (vivo)",
+        "description": "CR mucho mayor, muchos rayos y antimagia."
+      }
+    ],
+    "abilityScores": {
+      "str": 10,
+      "dex": 8,
+      "con": 16,
+      "int": 3,
+      "wis": 8,
+      "cha": 5
+    },
+    "challengeRating": "5",
+    "savingThrows": "Sab +2"
+  },
+  {
+    "id": "kobold",
+    "name": "Kobold",
+    "nameEn": "Kobold",
+    "size": "Pequeño",
+    "type": "humanoide",
+    "alignment": "Legal maligno",
+    "armorClass": 12,
+    "hitPoints": "5 (2d6-2)",
+    "speed": "30 ft",
+    "senses": "visión en la oscuridad 60 ft, Percepción pasiva 8",
+    "languages": "Común, Dracónico",
+    "proficiencyBonus": 2,
+    "traits": [
+      {
+        "name": "Sensibilidad a la luz solar",
+        "description": "Desventaja en ataques y Percepción visual bajo luz solar."
+      },
+      {
+        "name": "Tácticas de manada",
+        "description": "Ventaja en ataque si un aliado está a 5 ft del objetivo."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Daga",
+        "attackBonus": 4,
+        "damage": "1d4+2",
+        "damageType": "perforante",
+        "description": "Cuerpo a cuerpo o 20/60"
+      },
+      {
+        "name": "Honda",
+        "attackBonus": 4,
+        "damage": "1d4+2",
+        "damageType": "contundente",
+        "description": "30/120 ft"
+      }
+    ],
+    "abilityScores": {
+      "str": 7,
+      "dex": 15,
+      "con": 9,
+      "int": 8,
+      "wis": 7,
+      "cha": 8
+    },
+    "challengeRating": "1/8"
+  },
+  {
+    "id": "flameskull",
+    "name": "Calavera llameante",
+    "nameEn": "Flameskull",
+    "size": "Diminuto",
+    "type": "no muerto",
+    "alignment": "Neutral maligno",
+    "armorClass": 13,
+    "hitPoints": "40 (9d4+18)",
+    "speed": "0 ft, volar 40 ft",
+    "skills": "Arcana +5, Percepción +2",
+    "senses": "visión en la oscuridad 60 ft, Percepción pasiva 12",
+    "languages": "Común",
+    "proficiencyBonus": 2,
+    "traits": [
+      {
+        "name": "Iluminación",
+        "description": "Luz brillante 15 ft y penumbra 15 ft más."
+      },
+      {
+        "name": "Rejuvenecimiento",
+        "description": "Si se destruye, se reforma en 1d10 días salvo que se lance agua bendita sobre sus restos."
+      },
+      {
+        "name": "Lanzamiento de conjuros",
+        "description": "Conjuros de mago (Innato/preparados según mesa): Fireball, etc."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Multiataque",
+        "description": "Dos ataques de Rayo de fuego."
+      },
+      {
+        "name": "Rayo de fuego",
+        "attackBonus": 5,
+        "damage": "3d6",
+        "damageType": "fuego",
+        "description": "Ataque a distancia de conjuro 30 ft"
+      }
+    ],
+    "abilityScores": {
+      "str": 1,
+      "dex": 17,
+      "con": 14,
+      "int": 16,
+      "wis": 10,
+      "cha": 11
+    },
+    "challengeRating": "4"
+  },
+  {
+    "id": "guard",
+    "name": "Guardia",
+    "nameEn": "Guard",
+    "size": "Mediano",
+    "type": "humanoide",
+    "alignment": "Cualquier",
+    "armorClass": 16,
+    "hitPoints": "11 (2d8+2)",
+    "speed": "30 ft",
+    "skills": "Percepción +2",
+    "senses": "Percepción pasiva 12",
+    "languages": "Cualquier idioma (normalmente Común)",
+    "proficiencyBonus": 2,
+    "actions": [
+      {
+        "name": "Lanza",
+        "attackBonus": 3,
+        "damage": "1d6+1",
+        "damageType": "perforante",
+        "description": "Cuerpo a cuerpo o 20/60 ft"
+      }
+    ],
+    "abilityScores": {
+      "str": 13,
+      "dex": 12,
+      "con": 12,
+      "int": 10,
+      "wis": 11,
+      "cha": 10
+    },
+    "challengeRating": "1/8"
+  }
+]

@@ -32,6 +32,9 @@ import { LevelUpModal } from './LevelUpModal';
 import { SubclassPanel } from './SubclassPanel';
 import { SorceryPointsPanel } from './SorceryPointsPanel';
 import { FeatureTablesPanel } from './FeatureTablesPanel';
+import { ConditionsPanel } from './ConditionsPanel';
+import { CampaignNotesPanel } from './CampaignNotesPanel';
+import { exportCharacterPdf } from '../../utils/exportCharacterPdf';
 import { ALIGNMENTS, getAlignmentInfo } from '../../utils/alignments';
 import { CombatPanel } from './CombatPanel';
 import { ActionsPanel } from './ActionsPanel';
@@ -226,6 +229,12 @@ export function CharacterSheet({ character: initial, onSave, onBack, onExport }:
           >
             <TrendingUp className="w-4 h-4" /> Subir nivel
           </button>
+            <button
+              type="button"
+              onClick={() => exportCharacterPdf(character)}
+              className="text-xs px-2 py-1 border border-parchment-400 rounded hover:bg-ink-800"
+            >
+              Exportar PDF</button>
           <button
             onClick={() => onExport(character)}
             className="flex items-center gap-1 px-3 py-2 bg-ink-700 hover:bg-ink-600 rounded-lg text-sm"
@@ -337,6 +346,10 @@ export function CharacterSheet({ character: initial, onSave, onBack, onExport }:
       {/* Content */}
       <div className="bg-parchment-50 border-2 border-t-0 border-ink-800 rounded-b-xl p-4">
         {activeTab === 'main' && (
+          <>
+          <div className="mb-4">
+            <ConditionsPanel character={character} onUpdate={(partial) => update(partial)} />
+          </div>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
             {/* Ability Scores */}
             <div className="lg:col-span-2 flex lg:flex-col flex-wrap gap-2 justify-center">
@@ -547,18 +560,31 @@ export function CharacterSheet({ character: initial, onSave, onBack, onExport }:
               />
             </div>
           </div>
+          </>
         )}
 
         {activeTab === 'combat' && (
-          <div className="space-y-6">
-            {/* Arriba: espacios, hechicería/metamagia, conjuros — abajo: acciones (ActionsPanel) */}
+          <div className="space-y-4">
+            {/* 1 acciones de rasgos · 2 espacios · 3 SP/metamagia · 4 conjuros · 5 armas · 6 comunes */}
+            <ActionsPanel
+              character={character}
+              onUpdate={(partial) => update(partial)}
+              sections={['rest', 'features']}
+            />
             <CombatPanel
               character={character}
               onUpdate={(partial) => update(partial)}
+              sections={['slots', 'spells']}
             />
             <ActionsPanel
               character={character}
               onUpdate={(partial) => update(partial)}
+              sections={['weapons']}
+            />
+            <ActionsPanel
+              character={character}
+              onUpdate={(partial) => update(partial)}
+              sections={['common']}
             />
           </div>
         )}
@@ -586,6 +612,8 @@ export function CharacterSheet({ character: initial, onSave, onBack, onExport }:
         )}
 
         {activeTab === 'notes' && (
+          <div className="space-y-6">
+            <CampaignNotesPanel character={character} onUpdate={(partial) => update(partial)} />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-3">
               <div>
@@ -672,6 +700,7 @@ export function CharacterSheet({ character: initial, onSave, onBack, onExport }:
                 />
               </div>
             </div>
+          </div>
           </div>
         )}
       </div>

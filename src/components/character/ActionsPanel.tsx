@@ -15,6 +15,7 @@ import { Swords, Zap, Shield, Sparkles, BookOpen, List } from 'lucide-react';
 interface Props {
   character: Character;
   onUpdate?: (partial: Partial<Character>) => void;
+  sections?: Array<'rest' | 'weapons' | 'spells' | 'features' | 'common'>;
 }
 
 type Bucket = 'bonus' | 'reaction' | 'special' | 'passive';
@@ -79,7 +80,10 @@ function weaponAbility(
   return { mod: strMod, label: 'Fuerza', key: 'str' };
 }
 
-export function ActionsPanel({ character, onUpdate }: Props) {
+export function ActionsPanel({ character, onUpdate, sections }: Props) {
+  const show = (s: 'rest' | 'weapons' | 'spells' | 'features' | 'common') =>
+    !sections || sections.includes(s);
+
   const { spells: catalog } = useSpells();
   const { items: itemCatalog } = useItems();
   const strMod = getModifier(character.abilityScores.str);
@@ -230,7 +234,7 @@ export function ActionsPanel({ character, onUpdate }: Props) {
 
   return (
     <div className="space-y-4">
-      <div className="flex flex-wrap gap-2 text-xs items-center">
+      {show('rest') && <div className="flex flex-wrap gap-2 text-xs items-center">
         <button
           type="button"
           onClick={() => restoreAllByRecovery('short')}
@@ -249,10 +253,10 @@ export function ActionsPanel({ character, onUpdate }: Props) {
           Iniciativa {formatModifier(dexMod)} · Percepción pasiva{' '}
           {10 + calculateSkillBonus(character, 'perception')} · CA {character.armorClass}
         </span>
-      </div>
+      </div>}
 
       {/* ===== WEAPONS ===== */}
-      <section className="border-2 border-red-400 rounded-xl bg-red-50/40 overflow-hidden">
+      {show('weapons') && <section className="border-2 border-red-400 rounded-xl bg-red-50/40 overflow-hidden">
         <div className="px-3 py-2 border-b border-red-200 flex items-center gap-2 bg-red-100/60">
           <Swords className="w-4 h-4 text-red-800" />
           <h3 className="font-bold text-sm uppercase tracking-wide text-red-900">
@@ -351,10 +355,10 @@ export function ActionsPanel({ character, onUpdate }: Props) {
             </div>
           </div>
         </div>
-      </section>
+      </section>}
 
       {/* ===== SPELLS ===== */}
-      <section className="border-2 border-purple-400 rounded-xl bg-purple-50/40 overflow-hidden">
+      {show('spells') && <section className="border-2 border-purple-400 rounded-xl bg-purple-50/40 overflow-hidden">
         <div className="px-3 py-2 border-b border-purple-200 flex items-center gap-2 bg-purple-100/60">
           <BookOpen className="w-4 h-4 text-purple-800" />
           <h3 className="font-bold text-sm uppercase tracking-wide text-purple-900">
@@ -425,10 +429,10 @@ export function ActionsPanel({ character, onUpdate }: Props) {
             );
           })}
         </div>
-      </section>
+      </section>}
 
       {/* ===== FEATURE BUCKETS ===== */}
-      {(['bonus', 'reaction', 'special', 'passive'] as Bucket[]).map((key) => {
+      {show('features') && (['bonus', 'reaction', 'special', 'passive'] as Bucket[]).map((key) => {
         const items = buckets[key];
         if (items.length === 0) return null;
         const meta = BUCKET_META[key];
@@ -462,7 +466,7 @@ export function ActionsPanel({ character, onUpdate }: Props) {
       })}
 
       {/* ===== STANDARD ACTIONS (muted) ===== */}
-      <section className="border border-ink-200 rounded-xl bg-ink-50/40 overflow-hidden opacity-90">
+      {show('common') && <section className="border border-ink-200 rounded-xl bg-ink-50/40 overflow-hidden opacity-90">
         <div className="px-3 py-1.5 border-b border-ink-200 flex items-center gap-2 bg-ink-100/50">
           <List className="w-3.5 h-3.5 text-ink-500" />
           <h3 className="font-semibold text-xs uppercase tracking-wide text-ink-600">
@@ -483,7 +487,7 @@ export function ActionsPanel({ character, onUpdate }: Props) {
             </div>
           ))}
         </div>
-      </section>
+      </section>}
 
     </div>
   );

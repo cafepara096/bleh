@@ -214,6 +214,10 @@ export interface Character {
 
   // Notes
   notes?: string;
+  /** Estados activos (D&D 2024 + homebrew) */
+  conditions?: string[];
+  /** Notas de campaña en paneles */
+  campaignNotes?: { id: string; title: string; body: string; updatedAt?: string }[];
   appearance?: string;
   backstory?: string;
 
@@ -226,25 +230,39 @@ export interface Character {
 export interface Monster {
   id: string;
   name: string;
+  nameEn?: string;
   size: string;
   type: string;
-  alignment: string;
+  alignment?: string;
   armorClass: number;
   hitPoints: string;
   speed: string;
   abilityScores: AbilityScores;
+  /** aliases planos opcionales (compat) */
+  str?: number;
+  dex?: number;
+  con?: number;
+  int?: number;
+  wis?: number;
+  cha?: number;
   savingThrows?: string;
+  saves?: string;
   skills?: string;
   damageResistances?: string;
   damageImmunities?: string;
   conditionImmunities?: string;
-  senses: string;
-  languages: string;
+  senses?: string;
+  languages?: string;
   challengeRating: string;
+  /** alias */
+  challenge?: string;
   proficiencyBonus?: number;
   traits?: { name: string; description: string }[];
-  actions?: { name: string; description: string; damage?: string }[];
+  actions?: { name: string; description: string; damage?: string; damageType?: string; attackBonus?: number }[];
+  bonusActions?: { name: string; description: string; damage?: string }[];
+  reactions?: { name: string; description: string }[];
   legendaryActions?: { name: string; description: string }[];
+  variants?: { name: string; description: string }[];
   homebrew?: boolean;
   description?: string;
 }
