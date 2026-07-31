@@ -1,35 +1,41 @@
 /**
- * Approximate D&D 5e (SRD) limits for known/prepared spells.
- * Simplified for the app — full multiclass tables not included.
+ * Límites de trucos / conjuros conocidos — orientado a PHB 2024.
+ * Tablas simplificadas (sin multiclass completo).
  */
 
 export type CasterKind = 'full' | 'half' | 'third' | 'pact' | 'none';
 
-/** Cantrips known by level for full casters (bard, cleric, druid, sorcerer, warlock, wizard) */
+// index = character level 0..20
+/** Full casters (cleric, druid, wizard baseline cantrips) */
 const FULL_CANTRIPS = [0, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5];
-/** Sorcerer/Warlock cantrips slightly different at low levels — use shared table */
+/** Bard 2024: starts with 2 */
+const BARD_CANTRIPS = [0, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4];
+/** Sorcerer 2024: often 4 at 1 */
+const SORCERER_CANTRIPS = [0, 4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6];
+/** Warlock */
+const PACT_CANTRIPS = [0, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4];
+/** Ranger/Paladin half — cantrips only if granted by feature; 2024 ranger may get some later */
+const HALF_CANTRIPS = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
-const HALF_CANTRIPS = [0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3]; // ranger/paladin from 2
-
-/** Spells known (sorcerer-like fixed known) by level — full spontaneous */
-const FULL_SPELLS_KNOWN = [
+/** Spells known — bard/sorcerer spontaneous */
+const BARD_SPELLS_KNOWN = [
   0, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 15, 15, 16, 18, 19, 19, 20, 22, 22, 22,
 ];
-
-/** Wizard prepares Int mod + level; we use a soft max for UI */
-const WIZARD_PREPARE_BASE = (level: number, intMod: number) =>
-  Math.max(1, level + intMod);
-
-/** Warlock spells known */
+const SORCERER_SPELLS_KNOWN = [
+  0, 2, 4, 6, 7, 8, 9, 10, 11, 12, 12, 13, 13, 14, 14, 15, 15, 16, 16, 16, 17,
+];
 const PACT_SPELLS_KNOWN = [
   0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 11, 11, 12, 12, 13, 13, 14, 14, 15, 15,
 ];
-const PACT_CANTRIPS = [0, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4];
-
-/** Half caster spells known (ranger) — simplified */
 const HALF_SPELLS_KNOWN = [
   0, 0, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11,
 ];
+const RANGER_SPELLS_KNOWN = [
+  0, 0, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11,
+];
+
+const WIZARD_PREPARE_BASE = (level: number, intMod: number) =>
+  Math.max(1, level + intMod);
 
 export function getCasterKindFromClassId(classId?: string): CasterKind {
   if (!classId) return 'none';
@@ -39,7 +45,6 @@ export function getCasterKindFromClassId(classId?: string): CasterKind {
   if (full.includes(classId)) return 'full';
   if (half.includes(classId)) return 'half';
   if (pact.includes(classId)) return 'pact';
-  // homebrew with spellcasting will pass type from class data
   return 'none';
 }
 
@@ -50,14 +55,16 @@ export function getCantripLimit(
 ): number {
   const lv = Math.min(20, Math.max(0, level));
   if (kind === 'none') return 0;
-  if (kind === 'pact') return PACT_CANTRIPS[lv] ?? 4;
-  if (kind === 'half') return HALF_CANTRIPS[lv] ?? 3;
+  if (classId === 'sorcerer') return SORCERER_CANTRIPS[lv] ?? 6;
+  if (classId === 'bard') return BARD_CANTRIPS[lv] ?? 4;
+  if (classId === 'warlock' || kind === 'pact') return PACT_CANTRIPS[lv] ?? 4;
+  if (kind === 'half') return HALF_CANTRIPS[lv] ?? 0;
   if (classId === 'wizard') {
-    // Wizard: 3 at 1, +1 at 4 and 10
     if (lv >= 10) return 5;
     if (lv >= 4) return 4;
     return 3;
   }
+  // cleric / druid
   return FULL_CANTRIPS[lv] ?? 4;
 }
 
@@ -69,20 +76,19 @@ export function getSpellKnownLimit(
 ): number | 'prepared' {
   const lv = Math.min(20, Math.max(0, level));
   if (kind === 'none') return 0;
-  if (kind === 'pact') return PACT_SPELLS_KNOWN[lv] ?? 15;
-  if (kind === 'half') return HALF_SPELLS_KNOWN[lv] ?? 11;
-  // Cleric/Druid/Paladin prepare; Wizard prepares
-  if (classId === 'cleric' || classId === 'druid' || classId === 'paladin') {
-    return 'prepared';
+  if (classId === 'warlock' || kind === 'pact') return PACT_SPELLS_KNOWN[lv] ?? 15;
+  if (classId === 'ranger') return RANGER_SPELLS_KNOWN[lv] ?? 11;
+  if (classId === 'paladin' || kind === 'half') {
+    if (classId === 'paladin') return 'prepared';
+    return HALF_SPELLS_KNOWN[lv] ?? 11;
   }
-  if (classId === 'wizard') {
-    return WIZARD_PREPARE_BASE(lv, abilityMod);
-  }
-  // Bard, sorcerer: known list
-  return FULL_SPELLS_KNOWN[lv] ?? 22;
+  if (classId === 'cleric' || classId === 'druid') return 'prepared';
+  if (classId === 'wizard') return WIZARD_PREPARE_BASE(lv, abilityMod);
+  if (classId === 'sorcerer') return SORCERER_SPELLS_KNOWN[lv] ?? 17;
+  if (classId === 'bard') return BARD_SPELLS_KNOWN[lv] ?? 22;
+  return BARD_SPELLS_KNOWN[lv] ?? 22;
 }
 
-/** Max spell level available by character level (full caster) */
 export function maxSpellLevelAvailable(kind: CasterKind, level: number): number {
   if (kind === 'none') return 0;
   if (kind === 'pact') {
@@ -100,7 +106,6 @@ export function maxSpellLevelAvailable(kind: CasterKind, level: number): number 
     if (level >= 2) return 1;
     return 0;
   }
-  // full
   if (level >= 17) return 9;
   if (level >= 15) return 8;
   if (level >= 13) return 7;
@@ -113,10 +118,8 @@ export function maxSpellLevelAvailable(kind: CasterKind, level: number): number 
   return 0;
 }
 
-/** Spell slots by level for full casters (SRD table simplified) */
 export function getFullCasterSlots(level: number): Record<number, number> {
   const table: Record<number, number[]> = {
-    // index 0 unused; values are max slots for spell levels 1-9
     1: [2],
     2: [3],
     3: [4, 2],
@@ -155,4 +158,26 @@ export function getPactSlots(level: number): { level: number; count: number } {
   if (level >= 3) return { level: 2, count: 2 };
   if (level >= 2) return { level: 1, count: 2 };
   return { level: 1, count: 1 };
+}
+
+/** Sorcery points max = sorcerer level (2024 Font of Magic) */
+export function getSorceryPointsMax(level: number): number {
+  return Math.min(20, Math.max(0, level));
+}
+
+/** SP cost to create a spell slot of given level (PHB table) */
+export function spCostForSlot(slotLevel: number): number {
+  const costs: Record<number, number> = {
+    1: 2,
+    2: 3,
+    3: 5,
+    4: 6,
+    5: 7,
+  };
+  return costs[slotLevel] ?? 99;
+}
+
+/** SP gained by converting a spell slot of given level */
+export function spFromSlot(slotLevel: number): number {
+  return slotLevel; // 1st→1 SP, 2nd→2 SP, etc.
 }

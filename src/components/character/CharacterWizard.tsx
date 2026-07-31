@@ -243,6 +243,9 @@ export function CharacterWizard({ onComplete, onCancel }: Props) {
       }
     }
     if (alignment) char.alignment = alignment;
+    if (classData.id === 'sorcerer') {
+      char.sorceryPoints = { current: 1, max: 1 };
+    }
     onComplete(char);
   };
 

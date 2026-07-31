@@ -390,6 +390,10 @@ export function LevelUpModal({ character, onConfirm, onClose }: Props) {
           {needsSubclass && (
             <section className="bg-purple-50 border border-purple-200 rounded-lg p-3">
               <h3 className="font-bold text-sm mb-2">Elegir subclase</h3>
+              <p className="text-xs text-ink-600 mb-2">
+                Revisa qué otorga cada una (rasgos por nivel). Al confirmar se añaden los rasgos
+                de este nivel y los anteriores aplicables.
+              </p>
               <div className="space-y-2">
                 {subclassOptions.map((s) => (
                   <button

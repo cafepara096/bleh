@@ -29,6 +29,8 @@ import {
   X,
 } from 'lucide-react';
 import { LevelUpModal } from './LevelUpModal';
+import { SubclassPanel } from './SubclassPanel';
+import { SorceryPointsPanel } from './SorceryPointsPanel';
 import { ALIGNMENTS, getAlignmentInfo } from '../../utils/alignments';
 import { CombatPanel } from './CombatPanel';
 import { ActionsPanel } from './ActionsPanel';
@@ -42,7 +44,7 @@ interface Props {
 
 export function CharacterSheet({ character: initial, onSave, onBack, onExport }: Props) {
   const [character, setCharacter] = useState<Character>(initial);
-  const [activeTab, setActiveTab] = useState<'main' | 'combat' | 'inventory' | 'features' | 'notes'>('main');
+  const [activeTab, setActiveTab] = useState<'main' | 'combat' | 'inventory' | 'features' | 'subclass' | 'notes'>('main');
   const [dirty, setDirty] = useState(false);
   const [showLevelUp, setShowLevelUp] = useState(false);
   const [showPendingChoices, setShowPendingChoices] = useState(false);
@@ -311,7 +313,7 @@ export function CharacterSheet({ character: initial, onSave, onBack, onExport }:
 
       {/* Tabs */}
       <div className="bg-parchment-100 border-x-2 border-ink-800 flex">
-        {(['main', 'combat', 'inventory', 'features', 'notes'] as const).map((tab) => (
+        {(['main', 'combat', 'inventory', 'features', 'subclass', 'notes'] as const).map((tab) => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
@@ -325,6 +327,7 @@ export function CharacterSheet({ character: initial, onSave, onBack, onExport }:
             {tab === 'combat' && 'Combate'}
             {tab === 'inventory' && 'Inventario'}
             {tab === 'features' && 'Rasgos'}
+            {tab === 'subclass' && 'Subclase'}
             {tab === 'notes' && 'Notas'}
           </button>
         ))}
@@ -547,6 +550,7 @@ export function CharacterSheet({ character: initial, onSave, onBack, onExport }:
 
         {activeTab === 'combat' && (
           <div className="space-y-6">
+            <SorceryPointsPanel character={character} onUpdate={(partial) => update(partial)} />
             <ActionsPanel
               character={character}
               onUpdate={(partial) => update(partial)}
@@ -570,6 +574,13 @@ export function CharacterSheet({ character: initial, onSave, onBack, onExport }:
             character={character}
             onUpdate={(features) => update({ features })}
           />
+        )}
+
+        {activeTab === 'subclass' && (
+          <div className="space-y-4">
+            <SubclassPanel character={character} onUpdate={(partial) => update(partial)} />
+            <SorceryPointsPanel character={character} onUpdate={(partial) => update(partial)} />
+          </div>
         )}
 
         {activeTab === 'notes' && (
