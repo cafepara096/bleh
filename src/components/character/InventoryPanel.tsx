@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import type { Character, InventoryItem } from '../../types/dnd';
 import { useItems } from '../../hooks/useItems';
+import { resolveInventoryItem } from '../../utils/catalogResolve';
 import { ItemPicker } from '../content/ItemPicker';
 import { totalCurrencyInGP } from '../../utils/character';
 import {
@@ -38,6 +39,7 @@ const COIN_ORDER: (keyof Character['currency'])[] = ['pp', 'gp', 'ep', 'sp', 'cp
 
 export function InventoryPanel({ character, onUpdate }: Props) {
   const { items } = useItems();
+  const displayInventory = character.inventory.map((i) => resolveInventoryItem(i, items));
   const [showPicker, setShowPicker] = useState(false);
   const [addTarget, setAddTarget] = useState<AddTarget>('backpack');
   const [showManual, setShowManual] = useState(false);
@@ -63,8 +65,8 @@ export function InventoryPanel({ character, onUpdate }: Props) {
   const [convertTo, setConvertTo] = useState<keyof Character['currency']>('sp');
   const [convertAmount, setConvertAmount] = useState('');
 
-  const inHand = character.inventory.filter((i) => i.equipped);
-  const inBackpack = character.inventory.filter((i) => !i.equipped);
+  const inHand = displayInventory.filter((i) => i.equipped);
+  const inBackpack = displayInventory.filter((i) => !i.equipped);
 
   const setInventory = (inventory: InventoryItem[]) => {
     onUpdate({ inventory });
@@ -213,7 +215,14 @@ export function InventoryPanel({ character, onUpdate }: Props) {
     >
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2 flex-wrap">
-          <span className="font-medium truncate">{item.name}</span>
+          <span className="font-medium truncate">
+            {item.name}
+            {'nameEn' in item && (item as { nameEn?: string }).nameEn && (
+              <span className="ml-1 text-[10px] font-normal text-ink-400">
+                ({(item as { nameEn?: string }).nameEn})
+              </span>
+            )}
+          </span>
           {item.damage && (
             <span className="text-xs bg-red-100 text-red-800 px-1 rounded">
               {item.damage} {item.damageType}

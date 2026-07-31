@@ -14,8 +14,8 @@ import {
   countExtraLanguageChoices,
   COMMON_LANGUAGES,
   CLASS_SKILL_OPTIONS,
-  ALIGNMENTS,
 } from '../../utils/characterBuilder';
+import { ALIGNMENTS } from '../../utils/alignments';
 import { expandPackItems, packSummary } from '../../utils/equipmentPacks';
 import startingEquipment from '../../data/starting-equipment.json';
 import type { InventoryItem } from '../../types/dnd';
@@ -68,7 +68,12 @@ export function CharacterWizard({ onComplete, onCancel }: Props) {
 
   const race = races.find((r) => r.id === raceId) || null;
   const classData = classes.find((c) => c.id === classId) || null;
-  const subclassOptions = classId ? SUBCLASSES[classId] || [] : [];
+  const subclassOptions =
+    classData?.subclasses?.length
+      ? classData.subclasses
+      : classId
+      ? SUBCLASSES[classId] || []
+      : [];
   const subclass = subclassOptions.find((s) => s.id === subclassId);
 
   const finalScores = useMemo(() => {
@@ -287,10 +292,15 @@ export function CharacterWizard({ onComplete, onCancel }: Props) {
               >
                 <option value="">— Opcional —</option>
                 {ALIGNMENTS.map((a) => (
-                  <option key={a} value={a}>{a}</option>
+                  <option key={a.id} value={a.name}>{a.name}</option>
                 ))}
               </select>
-              <p className="text-xs text-ink-500 mt-1">En D&amp;D 2024 el alineamiento es principalmente roleplay.</p>
+              {ALIGNMENTS.find((a) => a.name === alignment) && (
+                <p className="text-xs text-ink-600 mt-1.5 bg-parchment-100 border border-ink-200 rounded px-2 py-1.5">
+                  {ALIGNMENTS.find((a) => a.name === alignment)!.description}
+                </p>
+              )}
+              <p className="text-xs text-ink-500 mt-1">En D&D 2024 el alineamiento es principalmente roleplay.</p>
             </div>
           </div>
         )}

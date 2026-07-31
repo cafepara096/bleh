@@ -103,6 +103,8 @@ export interface InventoryItem {
   properties?: string[];
   /** Weapon attack uses proficiency bonus when true (default true for weapons) */
   proficient?: boolean;
+  /** Link to items catalog — live stats on character sheet */
+  catalogId?: string;
 }
 
 export interface Spell {

@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import type { ClassData, FeatureEntry } from '../types/dnd';
+import { SUBCLASSES } from '../utils/characterBuilder';
 import baseClasses from '../data/classes.json';
 
 const STORAGE_KEY = 'dnd-homebrew-classes';
@@ -22,10 +23,23 @@ export function useClasses() {
 
   const classes: ClassData[] = useMemo(() => {
     const base = baseClasses as ClassData[];
-    const map = new Map(base.map((c) => [c.id, c]));
-    for (const hb of homebrew) {
-      map.set(hb.id, hb);
-    }
+    const map = new Map<string, ClassData>();
+    const attachSubs = (c: ClassData): ClassData => {
+      if (c.subclasses && c.subclasses.length > 0) return c;
+      const fromTable = SUBCLASSES[c.id];
+      if (!fromTable?.length) return c;
+      return {
+        ...c,
+        subclasses: fromTable.map((s) => ({
+          id: s.id,
+          name: s.name,
+          description: s.description,
+          features: s.features,
+        })),
+      };
+    };
+    for (const c of base) map.set(c.id, attachSubs(c));
+    for (const hb of homebrew) map.set(hb.id, attachSubs(hb));
     return Array.from(map.values());
   }, [homebrew]);
 
@@ -121,6 +135,20 @@ export function useClasses() {
     classes,
     homebrew,
     loading,
+    addSubclass: (classId: string, sub: NonNullable<ClassData['subclasses']>[0]) => {
+      setHomebrew((prev) => {
+        const existing = prev.find((c) => c.id === classId);
+        const base = existing || (baseClasses as ClassData[]).find((c) => c.id === classId);
+        if (!base) return prev;
+        const updated: ClassData = {
+          ...base,
+          homebrew: true,
+          subclasses: [...(base.subclasses || []), sub],
+        };
+        if (existing) return prev.map((c) => (c.id === classId ? updated : c));
+        return [...prev, updated];
+      });
+    },
     addHomebrew,
     updateHomebrew,
     deleteHomebrew,
