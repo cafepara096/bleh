@@ -108,6 +108,8 @@ export interface InventoryItem {
 export interface Spell {
   id: string;
   name: string;
+  /** English name for search / dual label */
+  nameEn?: string;
   level: number; // 0 = cantrip
   school: string;
   castingTime: string;
@@ -240,6 +242,8 @@ export interface Monster {
 export interface Item {
   id: string;
   name: string;
+  /** English name for search / dual label */
+  nameEn?: string;
   type: string; // weapon, armor, potion, wondrous, etc.
   rarity: string;
   attunement?: boolean;

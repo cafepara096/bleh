@@ -178,6 +178,7 @@ export function CombatPanel({ character, onUpdate }: Props) {
         if (!q) return true;
         return (
           s.name.toLowerCase().includes(q) ||
+          (s.nameEn && s.nameEn.toLowerCase().includes(q)) ||
           s.school.toLowerCase().includes(q) ||
           (s.homebrew && 'homebrew'.includes(q))
         );

@@ -47,6 +47,7 @@ export function ItemPicker({ items, onSelect, onClose, addLabel }: Props) {
       if (!q) return true;
       return (
         item.name.toLowerCase().includes(q) ||
+        (item.nameEn && item.nameEn.toLowerCase().includes(q)) ||
         item.description.toLowerCase().includes(q) ||
         item.type.toLowerCase().includes(q)
       );
@@ -145,7 +146,12 @@ export function ItemPicker({ items, onSelect, onClose, addLabel }: Props) {
                 }`}
               >
                 <div className="flex items-center gap-2">
-                  <span className="font-medium text-sm flex-1 truncate">{item.name}</span>
+                  <span className="font-medium text-sm flex-1 truncate">
+                    {item.name}
+                    {item.nameEn && (
+                      <span className="ml-1 text-[10px] font-normal text-ink-400">({item.nameEn})</span>
+                    )}
+                  </span>
                   {item.homebrew && (
                     <span className="text-[10px] bg-amber-200 text-amber-900 px-1 rounded">HB</span>
                   )}
