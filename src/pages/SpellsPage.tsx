@@ -71,6 +71,7 @@ export function SpellsPage() {
         if (!q) return true;
         return (
           s.name.toLowerCase().includes(q) ||
+          (s.nameEn && s.nameEn.toLowerCase().includes(q)) ||
           s.description.toLowerCase().includes(q) ||
           s.school.toLowerCase().includes(q)
         );
@@ -201,7 +202,12 @@ export function SpellsPage() {
               }`}
             >
               <div className="flex items-center gap-2">
-                <span className="font-medium flex-1 truncate">{spell.name}</span>
+                <span className="font-medium flex-1 truncate">
+                  {spell.name}
+                  {spell.nameEn && (
+                    <span className="ml-1 text-[10px] font-normal text-ink-400">({spell.nameEn})</span>
+                  )}
+                </span>
                 {spell.homebrew && (
                   <span className="text-[10px] bg-amber-200 text-amber-900 px-1.5 py-0.5 rounded font-bold">
                     HB
@@ -233,7 +239,12 @@ export function SpellsPage() {
             <div className="bg-parchment-100 border-2 border-ink-800 rounded-xl p-6">
               <div className="flex items-start justify-between gap-2 mb-3">
                 <div>
-                  <h2 className="text-2xl font-display font-bold">{selected.name}</h2>
+                  <h2 className="text-2xl font-display font-bold">
+                    {selected.name}
+                    {selected.nameEn && (
+                      <span className="ml-2 text-sm font-normal text-ink-400">({selected.nameEn})</span>
+                    )}
+                  </h2>
                   <div className="flex flex-wrap gap-2 mt-2">
                     <span className="text-xs bg-ink-800 text-parchment-50 px-2 py-1 rounded">
                       {LEVEL_LABELS(selected.level)}

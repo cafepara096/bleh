@@ -7,9 +7,12 @@
     "description": "Arma simple cuerpo a cuerpo. 1d4 de daño contundente. Propiedades: ligera.",
     "damage": "1d4",
     "damageType": "contundente",
-    "properties": ["ligera"],
+    "properties": [
+      "ligera"
+    ],
     "weight": 2,
-    "cost": "1 sp"
+    "cost": "1 sp",
+    "nameEn": "Club"
   },
   {
     "id": "dagger",
@@ -19,9 +22,14 @@
     "description": "Arma simple cuerpo a cuerpo. 1d4 de daño perforante. Propiedades: sutil, ligera, arrojadiza (alcance 20/60).",
     "damage": "1d4",
     "damageType": "perforante",
-    "properties": ["sutil", "ligera", "arrojadiza (20/60)"],
+    "properties": [
+      "sutil",
+      "ligera",
+      "arrojadiza (20/60)"
+    ],
     "weight": 1,
-    "cost": "2 gp"
+    "cost": "2 gp",
+    "nameEn": "Dagger"
   },
   {
     "id": "greatclub",
@@ -31,9 +39,12 @@
     "description": "Arma simple cuerpo a cuerpo. 1d8 de daño contundente. Propiedades: a dos manos.",
     "damage": "1d8",
     "damageType": "contundente",
-    "properties": ["a dos manos"],
+    "properties": [
+      "a dos manos"
+    ],
     "weight": 10,
-    "cost": "2 sp"
+    "cost": "2 sp",
+    "nameEn": "Greatclub"
   },
   {
     "id": "handaxe",
@@ -43,9 +54,13 @@
     "description": "Arma simple cuerpo a cuerpo. 1d6 de daño cortante. Propiedades: ligera, arrojadiza (alcance 20/60).",
     "damage": "1d6",
     "damageType": "cortante",
-    "properties": ["ligera", "arrojadiza (20/60)"],
+    "properties": [
+      "ligera",
+      "arrojadiza (20/60)"
+    ],
     "weight": 2,
-    "cost": "5 gp"
+    "cost": "5 gp",
+    "nameEn": "Handaxe"
   },
   {
     "id": "javelin",
@@ -55,9 +70,12 @@
     "description": "Arma simple cuerpo a cuerpo. 1d6 de daño perforante. Propiedades: arrojadiza (alcance 30/120).",
     "damage": "1d6",
     "damageType": "perforante",
-    "properties": ["arrojadiza (30/120)"],
+    "properties": [
+      "arrojadiza (30/120)"
+    ],
     "weight": 2,
-    "cost": "5 sp"
+    "cost": "5 sp",
+    "nameEn": "Javelin"
   },
   {
     "id": "light-hammer",
@@ -67,9 +85,13 @@
     "description": "Arma simple cuerpo a cuerpo. 1d4 de daño contundente. Propiedades: ligera, arrojadiza (alcance 20/60).",
     "damage": "1d4",
     "damageType": "contundente",
-    "properties": ["ligera", "arrojadiza (20/60)"],
+    "properties": [
+      "ligera",
+      "arrojadiza (20/60)"
+    ],
     "weight": 2,
-    "cost": "2 gp"
+    "cost": "2 gp",
+    "nameEn": "Light Hammer"
   },
   {
     "id": "mace",
@@ -81,7 +103,8 @@
     "damageType": "contundente",
     "properties": [],
     "weight": 4,
-    "cost": "5 gp"
+    "cost": "5 gp",
+    "nameEn": "Mace"
   },
   {
     "id": "quarterstaff",
@@ -91,9 +114,12 @@
     "description": "Arma simple cuerpo a cuerpo. 1d6 de daño contundente. Propiedades: versátil (1d8).",
     "damage": "1d6",
     "damageType": "contundente",
-    "properties": ["versátil (1d8)"],
+    "properties": [
+      "versátil (1d8)"
+    ],
     "weight": 4,
-    "cost": "2 sp"
+    "cost": "2 sp",
+    "nameEn": "Quarterstaff"
   },
   {
     "id": "spear",
@@ -103,9 +129,13 @@
     "description": "Arma simple cuerpo a cuerpo. 1d6 de daño perforante. Propiedades: arrojadiza (alcance 20/60), versátil (1d8).",
     "damage": "1d6",
     "damageType": "perforante",
-    "properties": ["arrojadiza (20/60)", "versátil (1d8)"],
+    "properties": [
+      "arrojadiza (20/60)",
+      "versátil (1d8)"
+    ],
     "weight": 3,
-    "cost": "1 gp"
+    "cost": "1 gp",
+    "nameEn": "Spear"
   },
   {
     "id": "light-crossbow",
@@ -115,9 +145,14 @@
     "description": "Arma simple a distancia. 1d8 de daño perforante. Propiedades: munición (alcance 80/320), de carga, a dos manos.",
     "damage": "1d8",
     "damageType": "perforante",
-    "properties": ["munición (80/320)", "de carga", "a dos manos"],
+    "properties": [
+      "munición (80/320)",
+      "de carga",
+      "a dos manos"
+    ],
     "weight": 5,
-    "cost": "25 gp"
+    "cost": "25 gp",
+    "nameEn": "Light Crossbow"
   },
   {
     "id": "shortbow",
@@ -127,9 +162,13 @@
     "description": "Arma simple a distancia. 1d6 de daño perforante. Propiedades: munición (alcance 80/320), a dos manos.",
     "damage": "1d6",
     "damageType": "perforante",
-    "properties": ["munición (80/320)", "a dos manos"],
+    "properties": [
+      "munición (80/320)",
+      "a dos manos"
+    ],
     "weight": 2,
-    "cost": "25 gp"
+    "cost": "25 gp",
+    "nameEn": "Shortbow"
   },
   {
     "id": "battleaxe",
@@ -139,9 +178,12 @@
     "description": "Arma marcial cuerpo a cuerpo. 1d8 de daño cortante. Propiedades: versátil (1d10).",
     "damage": "1d8",
     "damageType": "cortante",
-    "properties": ["versátil (1d10)"],
+    "properties": [
+      "versátil (1d10)"
+    ],
     "weight": 4,
-    "cost": "10 gp"
+    "cost": "10 gp",
+    "nameEn": "Battleaxe"
   },
   {
     "id": "greataxe",
@@ -151,9 +193,13 @@
     "description": "Arma marcial cuerpo a cuerpo. 1d12 de daño cortante. Propiedades: pesada, a dos manos.",
     "damage": "1d12",
     "damageType": "cortante",
-    "properties": ["pesada", "a dos manos"],
+    "properties": [
+      "pesada",
+      "a dos manos"
+    ],
     "weight": 7,
-    "cost": "30 gp"
+    "cost": "30 gp",
+    "nameEn": "Greataxe"
   },
   {
     "id": "greatsword",
@@ -163,9 +209,13 @@
     "description": "Arma marcial cuerpo a cuerpo. 2d6 de daño cortante. Propiedades: pesada, a dos manos.",
     "damage": "2d6",
     "damageType": "cortante",
-    "properties": ["pesada", "a dos manos"],
+    "properties": [
+      "pesada",
+      "a dos manos"
+    ],
     "weight": 6,
-    "cost": "50 gp"
+    "cost": "50 gp",
+    "nameEn": "Greatsword"
   },
   {
     "id": "longsword",
@@ -175,9 +225,12 @@
     "description": "Arma marcial cuerpo a cuerpo. 1d8 de daño cortante. Propiedades: versátil (1d10).",
     "damage": "1d8",
     "damageType": "cortante",
-    "properties": ["versátil (1d10)"],
+    "properties": [
+      "versátil (1d10)"
+    ],
     "weight": 3,
-    "cost": "15 gp"
+    "cost": "15 gp",
+    "nameEn": "Longsword"
   },
   {
     "id": "rapier",
@@ -187,9 +240,12 @@
     "description": "Arma marcial cuerpo a cuerpo. 1d8 de daño perforante. Propiedades: sutil.",
     "damage": "1d8",
     "damageType": "perforante",
-    "properties": ["sutil"],
+    "properties": [
+      "sutil"
+    ],
     "weight": 2,
-    "cost": "25 gp"
+    "cost": "25 gp",
+    "nameEn": "Rapier"
   },
   {
     "id": "scimitar",
@@ -199,9 +255,13 @@
     "description": "Arma marcial cuerpo a cuerpo. 1d6 de daño cortante. Propiedades: sutil, ligera.",
     "damage": "1d6",
     "damageType": "cortante",
-    "properties": ["sutil", "ligera"],
+    "properties": [
+      "sutil",
+      "ligera"
+    ],
     "weight": 3,
-    "cost": "25 gp"
+    "cost": "25 gp",
+    "nameEn": "Scimitar"
   },
   {
     "id": "shortsword",
@@ -211,9 +271,13 @@
     "description": "Arma marcial cuerpo a cuerpo. 1d6 de daño perforante. Propiedades: sutil, ligera.",
     "damage": "1d6",
     "damageType": "perforante",
-    "properties": ["sutil", "ligera"],
+    "properties": [
+      "sutil",
+      "ligera"
+    ],
     "weight": 2,
-    "cost": "10 gp"
+    "cost": "10 gp",
+    "nameEn": "Shortsword"
   },
   {
     "id": "warhammer",
@@ -223,9 +287,12 @@
     "description": "Arma marcial cuerpo a cuerpo. 1d8 de daño contundente. Propiedades: versátil (1d10).",
     "damage": "1d8",
     "damageType": "contundente",
-    "properties": ["versátil (1d10)"],
+    "properties": [
+      "versátil (1d10)"
+    ],
     "weight": 2,
-    "cost": "15 gp"
+    "cost": "15 gp",
+    "nameEn": "Warhammer"
   },
   {
     "id": "longbow",
@@ -235,9 +302,14 @@
     "description": "Arma marcial a distancia. 1d8 de daño perforante. Propiedades: munición (alcance 150/600), pesada, a dos manos.",
     "damage": "1d8",
     "damageType": "perforante",
-    "properties": ["munición (150/600)", "pesada", "a dos manos"],
+    "properties": [
+      "munición (150/600)",
+      "pesada",
+      "a dos manos"
+    ],
     "weight": 2,
-    "cost": "50 gp"
+    "cost": "50 gp",
+    "nameEn": "Longbow"
   },
   {
     "id": "heavy-crossbow",
@@ -247,9 +319,15 @@
     "description": "Arma marcial a distancia. 1d10 de daño perforante. Propiedades: munición (alcance 100/400), de carga, pesada, a dos manos.",
     "damage": "1d10",
     "damageType": "perforante",
-    "properties": ["munición (100/400)", "de carga", "pesada", "a dos manos"],
+    "properties": [
+      "munición (100/400)",
+      "de carga",
+      "pesada",
+      "a dos manos"
+    ],
     "weight": 18,
-    "cost": "50 gp"
+    "cost": "50 gp",
+    "nameEn": "Heavy Crossbow"
   },
   {
     "id": "padded",
@@ -259,7 +337,8 @@
     "description": "Armadura ligera. CA 11 + modificador de Destreza. Desventaja en pruebas de Sigilo.",
     "armorClass": "11 + Des",
     "weight": 8,
-    "cost": "5 gp"
+    "cost": "5 gp",
+    "nameEn": "Padded Armor"
   },
   {
     "id": "leather",
@@ -269,7 +348,8 @@
     "description": "Armadura ligera. CA 11 + modificador de Destreza.",
     "armorClass": "11 + Des",
     "weight": 10,
-    "cost": "10 gp"
+    "cost": "10 gp",
+    "nameEn": "Leather Armor"
   },
   {
     "id": "studded-leather",
@@ -279,7 +359,8 @@
     "description": "Armadura ligera. CA 12 + modificador de Destreza.",
     "armorClass": "12 + Des",
     "weight": 13,
-    "cost": "45 gp"
+    "cost": "45 gp",
+    "nameEn": "Studded Leather"
   },
   {
     "id": "hide",
@@ -289,7 +370,8 @@
     "description": "Armadura media. CA 12 + modificador de Destreza (máx. +2).",
     "armorClass": "12 + Des (máx 2)",
     "weight": 12,
-    "cost": "10 gp"
+    "cost": "10 gp",
+    "nameEn": null
   },
   {
     "id": "chain-shirt",
@@ -299,7 +381,8 @@
     "description": "Armadura media. CA 13 + modificador de Destreza (máx. +2).",
     "armorClass": "13 + Des (máx 2)",
     "weight": 20,
-    "cost": "50 gp"
+    "cost": "50 gp",
+    "nameEn": null
   },
   {
     "id": "scale-mail",
@@ -309,7 +392,8 @@
     "description": "Armadura media. CA 14 + modificador de Destreza (máx. +2). Desventaja en pruebas de Sigilo.",
     "armorClass": "14 + Des (máx 2)",
     "weight": 45,
-    "cost": "50 gp"
+    "cost": "50 gp",
+    "nameEn": "Scale Mail"
   },
   {
     "id": "breastplate",
@@ -319,7 +403,8 @@
     "description": "Armadura media. CA 14 + modificador de Destreza (máx. +2).",
     "armorClass": "14 + Des (máx 2)",
     "weight": 20,
-    "cost": "400 gp"
+    "cost": "400 gp",
+    "nameEn": "Breastplate"
   },
   {
     "id": "half-plate",
@@ -329,7 +414,8 @@
     "description": "Armadura media. CA 15 + modificador de Destreza (máx. +2). Desventaja en pruebas de Sigilo.",
     "armorClass": "15 + Des (máx 2)",
     "weight": 40,
-    "cost": "750 gp"
+    "cost": "750 gp",
+    "nameEn": null
   },
   {
     "id": "ring-mail",
@@ -339,7 +425,8 @@
     "description": "Armadura pesada. CA 14. Desventaja en pruebas de Sigilo.",
     "armorClass": "14",
     "weight": 40,
-    "cost": "30 gp"
+    "cost": "30 gp",
+    "nameEn": null
   },
   {
     "id": "chain-mail",
@@ -349,7 +436,8 @@
     "description": "Armadura pesada. CA 16. Requiere Fuerza 13. Desventaja en pruebas de Sigilo.",
     "armorClass": "16",
     "weight": 55,
-    "cost": "75 gp"
+    "cost": "75 gp",
+    "nameEn": "Chain Mail"
   },
   {
     "id": "splint",
@@ -359,7 +447,8 @@
     "description": "Armadura pesada. CA 17. Requiere Fuerza 15. Desventaja en pruebas de Sigilo.",
     "armorClass": "17",
     "weight": 60,
-    "cost": "200 gp"
+    "cost": "200 gp",
+    "nameEn": null
   },
   {
     "id": "plate",
@@ -369,7 +458,8 @@
     "description": "Armadura pesada. CA 18. Requiere Fuerza 15. Desventaja en pruebas de Sigilo.",
     "armorClass": "18",
     "weight": 65,
-    "cost": "1500 gp"
+    "cost": "1500 gp",
+    "nameEn": "Plate Armor"
   },
   {
     "id": "shield",
@@ -379,7 +469,8 @@
     "description": "Un escudo se lleva en una mano. Otorga +2 a la CA mientras lo empuñas.",
     "armorClass": "+2",
     "weight": 6,
-    "cost": "10 gp"
+    "cost": "10 gp",
+    "nameEn": "Shield"
   },
   {
     "id": "potion-healing",
@@ -388,7 +479,8 @@
     "rarity": "common",
     "description": "Como acción, bebes esta poción o se la administras a otra criatura. La criatura recupera 2d4+2 puntos de golpe.",
     "weight": 0.5,
-    "cost": "50 gp"
+    "cost": "50 gp",
+    "nameEn": "Potion of Healing"
   },
   {
     "id": "potion-greater-healing",
@@ -397,7 +489,8 @@
     "rarity": "uncommon",
     "description": "Como acción, bebes esta poción o se la administras a otra criatura. La criatura recupera 4d4+4 puntos de golpe.",
     "weight": 0.5,
-    "cost": "150 gp"
+    "cost": "150 gp",
+    "nameEn": "Potion of Greater Healing"
   },
   {
     "id": "potion-invisibility",
@@ -406,7 +499,8 @@
     "rarity": "very rare",
     "description": "Esta poción de líquido grisáceo parece contener trozos de nube. Cuando la bebes te vuelves invisible durante 1 hora. Cualquier cosa que lleves o portes también se vuelve invisible. El efecto termina si atacas o lanzas un conjuro.",
     "weight": 0.5,
-    "cost": "180 gp"
+    "cost": "180 gp",
+    "nameEn": null
   },
   {
     "id": "bag-of-holding",
@@ -415,7 +509,8 @@
     "rarity": "uncommon",
     "description": "Esta bolsa tiene un interior de mucho mayor tamaño que el exterior. Puede contener hasta 500 libras, sin superar un volumen de 64 pies cúbicos. La bolsa pesa 15 libras, independientemente de su contenido. Recuperar un objeto requiere una acción.",
     "weight": 15,
-    "cost": "—"
+    "cost": "—",
+    "nameEn": null
   },
   {
     "id": "cloak-of-protection",
@@ -425,7 +520,8 @@
     "attunement": true,
     "description": "Obtienes un bonificador de +1 a la CA y a las tiradas de salvación mientras llevas esta capa.",
     "weight": 1,
-    "cost": "—"
+    "cost": "—",
+    "nameEn": null
   },
   {
     "id": "ring-of-protection",
@@ -435,7 +531,8 @@
     "attunement": true,
     "description": "Obtienes un bonificador de +1 a la CA y a las tiradas de salvación mientras llevas este anillo.",
     "weight": 0,
-    "cost": "—"
+    "cost": "—",
+    "nameEn": null
   },
   {
     "id": "boots-of-striding",
@@ -445,7 +542,8 @@
     "attunement": true,
     "description": "Mientras llevas estas botas, tu velocidad caminando se convierte en 30 pies, a menos que ya sea mayor, e ignoras el terreno difícil. Además, puedes saltar tres veces la distancia normal, aunque ese salto no puede exceder tu velocidad restante.",
     "weight": 1,
-    "cost": "—"
+    "cost": "—",
+    "nameEn": null
   },
   {
     "id": "weapon-1",
@@ -454,8 +552,11 @@
     "rarity": "uncommon",
     "description": "Tienes un bonificador de +1 a las tiradas de ataque y de daño realizadas con esta arma mágica.",
     "damage": "según arma base +1",
-    "properties": ["mágica"],
-    "cost": "—"
+    "properties": [
+      "mágica"
+    ],
+    "cost": "—",
+    "nameEn": null
   },
   {
     "id": "armor-1",
@@ -464,7 +565,8 @@
     "rarity": "rare",
     "description": "Tienes un bonificador de +1 a la CA mientras llevas esta armadura.",
     "armorClass": "base +1",
-    "cost": "—"
+    "cost": "—",
+    "nameEn": null
   },
   {
     "id": "torch",
@@ -473,7 +575,8 @@
     "rarity": "common",
     "description": "Una antorcha arde durante 1 hora y proporciona luz brillante en un radio de 20 pies y luz tenue 20 pies adicionales.",
     "weight": 1,
-    "cost": "1 cp"
+    "cost": "1 cp",
+    "nameEn": "Torch"
   },
   {
     "id": "rope-hempen",
@@ -482,7 +585,8 @@
     "rarity": "common",
     "description": "Cuerda de cáñamo con 2 puntos de golpe que puede ser reventada con una prueba de Fuerza CD 17.",
     "weight": 10,
-    "cost": "1 gp"
+    "cost": "1 gp",
+    "nameEn": "Hempen Rope"
   },
   {
     "id": "backpack",
@@ -491,7 +595,8 @@
     "rarity": "common",
     "description": "Capacidad de 1 pie cúbico / 30 libras de equipo.",
     "weight": 5,
-    "cost": "2 gp"
+    "cost": "2 gp",
+    "nameEn": "Backpack"
   },
   {
     "id": "healer-kit",
@@ -500,7 +605,8 @@
     "rarity": "common",
     "description": "Este kit tiene diez usos. Como acción, puedes gastar un uso para estabilizar a una criatura que tenga 0 puntos de golpe, sin necesidad de realizar una prueba de Sabiduría (Medicina).",
     "weight": 3,
-    "cost": "5 gp"
+    "cost": "5 gp",
+    "nameEn": null
   },
   {
     "id": "thieves-tools",
@@ -509,7 +615,8 @@
     "rarity": "common",
     "description": "Este conjunto de herramientas incluye una lima pequeña, un juego de ganzúas, una campana pequeña, un espejo de mano y unas pinzas. La competencia con estas herramientas te permite añadir tu bonificador de competencia a cualquier prueba de habilidad que hagas para desactivar trampas o abrir cerraduras.",
     "weight": 1,
-    "cost": "25 gp"
+    "cost": "25 gp",
+    "nameEn": null
   },
   {
     "id": "holy-symbol",
@@ -518,7 +625,8 @@
     "rarity": "common",
     "description": "Un símbolo sagrado representa a un dios o panteón. Un clérigo o paladín puede usar un símbolo sagrado como foco de conjuros.",
     "weight": 1,
-    "cost": "5 gp"
+    "cost": "5 gp",
+    "nameEn": null
   },
   {
     "id": "arcane-focus",
@@ -527,6 +635,7 @@
     "rarity": "common",
     "description": "Un foco arcano es un objeto especial diseñado para canalizar la magia de los conjuros de los lanzadores arcanos. Un hechicero, brujo o mago puede usar este objeto como foco de conjuros.",
     "weight": 1,
-    "cost": "10 gp"
+    "cost": "10 gp",
+    "nameEn": null
   }
 ]

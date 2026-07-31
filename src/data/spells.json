@@ -14,7 +14,8 @@
     "classes": [
       "hechicero",
       "mago"
-    ]
+    ],
+    "nameEn": "Acid Splash"
   },
   {
     "id": "chill-touch",
@@ -32,7 +33,8 @@
       "hechicero",
       "brujo",
       "mago"
-    ]
+    ],
+    "nameEn": "Chill Touch"
   },
   {
     "id": "fire-bolt",
@@ -49,7 +51,8 @@
     "classes": [
       "hechicero",
       "mago"
-    ]
+    ],
+    "nameEn": "Fire Bolt"
   },
   {
     "id": "guidance",
@@ -65,7 +68,8 @@
     "classes": [
       "clérigo",
       "druida"
-    ]
+    ],
+    "nameEn": "Guidance"
   },
   {
     "id": "light",
@@ -82,7 +86,8 @@
       "clérigo",
       "hechicero",
       "mago"
-    ]
+    ],
+    "nameEn": "Light"
   },
   {
     "id": "mage-hand",
@@ -99,7 +104,8 @@
       "hechicero",
       "brujo",
       "mago"
-    ]
+    ],
+    "nameEn": "Mage Hand"
   },
   {
     "id": "mending",
@@ -117,7 +123,8 @@
       "druida",
       "hechicero",
       "mago"
-    ]
+    ],
+    "nameEn": "Mending"
   },
   {
     "id": "message",
@@ -133,7 +140,8 @@
       "bardo",
       "hechicero",
       "mago"
-    ]
+    ],
+    "nameEn": "Message"
   },
   {
     "id": "minor-illusion",
@@ -150,7 +158,8 @@
       "hechicero",
       "brujo",
       "mago"
-    ]
+    ],
+    "nameEn": "Minor Illusion"
   },
   {
     "id": "prestidigitation",
@@ -167,7 +176,8 @@
       "hechicero",
       "brujo",
       "mago"
-    ]
+    ],
+    "nameEn": "Prestidigitation"
   },
   {
     "id": "ray-of-frost",
@@ -184,7 +194,8 @@
     "classes": [
       "hechicero",
       "mago"
-    ]
+    ],
+    "nameEn": "Ray of Frost"
   },
   {
     "id": "resistance",
@@ -200,7 +211,8 @@
     "classes": [
       "clérigo",
       "druida"
-    ]
+    ],
+    "nameEn": "Resistance"
   },
   {
     "id": "sacred-flame",
@@ -216,7 +228,8 @@
     "damageType": "radiante",
     "classes": [
       "clérigo"
-    ]
+    ],
+    "nameEn": null
   },
   {
     "id": "shocking-grasp",
@@ -233,7 +246,8 @@
     "classes": [
       "hechicero",
       "mago"
-    ]
+    ],
+    "nameEn": null
   },
   {
     "id": "thaumaturgy",
@@ -247,7 +261,8 @@
     "description": "Manifiestas una pequeña maravilla, una señal de poder sobrenatural, en el alcance. Creas uno de estos efectos: tu voz resuena hasta el triple de fuerte; haces temblar el suelo levemente; creas sonidos inofensivos; haces centellear una luz; abres o cierras una puerta o ventana desbloqueada.",
     "classes": [
       "clérigo"
-    ]
+    ],
+    "nameEn": "Thaumaturgy"
   },
   {
     "id": "true-strike",
@@ -265,7 +280,8 @@
       "hechicero",
       "brujo",
       "mago"
-    ]
+    ],
+    "nameEn": null
   },
   {
     "id": "vicious-mockery",
@@ -281,7 +297,8 @@
     "damageType": "psíquico",
     "classes": [
       "bardo"
-    ]
+    ],
+    "nameEn": null
   },
   {
     "id": "burning-hands",
@@ -299,7 +316,8 @@
     "classes": [
       "hechicero",
       "mago"
-    ]
+    ],
+    "nameEn": null
   },
   {
     "id": "charm-person",
@@ -317,7 +335,8 @@
       "hechicero",
       "brujo",
       "mago"
-    ]
+    ],
+    "nameEn": null
   },
   {
     "id": "cure-wounds",
@@ -338,7 +357,8 @@
       "druida",
       "paladín",
       "explorador"
-    ]
+    ],
+    "nameEn": "Cure Wounds"
   },
   {
     "id": "detect-magic",
@@ -360,7 +380,8 @@
       "explorador",
       "hechicero",
       "mago"
-    ]
+    ],
+    "nameEn": "Detect Magic"
   },
   {
     "id": "feather-fall",
@@ -376,7 +397,8 @@
       "bardo",
       "hechicero",
       "mago"
-    ]
+    ],
+    "nameEn": null
   },
   {
     "id": "healing-word",
@@ -395,7 +417,8 @@
       "bardo",
       "clérigo",
       "druida"
-    ]
+    ],
+    "nameEn": null
   },
   {
     "id": "identify",
@@ -411,7 +434,8 @@
     "classes": [
       "bardo",
       "mago"
-    ]
+    ],
+    "nameEn": null
   },
   {
     "id": "mage-armor",
@@ -426,7 +450,8 @@
     "classes": [
       "hechicero",
       "mago"
-    ]
+    ],
+    "nameEn": "Mage Armor"
   },
   {
     "id": "magic-missile",
@@ -444,7 +469,8 @@
     "classes": [
       "hechicero",
       "mago"
-    ]
+    ],
+    "nameEn": null
   },
   {
     "id": "shield",
@@ -459,7 +485,8 @@
     "classes": [
       "hechicero",
       "mago"
-    ]
+    ],
+    "nameEn": "Shield"
   },
   {
     "id": "sleep",
@@ -476,7 +503,8 @@
       "bardo",
       "hechicero",
       "mago"
-    ]
+    ],
+    "nameEn": "Sleep"
   },
   {
     "id": "thunderwave",
@@ -496,7 +524,8 @@
       "druida",
       "hechicero",
       "mago"
-    ]
+    ],
+    "nameEn": null
   },
   {
     "id": "invisibility",
@@ -514,7 +543,8 @@
       "hechicero",
       "brujo",
       "mago"
-    ]
+    ],
+    "nameEn": "Invisibility"
   },
   {
     "id": "misty-step",
@@ -530,7 +560,8 @@
       "hechicero",
       "brujo",
       "mago"
-    ]
+    ],
+    "nameEn": null
   },
   {
     "id": "scorching-ray",
@@ -548,7 +579,8 @@
     "classes": [
       "hechicero",
       "mago"
-    ]
+    ],
+    "nameEn": null
   },
   {
     "id": "shatter",
@@ -568,7 +600,8 @@
       "hechicero",
       "brujo",
       "mago"
-    ]
+    ],
+    "nameEn": null
   },
   {
     "id": "spiritual-weapon",
@@ -585,7 +618,8 @@
     "higherLevels": "+1d8 por cada dos niveles por encima de 2º",
     "classes": [
       "clérigo"
-    ]
+    ],
+    "nameEn": null
   },
   {
     "id": "web",
@@ -601,7 +635,8 @@
     "classes": [
       "hechicero",
       "mago"
-    ]
+    ],
+    "nameEn": null
   },
   {
     "id": "counterspell",
@@ -617,7 +652,8 @@
       "hechicero",
       "brujo",
       "mago"
-    ]
+    ],
+    "nameEn": "Counterspell"
   },
   {
     "id": "fireball",
@@ -635,7 +671,8 @@
     "classes": [
       "hechicero",
       "mago"
-    ]
+    ],
+    "nameEn": "Fireball"
   },
   {
     "id": "fly",
@@ -652,7 +689,8 @@
       "hechicero",
       "brujo",
       "mago"
-    ]
+    ],
+    "nameEn": null
   },
   {
     "id": "haste",
@@ -668,7 +706,8 @@
     "classes": [
       "hechicero",
       "mago"
-    ]
+    ],
+    "nameEn": null
   },
   {
     "id": "lightning-bolt",
@@ -686,7 +725,8 @@
     "classes": [
       "hechicero",
       "mago"
-    ]
+    ],
+    "nameEn": null
   },
   {
     "id": "revivify",
@@ -701,7 +741,8 @@
     "classes": [
       "clérigo",
       "paladín"
-    ]
+    ],
+    "nameEn": "Revivify"
   },
   {
     "id": "dimension-door",
@@ -718,7 +759,8 @@
       "hechicero",
       "brujo",
       "mago"
-    ]
+    ],
+    "nameEn": null
   },
   {
     "id": "greater-invisibility",
@@ -735,7 +777,8 @@
       "bardo",
       "hechicero",
       "mago"
-    ]
+    ],
+    "nameEn": null
   },
   {
     "id": "ice-storm",
@@ -754,7 +797,8 @@
       "druida",
       "hechicero",
       "mago"
-    ]
+    ],
+    "nameEn": null
   },
   {
     "id": "stoneskin",
@@ -772,7 +816,8 @@
       "explorador",
       "hechicero",
       "mago"
-    ]
+    ],
+    "nameEn": null
   },
   {
     "id": "cone-of-cold",
@@ -790,7 +835,8 @@
     "classes": [
       "hechicero",
       "mago"
-    ]
+    ],
+    "nameEn": null
   },
   {
     "id": "dominate-person",
@@ -807,7 +853,8 @@
       "bardo",
       "hechicero",
       "mago"
-    ]
+    ],
+    "nameEn": null
   },
   {
     "id": "flame-strike",
@@ -824,7 +871,8 @@
     "higherLevels": "+1d6 por nivel por encima de 5º",
     "classes": [
       "clérigo"
-    ]
+    ],
+    "nameEn": null
   },
   {
     "id": "hold-monster",
@@ -842,7 +890,8 @@
       "hechicero",
       "brujo",
       "mago"
-    ]
+    ],
+    "nameEn": null
   },
   {
     "id": "chain-lightning",
@@ -860,7 +909,8 @@
     "classes": [
       "hechicero",
       "mago"
-    ]
+    ],
+    "nameEn": null
   },
   {
     "id": "disintegrate",
@@ -878,7 +928,8 @@
     "classes": [
       "hechicero",
       "mago"
-    ]
+    ],
+    "nameEn": null
   },
   {
     "id": "heal",
@@ -896,7 +947,8 @@
     "classes": [
       "clérigo",
       "druida"
-    ]
+    ],
+    "nameEn": null
   },
   {
     "id": "finger-of-death",
@@ -914,7 +966,8 @@
       "hechicero",
       "brujo",
       "mago"
-    ]
+    ],
+    "nameEn": null
   },
   {
     "id": "teleport",
@@ -930,7 +983,8 @@
       "bardo",
       "hechicero",
       "mago"
-    ]
+    ],
+    "nameEn": "Teleport"
   },
   {
     "id": "dominate-monster",
@@ -948,7 +1002,8 @@
       "hechicero",
       "brujo",
       "mago"
-    ]
+    ],
+    "nameEn": null
   },
   {
     "id": "power-word-stun",
@@ -965,7 +1020,8 @@
       "hechicero",
       "brujo",
       "mago"
-    ]
+    ],
+    "nameEn": null
   },
   {
     "id": "power-word-kill",
@@ -982,7 +1038,8 @@
       "hechicero",
       "brujo",
       "mago"
-    ]
+    ],
+    "nameEn": "Power Word Kill"
   },
   {
     "id": "wish",
@@ -997,7 +1054,8 @@
     "classes": [
       "hechicero",
       "mago"
-    ]
+    ],
+    "nameEn": "Wish"
   },
   {
     "id": "time-stop",
@@ -1012,7 +1070,8 @@
     "classes": [
       "hechicero",
       "mago"
-    ]
+    ],
+    "nameEn": null
   },
   {
     "id": "meteor-swarm",
@@ -1029,6 +1088,7 @@
     "classes": [
       "hechicero",
       "mago"
-    ]
+    ],
+    "nameEn": null
   }
 ]

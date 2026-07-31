@@ -14,6 +14,7 @@ import {
   countExtraLanguageChoices,
   COMMON_LANGUAGES,
   CLASS_SKILL_OPTIONS,
+  ALIGNMENTS,
 } from '../../utils/characterBuilder';
 import { expandPackItems, packSummary } from '../../utils/equipmentPacks';
 import startingEquipment from '../../data/starting-equipment.json';
@@ -51,6 +52,7 @@ export function CharacterWizard({ onComplete, onCancel }: Props) {
 
   const [step, setStep] = useState<Step>('identity');
   const [name, setName] = useState('');
+  const [alignment, setAlignment] = useState('');
   const [raceId, setRaceId] = useState<string | null>(null);
   const [classId, setClassId] = useState<string | null>(null);
   const [subclassId, setSubclassId] = useState<string | null>(null);
@@ -235,6 +237,7 @@ export function CharacterWizard({ onComplete, onCancel }: Props) {
         });
       }
     }
+    if (alignment) char.alignment = alignment;
     onComplete(char);
   };
 
@@ -275,6 +278,20 @@ export function CharacterWizard({ onComplete, onCancel }: Props) {
               placeholder="Nombre del personaje"
               className="w-full text-2xl font-display px-4 py-3 border-2 border-ink-300 rounded-lg focus:border-crimson-600 focus:outline-none"
             />
+            <div>
+              <label className="block text-sm font-bold mb-1 text-ink-700">Alineamiento</label>
+              <select
+                value={alignment}
+                onChange={(e) => setAlignment(e.target.value)}
+                className="w-full px-3 py-2 border-2 border-ink-300 rounded-lg bg-white"
+              >
+                <option value="">— Opcional —</option>
+                {ALIGNMENTS.map((a) => (
+                  <option key={a} value={a}>{a}</option>
+                ))}
+              </select>
+              <p className="text-xs text-ink-500 mt-1">En D&amp;D 2024 el alineamiento es principalmente roleplay.</p>
+            </div>
           </div>
         )}
 

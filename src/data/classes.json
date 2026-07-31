@@ -136,8 +136,8 @@
       {
         "id": "cleric-domain",
         "name": "Dominio divino",
-        "description": "Eliges subclase.",
-        "level": 1,
+        "description": "Eliges subclase. (desbloqueo típico nivel 3 en PHB 2024).",
+        "level": 3,
         "source": "class",
         "requiresChoice": true,
         "choiceHint": "Elige tu subclase / camino / dominio / tradición."
@@ -186,8 +186,8 @@
       {
         "id": "druid-circle",
         "name": "Circulo druidico",
-        "description": "Eliges subclase.",
-        "level": 2,
+        "description": "Eliges subclase. (desbloqueo típico nivel 3 en PHB 2024).",
+        "level": 3,
         "source": "class",
         "requiresChoice": true,
         "choiceHint": "Elige tu subclase / camino / dominio / tradición."
@@ -289,8 +289,8 @@
       },
       {
         "id": "monk-ki",
-        "name": "Ki",
-        "description": "Puntos de ki = nivel.",
+        "name": "Puntos de enfoque (Focus)",
+        "description": "Recurso monástico (antes Ki). Se gastan en técnicas; se recuperan en descanso corto. (2024)",
         "level": 2,
         "source": "class"
       },
@@ -478,8 +478,8 @@
       {
         "id": "sorc-origin",
         "name": "Origen",
-        "description": "Eliges subclase.",
-        "level": 1,
+        "description": "Eliges subclase. (desbloqueo típico nivel 3 en PHB 2024).",
+        "level": 3,
         "source": "class",
         "requiresChoice": true,
         "choiceHint": "Elige tu subclase / camino / dominio / tradición."
@@ -517,8 +517,8 @@
       {
         "id": "warlock-patron",
         "name": "Patron",
-        "description": "Eliges subclase.",
-        "level": 1,
+        "description": "Eliges subclase. (desbloqueo típico nivel 3 en PHB 2024).",
+        "level": 3,
         "source": "class",
         "requiresChoice": true,
         "choiceHint": "Elige tu subclase / camino / dominio / tradición."
@@ -578,8 +578,8 @@
       {
         "id": "wizard-tradition",
         "name": "Tradicion arcana",
-        "description": "Eliges subclase.",
-        "level": 2,
+        "description": "Eliges subclase. (desbloqueo típico nivel 3 en PHB 2024).",
+        "level": 3,
         "source": "class",
         "requiresChoice": true,
         "choiceHint": "Elige tu subclase / camino / dominio / tradición."

@@ -181,6 +181,12 @@ export function CharacterSheet({ character: initial, onSave, onBack, onExport }:
               placeholder="Trasfondo"
               className="bg-transparent border-b border-transparent hover:border-parchment-500 focus:border-parchment-400 focus:outline-none w-28"
             />
+            {character.alignment && (
+              <>
+                <span>•</span>
+                <span className="text-parchment-400">{character.alignment}</span>
+              </>
+            )}
           </div>
         </div>
 
@@ -400,7 +406,7 @@ export function CharacterSheet({ character: initial, onSave, onBack, onExport }:
 
               {/* Hit Dice */}
               <div className="bg-parchment-100 border-2 border-ink-800 rounded-lg p-3 shadow-sm flex items-center gap-4">
-                <span className="font-bold text-sm">Dados de Golpe:</span>
+                <span className="font-bold text-sm">Ataque / HD:</span>
                 <input
                   type="text"
                   value={character.hitDice}
@@ -564,6 +570,24 @@ export function CharacterSheet({ character: initial, onSave, onBack, onExport }:
         {activeTab === 'notes' && (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-3">
+              <div>
+                <label className="block text-sm font-bold mb-1">Alineamiento</label>
+                <select
+                  value={character.alignment || ''}
+                  onChange={(e) => update({ alignment: e.target.value })}
+                  className="w-full px-3 py-2 border-2 border-ink-300 rounded-lg bg-white"
+                >
+                  <option value="">— Elegir —</option>
+                  {[
+                    'Legal bueno', 'Neutral bueno', 'Caótico bueno',
+                    'Legal neutral', 'Neutral', 'Caótico neutral',
+                    'Legal maligno', 'Neutral maligno', 'Caótico maligno',
+                    'Sin alineamiento',
+                  ].map((a) => (
+                    <option key={a} value={a}>{a}</option>
+                  ))}
+                </select>
+              </div>
               <div>
                 <label className="block text-sm font-bold mb-1">Rasgos de Personalidad</label>
                 <textarea
