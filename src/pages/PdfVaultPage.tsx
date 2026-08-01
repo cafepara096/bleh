@@ -234,7 +234,7 @@ export function PdfVaultPage() {
       </p>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="bg-parchment-100 border-2 border-ink-800 rounded-xl p-2 max-h-[75vh] overflow-y-auto space-y-1">
+        <div className="bg-parchment-100 border-2 border-ink-800 rounded-xl p-2 max-h-[35vh] md:max-h-[75vh] overflow-y-auto space-y-1">
           <h3 className="font-bold text-sm px-2 py-1">Índice</h3>
           {docs.length === 0 && <p className="text-xs text-ink-500 px-2">Sin PDFs.</p>}
           {docs.map((d) => (
@@ -253,7 +253,7 @@ export function PdfVaultPage() {
         <div className="md:col-span-2 space-y-2">
           {selectedId && objectUrl ? (
             <>
-              <iframe title="pdf" src={objectUrl} className="w-full h-[55vh] border-2 border-ink-800 rounded-xl bg-white" />
+              <iframe title="pdf" src={objectUrl} className="w-full h-[45vh] sm:h-[55vh] border-2 border-ink-800 rounded-xl bg-white" />
               <div className="bg-parchment-100 border-2 border-ink-800 rounded-xl p-3 space-y-2">
                 <div className="flex flex-wrap items-center gap-2 text-sm">
                   <Bookmark className="w-4 h-4" />

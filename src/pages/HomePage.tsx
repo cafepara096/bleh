@@ -74,24 +74,24 @@ export function HomePage() {
   return (
     <div className="max-w-4xl mx-auto">
       <div className="text-center mb-10">
-        <h1 className="text-4xl md:text-5xl font-display font-bold text-ink-900 mb-3">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold text-ink-900 mb-3 px-1">
           D&amp;D Homebrew Vault
         </h1>
-        <p className="text-lg text-ink-600 max-w-2xl mx-auto">
+        <p className="text-sm sm:text-lg text-ink-600 max-w-2xl mx-auto px-1">
           Compendio personal para D&amp;D (reglas 2024 / 5.5): hojas de personaje,
           catálogos editables, monstruos, PDFs y respaldo de campaña. Los datos viven
           en tu navegador; puedes exportarlos cuando quieras.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-8 sm:mb-10">
         {sections.map(({ to, icon: Icon, title, text }) => (
           <Link
             key={to}
             to={to}
-            className="group bg-parchment-100 border-2 border-ink-800 rounded-xl p-6 hover:border-crimson-600 hover:shadow-lg transition-all"
+            className="group bg-parchment-100 border-2 border-ink-800 rounded-xl p-4 sm:p-6 hover:border-crimson-600 hover:shadow-lg transition-all active:scale-[0.99]"
           >
-            <Icon className="w-10 h-10 text-crimson-600 mb-3 group-hover:scale-110 transition-transform" />
+            <Icon className="w-8 h-8 sm:w-10 sm:h-10 text-crimson-600 mb-2 sm:mb-3 group-hover:scale-110 transition-transform" />
             <h2 className="text-xl font-bold mb-1">{title}</h2>
             <p className="text-ink-600 text-sm leading-relaxed">{text}</p>
           </Link>

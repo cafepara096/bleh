@@ -82,27 +82,27 @@ export function CharactersPage() {
   return (
     <div className="max-w-5xl mx-auto">
       <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
-        <h1 className="text-3xl font-display font-bold text-ink-900">
+        <h1 className="text-2xl sm:text-3xl font-display font-bold text-ink-900">
           Hojas de Personaje
         </h1>
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-2 w-full sm:w-auto">
           <button
             onClick={handleCreate}
-            className="flex items-center gap-2 px-4 py-2 bg-crimson-600 hover:bg-crimson-700 text-white rounded-lg font-medium shadow"
+            className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-3 sm:px-4 py-2.5 sm:py-2 bg-crimson-600 hover:bg-crimson-700 text-white rounded-lg font-medium shadow text-sm"
           >
             <Plus className="w-4 h-4" /> Nuevo
           </button>
           <button
             onClick={() => fileInputRef.current?.click()}
-            className="flex items-center gap-2 px-4 py-2 bg-ink-800 hover:bg-ink-700 text-parchment-50 rounded-lg"
+            className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-3 sm:px-4 py-2.5 sm:py-2 bg-ink-800 hover:bg-ink-700 text-parchment-50 rounded-lg text-sm"
           >
             <Upload className="w-4 h-4" /> Importar
           </button>
           <button
             onClick={exportAll}
-            className="flex items-center gap-2 px-4 py-2 bg-ink-200 hover:bg-ink-300 text-ink-900 rounded-lg"
+            className="flex-[1_1_100%] sm:flex-none flex items-center justify-center gap-2 px-3 sm:px-4 py-2.5 sm:py-2 bg-ink-200 hover:bg-ink-300 text-ink-900 rounded-lg text-sm"
           >
-            <Download className="w-4 h-4" /> Exportar todos
+            <Download className="w-4 h-4" /> <span className="sm:inline">Exportar todos</span>
           </button>
           <input
             ref={fileInputRef}
@@ -205,7 +205,7 @@ function CharacterCard({
 
         {/* Actions */}
         <div
-          className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity"
+          className="flex gap-2 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity"
           onClick={(e) => e.stopPropagation()}
         >
           <button

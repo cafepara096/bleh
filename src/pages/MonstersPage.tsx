@@ -195,7 +195,7 @@ export function MonstersPage() {
             <Plus className="w-5 h-5" />
           </button>
         </div>
-        <div className="bg-parchment-100 border-2 border-ink-800 rounded-xl max-h-[70vh] overflow-y-auto divide-y divide-ink-200">
+        <div className="bg-parchment-100 border-2 border-ink-800 rounded-xl max-h-[40vh] md:max-h-[70vh] overflow-y-auto divide-y divide-ink-200">
           {filtered.map((m) => (
             <button
               key={m.id}
@@ -218,7 +218,7 @@ export function MonstersPage() {
 
       <div className="md:col-span-2">
         {editing ? (
-          <div className="bg-parchment-100 border-2 border-ink-800 rounded-xl p-4 space-y-3 max-h-[80vh] overflow-y-auto">
+          <div className="bg-parchment-100 border-2 border-ink-800 rounded-xl p-3 sm:p-4 space-y-3 max-h-[70vh] md:max-h-[80vh] overflow-y-auto">
             <div className="flex items-center justify-between">
               <h2 className="text-lg font-display font-bold">
                 {editing.mode === 'create' ? 'Nuevo monstruo homebrew' : 'Editar monstruo'}

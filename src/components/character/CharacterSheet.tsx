@@ -130,9 +130,9 @@ export function CharacterSheet({ character: initial, onSave, onBack, onExport }:
   };
 
   return (
-    <div className="max-w-6xl mx-auto">
+    <div className="max-w-6xl mx-auto w-full">
       {/* Header */}
-      <div className="bg-ink-900 text-parchment-50 rounded-t-xl p-4 flex flex-wrap items-center gap-4">
+      <div className="bg-ink-900 text-parchment-50 rounded-t-xl p-3 sm:p-4 flex flex-wrap items-center gap-2 sm:gap-4">
         <button
           onClick={onBack}
           className="p-2 hover:bg-ink-700 rounded-lg transition-colors"
@@ -145,7 +145,7 @@ export function CharacterSheet({ character: initial, onSave, onBack, onExport }:
             type="text"
             value={character.name}
             onChange={(e) => update({ name: e.target.value })}
-            className="text-2xl font-display font-bold bg-transparent border-b border-transparent hover:border-parchment-400 focus:border-parchment-300 focus:outline-none w-full"
+            className="text-xl sm:text-2xl font-display font-bold bg-transparent border-b border-transparent hover:border-parchment-400 focus:border-parchment-300 focus:outline-none w-full"
           />
           <div className="flex flex-wrap gap-2 mt-1 text-sm text-parchment-300">
             <input
@@ -322,12 +322,12 @@ export function CharacterSheet({ character: initial, onSave, onBack, onExport }:
       </div>
 
       {/* Tabs */}
-      <div className="bg-parchment-100 border-x-2 border-ink-800 flex">
+      <div className="bg-parchment-100 border-x-2 border-ink-800 flex overflow-x-auto scroll-touch sticky top-[3.25rem] sm:top-0 z-20 sm:static">
         {(['main', 'combat', 'inventory', 'features', 'subclass', 'notes'] as const).map((tab) => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
-            className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
+            className={`px-3 sm:px-4 py-2.5 sm:py-2 text-xs sm:text-sm font-medium border-b-2 transition-colors whitespace-nowrap shrink-0 ${
               activeTab === tab
                 ? 'border-crimson-600 text-crimson-700 bg-parchment-50'
                 : 'border-transparent text-ink-600 hover:text-ink-900'
@@ -344,7 +344,7 @@ export function CharacterSheet({ character: initial, onSave, onBack, onExport }:
       </div>
 
       {/* Content */}
-      <div className="bg-parchment-50 border-2 border-t-0 border-ink-800 rounded-b-xl p-4">
+      <div className="bg-parchment-50 border-2 border-t-0 border-ink-800 rounded-b-xl p-3 sm:p-4">
         {activeTab === 'main' && (
           <>
           <div className="mb-4">
