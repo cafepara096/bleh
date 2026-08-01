@@ -1,80 +1,115 @@
 import { Link } from 'react-router-dom';
-import { Users, BookOpen, Swords, Scroll, Github } from 'lucide-react';
+import {
+  Users,
+  BookOpen,
+  Swords,
+  Scroll,
+  Github,
+  Crown,
+  Shield,
+  FileText,
+  Save,
+} from 'lucide-react';
+
+const sections = [
+  {
+    to: '/characters',
+    icon: Users,
+    title: 'Personajes',
+    text:
+      'Crea y gestiona hojas interactivas: características, PG, combate, inventario (mano/mochila), monedas, estados, conjuros, subclases 2024 y notas de campaña. Exporta JSON (con homebrew opcional) o planilla PDF.',
+  },
+  {
+    to: '/races',
+    icon: Crown,
+    title: 'Razas',
+    text:
+      'Catálogo de razas del manual y homebrew. Define rasgos, aumentos de característica, tamaño, velocidad e idiomas. Las razas homebrew se pueden empaquetar al exportar un personaje.',
+  },
+  {
+    to: '/classes',
+    icon: Shield,
+    title: 'Clases',
+    text:
+      'Clases y subclases alineadas al manual 2024: progresión de rasgos, espacios de conjuro, tablas (metamagia, maniobras, sobrecarga…), usos limitados y opciones al subir de nivel. Todo editable como homebrew.',
+  },
+  {
+    to: '/spells',
+    icon: BookOpen,
+    title: 'Conjuros',
+    text:
+      'Lista de trucos y conjuros con nivel, escuela, tiempo de lanzamiento, alcance y efecto. Añade homebrew y vincúlalos a la hoja; los cambios del catálogo se reflejan en los personajes.',
+  },
+  {
+    to: '/items',
+    icon: Scroll,
+    title: 'Objetos',
+    text:
+      'Armas, armaduras y objetos con daño, propiedades, rareza y coste. El inventario de la hoja puede enlazar al catálogo para mantener stats al día. Incluye packs de equipo inicial.',
+  },
+  {
+    to: '/monsters',
+    icon: Swords,
+    title: 'Monstruos',
+    text:
+      'Bestiario con CA, PG, características, rasgos, acciones, reacciones, legendarias y variantes. Crea monstruos homebrew completos con el mismo nivel de detalle o clona una ficha base.',
+  },
+  {
+    to: '/pdfs',
+    icon: FileText,
+    title: 'PDFs',
+    text:
+      'Biblioteca personal de manuales y notas en PDF (hasta 150 MB por archivo, IndexedDB). Índice, visor embebido, marcadores por página e import/export del vault completo.',
+  },
+  {
+    to: '/campaña',
+    icon: Save,
+    title: 'Campaña',
+    text:
+      'Respaldo selectivo de toda la app: personajes, catálogos base o homebrew, monstruos, PDFs y tablas. Marca qué incluir e importa el JSON en otro dispositivo o navegador.',
+  },
+];
 
 export function HomePage() {
   return (
     <div className="max-w-4xl mx-auto">
       <div className="text-center mb-10">
         <h1 className="text-4xl md:text-5xl font-display font-bold text-ink-900 mb-3">
-          D&D Homebrew Vault
+          D&amp;D Homebrew Vault
         </h1>
         <p className="text-lg text-ink-600 max-w-2xl mx-auto">
-          Tu propio D&D Beyond personal. Hojas de personaje interactivas, contenido
-          editable y homebrew versionado en GitHub.
+          Compendio personal para D&amp;D (reglas 2024 / 5.5): hojas de personaje,
+          catálogos editables, monstruos, PDFs y respaldo de campaña. Los datos viven
+          en tu navegador; puedes exportarlos cuando quieras.
         </p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
-        <Link
-          to="/characters"
-          className="group bg-parchment-100 border-2 border-ink-800 rounded-xl p-6 hover:border-crimson-600 hover:shadow-lg transition-all"
-        >
-          <Users className="w-10 h-10 text-crimson-600 mb-3 group-hover:scale-110 transition-transform" />
-          <h2 className="text-xl font-bold mb-1">Hojas de Personaje</h2>
-          <p className="text-ink-600 text-sm">
-            Crea, edita y gestiona tus personajes con trackers de PG, habilidades,
-            inventario y más. Todo interactivo.
-          </p>
-        </Link>
-
-        <Link
-          to="/spells"
-          className="group bg-parchment-100 border-2 border-ink-800 rounded-xl p-6 hover:border-crimson-600 hover:shadow-lg transition-all"
-        >
-          <BookOpen className="w-10 h-10 text-crimson-600 mb-3 group-hover:scale-110 transition-transform" />
-          <h2 className="text-xl font-bold mb-1">Conjuros</h2>
-          <p className="text-ink-600 text-sm">
-            Consulta y edita conjuros. Añade tus propios hechizos homebrew con daño
-            y descripciones personalizadas.
-          </p>
-        </Link>
-
-        <Link
-          to="/monsters"
-          className="group bg-parchment-100 border-2 border-ink-800 rounded-xl p-6 hover:border-crimson-600 hover:shadow-lg transition-all"
-        >
-          <Swords className="w-10 h-10 text-crimson-600 mb-3 group-hover:scale-110 transition-transform" />
-          <h2 className="text-xl font-bold mb-1">Monstruos</h2>
-          <p className="text-ink-600 text-sm">
-            Bestiario editable. Modifica estadísticas, acciones y crea criaturas
-            homebrew para tus campañas.
-          </p>
-        </Link>
-
-        <Link
-          to="/items"
-          className="group bg-parchment-100 border-2 border-ink-800 rounded-xl p-6 hover:border-crimson-600 hover:shadow-lg transition-all"
-        >
-          <Scroll className="w-10 h-10 text-crimson-600 mb-3 group-hover:scale-110 transition-transform" />
-          <h2 className="text-xl font-bold mb-1">Objetos Mágicos</h2>
-          <p className="text-ink-600 text-sm">
-            Armas, armaduras y objetos maravillosos. Edita propiedades y añade tu
-            propio botín homebrew.
-          </p>
-        </Link>
+        {sections.map(({ to, icon: Icon, title, text }) => (
+          <Link
+            key={to}
+            to={to}
+            className="group bg-parchment-100 border-2 border-ink-800 rounded-xl p-6 hover:border-crimson-600 hover:shadow-lg transition-all"
+          >
+            <Icon className="w-10 h-10 text-crimson-600 mb-3 group-hover:scale-110 transition-transform" />
+            <h2 className="text-xl font-bold mb-1">{title}</h2>
+            <p className="text-ink-600 text-sm leading-relaxed">{text}</p>
+          </Link>
+        ))}
       </div>
 
       <div className="bg-ink-900 text-parchment-100 rounded-xl p-6">
-        <div className="flex items-start gap-3">
-          <Github className="w-6 h-6 flex-shrink-0 mt-0.5" />
+        <div className="flex items-start gap-4">
+          <Github className="w-8 h-8 text-parchment-300 shrink-0 mt-0.5" />
           <div>
-            <h3 className="font-bold text-lg mb-1">Gestión con GitHub</h3>
+            <h3 className="font-bold text-lg mb-1">Datos locales y GitHub</h3>
             <p className="text-parchment-300 text-sm leading-relaxed">
-              Los personajes se guardan en tu navegador (localStorage) y puedes
-              exportarlos como JSON para versionarlos en un repositorio de GitHub.
-              El contenido de conjuros, monstruos y objetos vive en archivos JSON
-              del repo: edítalos directamente o desde la interfaz y haz commit.
-              Ideal para campañas compartidas con tu mesa.
+              Personajes, homebrew y PDFs se guardan en este navegador (localStorage /
+              IndexedDB). Exporta un personaje con su raza/clase/objetos/conjuros
+              homebrew para abrirlo en otro sitio sin errores de referencia. Usa la
+              sección <strong className="text-parchment-100">Campaña</strong> para un
+              respaldo completo, o versiona los JSON en un repositorio de GitHub para
+              compartir con tu mesa.
             </p>
           </div>
         </div>
