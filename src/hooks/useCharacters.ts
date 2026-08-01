@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import type { Character } from '../types/dnd';
 import { createEmptyCharacter } from '../utils/character';
+import { exportCharacterWithPrompt, importCharacterBundle } from '../utils/characterBundle';
 import sampleCharacter from '../data/sample-character.json';
 
 const STORAGE_KEY = 'dnd-homebrew-characters';
@@ -63,14 +64,7 @@ export function useCharacters() {
   );
 
   const exportCharacter = useCallback((character: Character) => {
-    const dataStr = JSON.stringify(character, null, 2);
-    const blob = new Blob([dataStr], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `${character.name.replace(/\s+/g, '_')}.json`;
-    a.click();
-    URL.revokeObjectURL(url);
+    exportCharacterWithPrompt(character);
   }, []);
 
   const exportAll = useCallback(() => {
@@ -90,16 +84,7 @@ export function useCharacters() {
       reader.onload = (e) => {
         try {
           const data = JSON.parse(e.target?.result as string);
-          // Basic validation
-          if (!data.name || !data.abilityScores) {
-            reject(new Error('Archivo de personaje inválido'));
-            return;
-          }
-          const character: Character = {
-            ...data,
-            id: data.id || crypto.randomUUID(),
-            updatedAt: new Date().toISOString(),
-          };
+          const character = importCharacterBundle(data);
           saveCharacter(character);
           resolve(character);
         } catch {
