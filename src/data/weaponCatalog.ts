@@ -60,20 +60,40 @@ export const MARTIAL_RANGED: WeaponPick[] = [
 export function weaponsForChoice(optionName: string): WeaponPick[] {
   const n = optionName.toLowerCase();
   if (/marcial/.test(n) && /distancia|ranged|a distancia/.test(n)) return MARTIAL_RANGED;
-  if (/marcial/.test(n)) return [...MARTIAL_MELEE, ...MARTIAL_RANGED].filter((w) =>
-    /cuerpo a cuerpo|melee/i.test(n) ? w.category === 'martial-melee' : true
-  );
-  if (/simple/.test(n) && /distancia|ranged/.test(n)) return SIMPLE_RANGED;
-  if (/simple/.test(n)) return [...SIMPLE_MELEE, ...SIMPLE_RANGED].filter((w) =>
-    /cuerpo a cuerpo|melee/i.test(n) ? w.category === 'simple-melee' : true
-  );
-  if (/cualquier arma simple|arma simple/.test(n)) return [...SIMPLE_MELEE, ...SIMPLE_RANGED];
-  if (/arma marcial/.test(n)) return [...MARTIAL_MELEE, ...MARTIAL_RANGED];
+  if (/simple/.test(n) && /distancia|ranged|a distancia/.test(n)) return SIMPLE_RANGED;
+  if (/cuerpo a cuerpo|melee/.test(n) && /marcial/.test(n)) return MARTIAL_MELEE;
+  if (/cuerpo a cuerpo|melee/.test(n) && /simple/.test(n)) return SIMPLE_MELEE;
+  if (/marcial/.test(n)) return [...MARTIAL_MELEE, ...MARTIAL_RANGED];
+  if (/simple|cualquier arma simple/.test(n)) return [...SIMPLE_MELEE, ...SIMPLE_RANGED];
+  if (/cualquier arma(?! simple)/.test(n)) return [...SIMPLE_MELEE, ...SIMPLE_RANGED, ...MARTIAL_MELEE, ...MARTIAL_RANGED];
   return [];
 }
 
+/** Opciones genéricas que requieren elegir arma(s) del catálogo */
 export function needsWeaponPick(optionName: string): boolean {
-  return weaponsForChoice(optionName).length > 0 &&
-    /arma marcial|arma simple|cualquier arma/i.test(optionName) &&
-    !/espada|hacha|maza|arco|ballesta|estoque|daga|jabalina|bastón/i.test(optionName);
+  const n = optionName.toLowerCase();
+  // Ya es un arma concreta conocida
+  if (
+    /espada|hacha grande|hacha de mano|maza|arco|ballesta|estoque|daga|jabalina|bast[oó]n|cimitarra|guja|alabarda|pica|mayal|lucero|tridente|l[aá]tigo|garrote|hoz|honda|dardo|red|cerbatana|martillo de guerra|pico de guerra/i.test(
+      n
+    ) && !/arma marcial|arma simple|cualquier arma|dos armas/.test(n)
+  ) {
+    return false;
+  }
+  return (
+    /arma marcial|armas marciales|arma simple|armas simples|cualquier arma|dos armas/i.test(n) &&
+    weaponsForChoice(optionName).length > 0
+  );
+}
+
+/** Cuántas armas hay que elegir (1 o 2) */
+export function weaponPickCount(optionName: string): number {
+  const n = optionName.toLowerCase();
+  if (/dos armas|2 armas|x2/.test(n)) return 2;
+  return 1;
+}
+
+/** La opción también incluye escudo */
+export function optionIncludesShield(optionName: string): boolean {
+  return /escudo|shield/i.test(optionName);
 }
