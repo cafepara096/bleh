@@ -72,7 +72,8 @@
       }
     ],
     "fixed": [],
-    "gold": 0
+    "gold": 0,
+    "goldAlternative": 75
   },
   "bard": {
     "choices": [
@@ -155,7 +156,8 @@
         "quantity": 1
       }
     ],
-    "gold": 0
+    "gold": 0,
+    "goldAlternative": 100
   },
   "cleric": {
     "choices": [
@@ -240,7 +242,8 @@
         "quantity": 1
       }
     ],
-    "gold": 0
+    "gold": 0,
+    "goldAlternative": 110
   },
   "druid": {
     "choices": [
@@ -303,7 +306,8 @@
         "quantity": 1
       }
     ],
-    "gold": 0
+    "gold": 0,
+    "goldAlternative": 50
   },
   "fighter": {
     "choices": [
@@ -401,7 +405,8 @@
       }
     ],
     "fixed": [],
-    "gold": 0
+    "gold": 0,
+    "goldAlternative": 155
   },
   "monk": {
     "choices": [
@@ -455,7 +460,8 @@
         "proficient": true
       }
     ],
-    "gold": 0
+    "gold": 0,
+    "goldAlternative": 15
   },
   "paladin": {
     "choices": [
@@ -520,7 +526,8 @@
         "proficient": true
       }
     ],
-    "gold": 0
+    "gold": 0,
+    "goldAlternative": 150
   },
   "ranger": {
     "choices": [
@@ -598,7 +605,8 @@
         "quantity": 20
       }
     ],
-    "gold": 0
+    "gold": 0,
+    "goldAlternative": 150
   },
   "rogue": {
     "choices": [
@@ -699,7 +707,8 @@
         "quantity": 1
       }
     ],
-    "gold": 0
+    "gold": 0,
+    "goldAlternative": 100
   },
   "sorcerer": {
     "choices": [
@@ -777,7 +786,8 @@
         "proficient": true
       }
     ],
-    "gold": 0
+    "gold": 0,
+    "goldAlternative": 60
   },
   "warlock": {
     "choices": [
@@ -868,7 +878,8 @@
         "proficient": true
       }
     ],
-    "gold": 0
+    "gold": 0,
+    "goldAlternative": 100
   },
   "wizard": {
     "choices": [
@@ -941,6 +952,7 @@
         "description": "Contiene 6 conjuros de nivel 1."
       }
     ],
-    "gold": 0
+    "gold": 0,
+    "goldAlternative": 55
   }
 }

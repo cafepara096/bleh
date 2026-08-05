@@ -98,6 +98,8 @@ export interface InventoryItem {
   weight?: number;
   description?: string;
   equipped?: boolean;
+  armorClass?: string;
+  armorDexMod?: 'none' | 'full' | 'max2' | 'max3';
   damage?: string;
   damageType?: string;
   properties?: string[];
@@ -280,6 +282,8 @@ export interface Item {
   damageType?: string;
   properties?: string[];
   armorClass?: string;
+  /** Cómo aplica el modificador de Destreza a la CA de esta armadura */
+  armorDexMod?: 'none' | 'full' | 'max2' | 'max3';
   weight?: number;
   cost?: string;
   homebrew?: boolean;

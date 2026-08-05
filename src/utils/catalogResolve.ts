@@ -21,6 +21,8 @@ export function resolveInventoryItem(
       damage: byName.damage ?? item.damage,
       damageType: byName.damageType ?? item.damageType,
       properties: byName.properties ?? item.properties,
+      armorClass: byName.armorClass ?? item.armorClass,
+      armorDexMod: byName.armorDexMod ?? item.armorDexMod,
       weight: byName.weight ?? item.weight,
       nameEn: byName.nameEn,
       catalogId: byName.id,
@@ -35,6 +37,8 @@ export function resolveInventoryItem(
     damage: cat.damage ?? item.damage,
     damageType: cat.damageType ?? item.damageType,
     properties: cat.properties ?? item.properties,
+    armorClass: cat.armorClass ?? item.armorClass,
+    armorDexMod: cat.armorDexMod ?? item.armorDexMod,
     weight: cat.weight ?? item.weight,
     nameEn: cat.nameEn,
   };
