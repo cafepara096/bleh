@@ -22,7 +22,58 @@
     "feature": {
       "name": "Refugio de los fieles",
       "description": "Puedes recibir cuidados y hospitalidad en templos de tu fe. Los sacerdotes te ayudarán con recursos modestos."
-    }
+    },
+    "originFeat": {
+      "name": "Iniciado en la magia",
+      "description": "Aprendes dos trucos y un conjuro de nivel 1 de una lista de clase; puedes lanzar el de nivel 1 1/día sin espacio."
+    },
+    "originFeatChoices": [
+      {
+        "id": "alert",
+        "name": "Alerta",
+        "description": "+2 a iniciativa; no sorprendido si estás consciente."
+      },
+      {
+        "id": "magic-initiate",
+        "name": "Iniciado en la magia",
+        "description": "Dos trucos y un conjuro de nivel 1 de una lista de clase; 1/día sin espacio el de nivel 1."
+      },
+      {
+        "id": "savage-attacker",
+        "name": "Atacante salvaje",
+        "description": "Una vez por turno puedes relanzar el daño de un arma cuerpo a cuerpo."
+      },
+      {
+        "id": "skilled",
+        "name": "Habilidoso",
+        "description": "Ganas competencia en tres habilidades o herramientas a tu elección."
+      },
+      {
+        "id": "tough",
+        "name": "Resistente",
+        "description": "+2 PG por nivel (incluyendo niveles ya obtenidos)."
+      },
+      {
+        "id": "healer",
+        "name": "Sanador",
+        "description": "Mejor uso del equipo de sanador para estabilizar y curar."
+      },
+      {
+        "id": "lucky",
+        "name": "Afortunado",
+        "description": "Puntos de suerte para relanzar d20s."
+      },
+      {
+        "id": "musician",
+        "name": "Músico",
+        "description": "Instrumento; ayudas a aliados en descansos cortos."
+      },
+      {
+        "id": "crafter",
+        "name": "Artesano",
+        "description": "Herramientas de artesano; descuentos y contactos."
+      }
+    ]
   },
   {
     "id": "criminal",
@@ -45,7 +96,58 @@
     "feature": {
       "name": "Contacto criminal",
       "description": "Tienes un contacto de confianza en la red criminal que puedes contactar para obtener información o ayuda ilícita."
-    }
+    },
+    "originFeat": {
+      "name": "Alerta",
+      "description": "+2 a iniciativa; no puedes ser sorprendido mientras estés consciente; otras criaturas no ganan ventaja por estar ocultas a ti al inicio del combate."
+    },
+    "originFeatChoices": [
+      {
+        "id": "alert",
+        "name": "Alerta",
+        "description": "+2 a iniciativa; no sorprendido si estás consciente."
+      },
+      {
+        "id": "magic-initiate",
+        "name": "Iniciado en la magia",
+        "description": "Dos trucos y un conjuro de nivel 1 de una lista de clase; 1/día sin espacio el de nivel 1."
+      },
+      {
+        "id": "savage-attacker",
+        "name": "Atacante salvaje",
+        "description": "Una vez por turno puedes relanzar el daño de un arma cuerpo a cuerpo."
+      },
+      {
+        "id": "skilled",
+        "name": "Habilidoso",
+        "description": "Ganas competencia en tres habilidades o herramientas a tu elección."
+      },
+      {
+        "id": "tough",
+        "name": "Resistente",
+        "description": "+2 PG por nivel (incluyendo niveles ya obtenidos)."
+      },
+      {
+        "id": "healer",
+        "name": "Sanador",
+        "description": "Mejor uso del equipo de sanador para estabilizar y curar."
+      },
+      {
+        "id": "lucky",
+        "name": "Afortunado",
+        "description": "Puntos de suerte para relanzar d20s."
+      },
+      {
+        "id": "musician",
+        "name": "Músico",
+        "description": "Instrumento; ayudas a aliados en descansos cortos."
+      },
+      {
+        "id": "crafter",
+        "name": "Artesano",
+        "description": "Herramientas de artesano; descuentos y contactos."
+      }
+    ]
   },
   {
     "id": "folk-hero",
@@ -69,7 +171,58 @@
     "feature": {
       "name": "Hospitalidad rústica",
       "description": "La gente común te ofrece un lugar seguro para descansar, esconderte o recuperarte. Tratan de ocultarte de la ley o de enemigos si no les pones en peligro."
-    }
+    },
+    "originFeat": {
+      "name": "Superviviente hábil",
+      "description": "Competencia en Supervivencia (o pericia si ya la tienes); hallas comida y refugio en la naturaleza con más facilidad."
+    },
+    "originFeatChoices": [
+      {
+        "id": "alert",
+        "name": "Alerta",
+        "description": "+2 a iniciativa; no sorprendido si estás consciente."
+      },
+      {
+        "id": "magic-initiate",
+        "name": "Iniciado en la magia",
+        "description": "Dos trucos y un conjuro de nivel 1 de una lista de clase; 1/día sin espacio el de nivel 1."
+      },
+      {
+        "id": "savage-attacker",
+        "name": "Atacante salvaje",
+        "description": "Una vez por turno puedes relanzar el daño de un arma cuerpo a cuerpo."
+      },
+      {
+        "id": "skilled",
+        "name": "Habilidoso",
+        "description": "Ganas competencia en tres habilidades o herramientas a tu elección."
+      },
+      {
+        "id": "tough",
+        "name": "Resistente",
+        "description": "+2 PG por nivel (incluyendo niveles ya obtenidos)."
+      },
+      {
+        "id": "healer",
+        "name": "Sanador",
+        "description": "Mejor uso del equipo de sanador para estabilizar y curar."
+      },
+      {
+        "id": "lucky",
+        "name": "Afortunado",
+        "description": "Puntos de suerte para relanzar d20s."
+      },
+      {
+        "id": "musician",
+        "name": "Músico",
+        "description": "Instrumento; ayudas a aliados en descansos cortos."
+      },
+      {
+        "id": "crafter",
+        "name": "Artesano",
+        "description": "Herramientas de artesano; descuentos y contactos."
+      }
+    ]
   },
   {
     "id": "noble",
@@ -95,7 +248,58 @@
     "feature": {
       "name": "Posición privilegiada",
       "description": "Se te admite en la alta sociedad. La gente común se esfuerza por agradarte y puedes conseguir audiencia con nobles locales."
-    }
+    },
+    "originFeat": {
+      "name": "Artista hábil",
+      "description": "Competencia en una habilidad a tu elección entre Historia, Interpretación, Intimidación o Persuasión; inspiras aliados en contextos sociales."
+    },
+    "originFeatChoices": [
+      {
+        "id": "alert",
+        "name": "Alerta",
+        "description": "+2 a iniciativa; no sorprendido si estás consciente."
+      },
+      {
+        "id": "magic-initiate",
+        "name": "Iniciado en la magia",
+        "description": "Dos trucos y un conjuro de nivel 1 de una lista de clase; 1/día sin espacio el de nivel 1."
+      },
+      {
+        "id": "savage-attacker",
+        "name": "Atacante salvaje",
+        "description": "Una vez por turno puedes relanzar el daño de un arma cuerpo a cuerpo."
+      },
+      {
+        "id": "skilled",
+        "name": "Habilidoso",
+        "description": "Ganas competencia en tres habilidades o herramientas a tu elección."
+      },
+      {
+        "id": "tough",
+        "name": "Resistente",
+        "description": "+2 PG por nivel (incluyendo niveles ya obtenidos)."
+      },
+      {
+        "id": "healer",
+        "name": "Sanador",
+        "description": "Mejor uso del equipo de sanador para estabilizar y curar."
+      },
+      {
+        "id": "lucky",
+        "name": "Afortunado",
+        "description": "Puntos de suerte para relanzar d20s."
+      },
+      {
+        "id": "musician",
+        "name": "Músico",
+        "description": "Instrumento; ayudas a aliados en descansos cortos."
+      },
+      {
+        "id": "crafter",
+        "name": "Artesano",
+        "description": "Herramientas de artesano; descuentos y contactos."
+      }
+    ]
   },
   {
     "id": "sage",
@@ -120,7 +324,58 @@
     "feature": {
       "name": "Investigador",
       "description": "Si no sabes una información, a menudo sabes dónde encontrarla: quién la tiene, o qué biblioteca o sabio la posee."
-    }
+    },
+    "originFeat": {
+      "name": "Iniciado en la magia",
+      "description": "Dos trucos y un conjuro de nivel 1 de la lista de mago; el de nivel 1 1/día sin espacio."
+    },
+    "originFeatChoices": [
+      {
+        "id": "alert",
+        "name": "Alerta",
+        "description": "+2 a iniciativa; no sorprendido si estás consciente."
+      },
+      {
+        "id": "magic-initiate",
+        "name": "Iniciado en la magia",
+        "description": "Dos trucos y un conjuro de nivel 1 de una lista de clase; 1/día sin espacio el de nivel 1."
+      },
+      {
+        "id": "savage-attacker",
+        "name": "Atacante salvaje",
+        "description": "Una vez por turno puedes relanzar el daño de un arma cuerpo a cuerpo."
+      },
+      {
+        "id": "skilled",
+        "name": "Habilidoso",
+        "description": "Ganas competencia en tres habilidades o herramientas a tu elección."
+      },
+      {
+        "id": "tough",
+        "name": "Resistente",
+        "description": "+2 PG por nivel (incluyendo niveles ya obtenidos)."
+      },
+      {
+        "id": "healer",
+        "name": "Sanador",
+        "description": "Mejor uso del equipo de sanador para estabilizar y curar."
+      },
+      {
+        "id": "lucky",
+        "name": "Afortunado",
+        "description": "Puntos de suerte para relanzar d20s."
+      },
+      {
+        "id": "musician",
+        "name": "Músico",
+        "description": "Instrumento; ayudas a aliados en descansos cortos."
+      },
+      {
+        "id": "crafter",
+        "name": "Artesano",
+        "description": "Herramientas de artesano; descuentos y contactos."
+      }
+    ]
   },
   {
     "id": "soldier",
@@ -144,7 +399,58 @@
     "feature": {
       "name": "Rango militar",
       "description": "Los soldados leales a tu antigua organización te reconocen. Puedes ejercer influencia sobre ellos y conseguir ayuda o equipo sencillo."
-    }
+    },
+    "originFeat": {
+      "name": "Atleta salvaje",
+      "description": "Ventaja en salvaciones contra fatiga por marcha forzada; competencia relacionada con hazañas atléticas."
+    },
+    "originFeatChoices": [
+      {
+        "id": "alert",
+        "name": "Alerta",
+        "description": "+2 a iniciativa; no sorprendido si estás consciente."
+      },
+      {
+        "id": "magic-initiate",
+        "name": "Iniciado en la magia",
+        "description": "Dos trucos y un conjuro de nivel 1 de una lista de clase; 1/día sin espacio el de nivel 1."
+      },
+      {
+        "id": "savage-attacker",
+        "name": "Atacante salvaje",
+        "description": "Una vez por turno puedes relanzar el daño de un arma cuerpo a cuerpo."
+      },
+      {
+        "id": "skilled",
+        "name": "Habilidoso",
+        "description": "Ganas competencia en tres habilidades o herramientas a tu elección."
+      },
+      {
+        "id": "tough",
+        "name": "Resistente",
+        "description": "+2 PG por nivel (incluyendo niveles ya obtenidos)."
+      },
+      {
+        "id": "healer",
+        "name": "Sanador",
+        "description": "Mejor uso del equipo de sanador para estabilizar y curar."
+      },
+      {
+        "id": "lucky",
+        "name": "Afortunado",
+        "description": "Puntos de suerte para relanzar d20s."
+      },
+      {
+        "id": "musician",
+        "name": "Músico",
+        "description": "Instrumento; ayudas a aliados en descansos cortos."
+      },
+      {
+        "id": "crafter",
+        "name": "Artesano",
+        "description": "Herramientas de artesano; descuentos y contactos."
+      }
+    ]
   },
   {
     "id": "hermit",
@@ -171,7 +477,58 @@
     "feature": {
       "name": "Descubrimiento",
       "description": "El aislamiento te otorgó un descubrimiento único: un hecho sobre el cosmos, la deidad, o un conocimiento que otros buscan."
-    }
+    },
+    "originFeat": {
+      "name": "Sanador",
+      "description": "Usas un equipo de sanador para estabilizar y restaurar PG adicionales según las reglas de la dote."
+    },
+    "originFeatChoices": [
+      {
+        "id": "alert",
+        "name": "Alerta",
+        "description": "+2 a iniciativa; no sorprendido si estás consciente."
+      },
+      {
+        "id": "magic-initiate",
+        "name": "Iniciado en la magia",
+        "description": "Dos trucos y un conjuro de nivel 1 de una lista de clase; 1/día sin espacio el de nivel 1."
+      },
+      {
+        "id": "savage-attacker",
+        "name": "Atacante salvaje",
+        "description": "Una vez por turno puedes relanzar el daño de un arma cuerpo a cuerpo."
+      },
+      {
+        "id": "skilled",
+        "name": "Habilidoso",
+        "description": "Ganas competencia en tres habilidades o herramientas a tu elección."
+      },
+      {
+        "id": "tough",
+        "name": "Resistente",
+        "description": "+2 PG por nivel (incluyendo niveles ya obtenidos)."
+      },
+      {
+        "id": "healer",
+        "name": "Sanador",
+        "description": "Mejor uso del equipo de sanador para estabilizar y curar."
+      },
+      {
+        "id": "lucky",
+        "name": "Afortunado",
+        "description": "Puntos de suerte para relanzar d20s."
+      },
+      {
+        "id": "musician",
+        "name": "Músico",
+        "description": "Instrumento; ayudas a aliados en descansos cortos."
+      },
+      {
+        "id": "crafter",
+        "name": "Artesano",
+        "description": "Herramientas de artesano; descuentos y contactos."
+      }
+    ]
   },
   {
     "id": "entertainer",
@@ -195,7 +552,58 @@
     "feature": {
       "name": "Con demanda",
       "description": "Siempre encuentras un lugar para actuar. Recibes alojamiento y comida modestos a cambio de una actuación nocturna."
-    }
+    },
+    "originFeat": {
+      "name": "Músico",
+      "description": "Competencia con un instrumento; durante un descanso corto puedes tocar para que aliados recuperen dados de golpe extra."
+    },
+    "originFeatChoices": [
+      {
+        "id": "alert",
+        "name": "Alerta",
+        "description": "+2 a iniciativa; no sorprendido si estás consciente."
+      },
+      {
+        "id": "magic-initiate",
+        "name": "Iniciado en la magia",
+        "description": "Dos trucos y un conjuro de nivel 1 de una lista de clase; 1/día sin espacio el de nivel 1."
+      },
+      {
+        "id": "savage-attacker",
+        "name": "Atacante salvaje",
+        "description": "Una vez por turno puedes relanzar el daño de un arma cuerpo a cuerpo."
+      },
+      {
+        "id": "skilled",
+        "name": "Habilidoso",
+        "description": "Ganas competencia en tres habilidades o herramientas a tu elección."
+      },
+      {
+        "id": "tough",
+        "name": "Resistente",
+        "description": "+2 PG por nivel (incluyendo niveles ya obtenidos)."
+      },
+      {
+        "id": "healer",
+        "name": "Sanador",
+        "description": "Mejor uso del equipo de sanador para estabilizar y curar."
+      },
+      {
+        "id": "lucky",
+        "name": "Afortunado",
+        "description": "Puntos de suerte para relanzar d20s."
+      },
+      {
+        "id": "musician",
+        "name": "Músico",
+        "description": "Instrumento; ayudas a aliados en descansos cortos."
+      },
+      {
+        "id": "crafter",
+        "name": "Artesano",
+        "description": "Herramientas de artesano; descuentos y contactos."
+      }
+    ]
   },
   {
     "id": "outlander",
@@ -222,7 +630,58 @@
     "feature": {
       "name": "Wanderer",
       "description": "Tienes excelente memoria para mapas y terreno. Puedes encontrar comida y agua dulce para ti y hasta cinco personas cada día, si la tierra lo ofrece."
-    }
+    },
+    "originFeat": {
+      "name": "Explorador del yermo",
+      "description": "Supervivencia; viajes más seguros en terreno natural difícil."
+    },
+    "originFeatChoices": [
+      {
+        "id": "alert",
+        "name": "Alerta",
+        "description": "+2 a iniciativa; no sorprendido si estás consciente."
+      },
+      {
+        "id": "magic-initiate",
+        "name": "Iniciado en la magia",
+        "description": "Dos trucos y un conjuro de nivel 1 de una lista de clase; 1/día sin espacio el de nivel 1."
+      },
+      {
+        "id": "savage-attacker",
+        "name": "Atacante salvaje",
+        "description": "Una vez por turno puedes relanzar el daño de un arma cuerpo a cuerpo."
+      },
+      {
+        "id": "skilled",
+        "name": "Habilidoso",
+        "description": "Ganas competencia en tres habilidades o herramientas a tu elección."
+      },
+      {
+        "id": "tough",
+        "name": "Resistente",
+        "description": "+2 PG por nivel (incluyendo niveles ya obtenidos)."
+      },
+      {
+        "id": "healer",
+        "name": "Sanador",
+        "description": "Mejor uso del equipo de sanador para estabilizar y curar."
+      },
+      {
+        "id": "lucky",
+        "name": "Afortunado",
+        "description": "Puntos de suerte para relanzar d20s."
+      },
+      {
+        "id": "musician",
+        "name": "Músico",
+        "description": "Instrumento; ayudas a aliados en descansos cortos."
+      },
+      {
+        "id": "crafter",
+        "name": "Artesano",
+        "description": "Herramientas de artesano; descuentos y contactos."
+      }
+    ]
   },
   {
     "id": "charlatan",
@@ -245,6 +704,57 @@
     "feature": {
       "name": "Identidad falsa",
       "description": "Has creado una segunda identidad con documentación, conocidos y disfraces. Además puedes falsificar documentos."
-    }
+    },
+    "originFeat": {
+      "name": "Engañador experto",
+      "description": "Competencia en Engaño o interpretaciones de disfraz; mantienes identidades falsas."
+    },
+    "originFeatChoices": [
+      {
+        "id": "alert",
+        "name": "Alerta",
+        "description": "+2 a iniciativa; no sorprendido si estás consciente."
+      },
+      {
+        "id": "magic-initiate",
+        "name": "Iniciado en la magia",
+        "description": "Dos trucos y un conjuro de nivel 1 de una lista de clase; 1/día sin espacio el de nivel 1."
+      },
+      {
+        "id": "savage-attacker",
+        "name": "Atacante salvaje",
+        "description": "Una vez por turno puedes relanzar el daño de un arma cuerpo a cuerpo."
+      },
+      {
+        "id": "skilled",
+        "name": "Habilidoso",
+        "description": "Ganas competencia en tres habilidades o herramientas a tu elección."
+      },
+      {
+        "id": "tough",
+        "name": "Resistente",
+        "description": "+2 PG por nivel (incluyendo niveles ya obtenidos)."
+      },
+      {
+        "id": "healer",
+        "name": "Sanador",
+        "description": "Mejor uso del equipo de sanador para estabilizar y curar."
+      },
+      {
+        "id": "lucky",
+        "name": "Afortunado",
+        "description": "Puntos de suerte para relanzar d20s."
+      },
+      {
+        "id": "musician",
+        "name": "Músico",
+        "description": "Instrumento; ayudas a aliados en descansos cortos."
+      },
+      {
+        "id": "crafter",
+        "name": "Artesano",
+        "description": "Herramientas de artesano; descuentos y contactos."
+      }
+    ]
   }
 ]

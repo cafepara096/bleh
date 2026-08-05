@@ -16,7 +16,7 @@ import {
   CLASS_SKILL_OPTIONS,
 } from '../../utils/characterBuilder';
 import { ALIGNMENTS } from '../../utils/alignments';
-import { expandPackItems, packSummary } from '../../utils/equipmentPacks';
+import { expandStartingOption, packSummary } from '../../utils/equipmentPacks';
 import startingEquipment from '../../data/starting-equipment.json';
 import type { InventoryItem } from '../../types/dnd';
 import { getModifier, formatModifier } from '../../utils/character';
@@ -66,6 +66,7 @@ export function CharacterWizard({ onComplete, onCancel }: Props) {
   const [chosenClassSkills, setChosenClassSkills] = useState<string[]>([]);
   const [equipChoices, setEquipChoices] = useState<Record<string, number>>({});
   const [equipMode, setEquipMode] = useState<'gear' | 'gold'>('gear');
+  const [originFeatId, setOriginFeatId] = useState<string>('');
 
   const race = races.find((r) => r.id === raceId) || null;
   const classData = classes.find((c) => c.id === classId) || null;
@@ -196,25 +197,23 @@ export function CharacterWizard({ onComplete, onCancel }: Props) {
     } else if (pack) {
       const items: InventoryItem[] = [];
       const pushItem = (raw: any) => {
-        const expanded = expandPackItems(raw.name || '');
-        if (expanded) {
-          for (const part of expanded) {
-            items.push({
-              ...part,
-              id: crypto.randomUUID(),
-              quantity: part.quantity || 1,
-              proficient: !!part.damage,
-            });
-          }
-          return;
+        const expanded = expandStartingOption(raw);
+        for (const part of expanded) {
+          items.push({
+            ...part,
+            id: crypto.randomUUID(),
+            quantity: part.quantity || 1,
+            proficient: part.proficient ?? !!part.damage,
+            properties: part.properties,
+            armorClass: part.armorClass,
+            armorDexMod: part.armorDexMod,
+            equipped: part.equipped ?? false,
+            description: part.description,
+            damage: part.damage,
+            damageType: part.damageType,
+            name: part.name,
+          });
         }
-        items.push({
-          ...raw,
-          id: crypto.randomUUID(),
-          quantity: raw.quantity || 1,
-          proficient: raw.proficient ?? !!raw.damage,
-          properties: raw.properties,
-        });
       };
       for (const fixed of pack.fixed || []) pushItem(fixed);
       for (const choice of pack.choices || []) {
@@ -255,6 +254,23 @@ export function CharacterWizard({ onComplete, onCancel }: Props) {
     }
     if (startingGold > 0) {
       char.currency = { ...char.currency, gp: (char.currency?.gp || 0) + startingGold };
+    }
+    const bgPick = backgrounds.find(
+      (b) => b.name === background.trim() || b.id === background.trim()
+    );
+    const feat =
+      (bgPick?.originFeatChoices || []).find((f) => f.id === originFeatId) ||
+      (bgPick?.originFeat
+        ? { id: 'suggested', name: bgPick.originFeat.name, description: bgPick.originFeat.description }
+        : null);
+    if (feat && !char.features.some((f) => f.name === feat.name)) {
+      char.features.push({
+        id: `origin-${feat.id}`,
+        name: feat.name,
+        description: feat.description,
+        source: 'background',
+        actionType: 'passive',
+      });
     }
     onComplete(char);
   };
@@ -668,6 +684,12 @@ export function CharacterWizard({ onComplete, onCancel }: Props) {
                     {bg.equipment && (
                       <div><strong>Equipo:</strong> {bg.equipment.join(', ')}</div>
                     )}
+                    {bg.originFeat && (
+                      <div className="mt-1 text-amber-900 bg-amber-50 border border-amber-200 rounded px-1.5 py-1">
+                        <strong>Dote de origen sugerida — {bg.originFeat.name}:</strong>{' '}
+                        {bg.originFeat.description}
+                      </div>
+                    )}
                   </div>
                 </button>
               ))}
@@ -678,6 +700,38 @@ export function CharacterWizard({ onComplete, onCancel }: Props) {
               className="w-full px-3 py-2 border-2 border-ink-300 rounded-lg"
               placeholder="O escribe un trasfondo libre / homebrew"
             />
+            {(() => {
+              const bgPick = backgrounds.find(
+                (b) => b.name === background.trim() || b.id === background.trim()
+              );
+              const choices = bgPick?.originFeatChoices || [];
+              if (!choices.length) return null;
+              return (
+                <div className="mt-4 space-y-2">
+                  <p className="text-sm font-bold">Dote de origen (PHB 2024)</p>
+                  <p className="text-xs text-ink-600">
+                    Elige la dote que otorga tu trasfondo. Se añadirá a la hoja de personaje.
+                  </p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    {choices.map((f) => (
+                      <button
+                        key={f.id}
+                        type="button"
+                        onClick={() => setOriginFeatId(f.id)}
+                        className={`text-left p-2 rounded-lg border-2 text-sm ${
+                          originFeatId === f.id
+                            ? 'border-crimson-600 bg-parchment-200'
+                            : 'border-ink-200 bg-white hover:border-ink-400'
+                        }`}
+                      >
+                        <strong>{f.name}</strong>
+                        <span className="block text-xs text-ink-600 mt-0.5">{f.description}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              );
+            })()}
           </div>
         )}
 

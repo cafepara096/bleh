@@ -313,16 +313,31 @@ export function InventoryPanel({ character, onUpdate }: Props) {
         <div className="grid grid-cols-1 sm:grid-cols-5 gap-2 mb-3">
           {COIN_ORDER.map((coin) => {
             const meta = COIN_META[coin];
+            const disabled = (character.disabledCoins || []).includes(coin);
             return (
               <div
                 key={coin}
-                className={`rounded-lg border-2 p-2 ${meta.color}`}
+                className={`rounded-lg border-2 p-2 ${meta.color} ${disabled ? 'opacity-45' : ''}`}
               >
-                <div className="flex items-center justify-between mb-1">
+                <div className="flex items-center justify-between mb-1 gap-1">
                   <span className="text-xs font-bold uppercase" title={meta.full}>
                     {meta.label}
                   </span>
-                  <span className="text-[10px] opacity-70">{meta.full}</span>
+                  <button
+                    type="button"
+                    title={disabled ? 'Mostrar moneda' : 'Ocultar moneda'}
+                    onClick={() => {
+                      const set = new Set(character.disabledCoins || []);
+                      if (set.has(coin)) set.delete(coin);
+                      else set.add(coin);
+                      onUpdate({
+                        disabledCoins: Array.from(set) as NonNullable<Character['disabledCoins']>,
+                      });
+                    }}
+                    className="text-[9px] leading-none px-1 py-0.5 rounded border border-ink-400/60 bg-white/80 hover:bg-white"
+                  >
+                    {disabled ? 'on' : 'off'}
+                  </button>
                 </div>
                 <div className="text-xl font-mono font-bold text-center mb-1.5">
                   {character.currency[coin] || 0}
