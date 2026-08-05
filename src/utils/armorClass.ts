@@ -1,5 +1,6 @@
 import type { Character, InventoryItem } from '../types/dnd';
 import { getModifier } from './character';
+import { resolveArmorStats } from '../data/armorCatalog';
 
 export type ArmorDexMode = 'none' | 'full' | 'max2' | 'max3';
 
@@ -18,15 +19,25 @@ export function isArmorItem(item: InventoryItem): boolean {
 
 /** Interpreta armorClass string + armorDexMod */
 export function itemToAC(item: InventoryItem, dexMod: number): number | null {
-  if (!item.armorClass && !isArmorItem(item) && !isShieldItem(item)) return null;
+  if (!isArmorItem(item) && !isShieldItem(item) && !item.armorClass) return null;
 
-  const text = (item.armorClass || '').trim();
+  let armorClass = item.armorClass;
+  let mode: ArmorDexMode = item.armorDexMod || 'none';
+
+  if (!armorClass || !item.armorDexMod) {
+    const resolved = resolveArmorStats(item.name, item.description);
+    if (resolved) {
+      armorClass = armorClass || resolved.armorClass;
+      if (!item.armorDexMod) mode = resolved.armorDexMod;
+    }
+  }
+
+  const text = (armorClass || item.description || '').trim();
   const numMatch = text.match(/(\d+)/);
-  const base = numMatch ? parseInt(numMatch[1], 10) : isShieldItem(item) ? 2 : 10;
+  const base = numMatch ? parseInt(numMatch[1], 10) : isShieldItem(item) ? 2 : null;
+  if (base == null) return null;
 
-  let mode: ArmorDexMode = (item as InventoryItem & { armorDexMod?: ArmorDexMode }).armorDexMod || 'none';
-  // Infer from text if not set
-  if (!(item as { armorDexMod?: string }).armorDexMod) {
+  if (!item.armorDexMod) {
     if (/m[aá]x\.?\s*2|max\s*2/i.test(text)) mode = 'max2';
     else if (/m[aá]x\.?\s*3|max\s*3/i.test(text)) mode = 'max3';
     else if (/des|dex/i.test(text)) mode = 'full';

@@ -17,6 +17,10 @@ import {
 } from '../../utils/characterBuilder';
 import { ALIGNMENTS } from '../../utils/alignments';
 import { expandStartingOption, packSummary } from '../../utils/equipmentPacks';
+import { needsWeaponPick, weaponsForChoice, type WeaponPick } from '../../data/weaponCatalog';
+import { computeArmorClass } from '../../utils/armorClass';
+import { applyFeatureSpellGrants } from '../../utils/featureSpellGrants';
+import { useSpells } from '../../hooks/useSpells';
 import startingEquipment from '../../data/starting-equipment.json';
 import type { InventoryItem } from '../../types/dnd';
 import { getModifier, formatModifier } from '../../utils/character';
@@ -49,6 +53,7 @@ export function CharacterWizard({ onComplete, onCancel }: Props) {
   const { races } = useRaces();
   const { classes } = useClasses();
   const { backgrounds } = useBackgrounds();
+  const { spells: spellCatalog } = useSpells();
 
   const [step, setStep] = useState<Step>('identity');
   const [name, setName] = useState('');
@@ -67,6 +72,10 @@ export function CharacterWizard({ onComplete, onCancel }: Props) {
   const [equipChoices, setEquipChoices] = useState<Record<string, number>>({});
   const [equipMode, setEquipMode] = useState<'gear' | 'gold'>('gear');
   const [originFeatId, setOriginFeatId] = useState<string>('');
+  /** choiceId -> weapon id elegido cuando la opción es genérica */
+  const [weaponPicks, setWeaponPicks] = useState<Record<string, string>>({});
+  const [miCantrips, setMiCantrips] = useState<string[]>([]);
+  const [miSpell, setMiSpell] = useState<string>('');
 
   const race = races.find((r) => r.id === raceId) || null;
   const classData = classes.find((c) => c.id === classId) || null;
@@ -134,7 +143,12 @@ export function CharacterWizard({ onComplete, onCancel }: Props) {
         if (equipMode === 'gold') return true;
         const pack = (startingEquipment as any)[classId];
         if (!pack?.choices?.length) return true;
-        return pack.choices.every((c: any) => equipChoices[c.id] !== undefined);
+        if (!pack.choices.every((c: any) => equipChoices[c.id] !== undefined)) return false;
+        for (const c of pack.choices) {
+          const opt = c.options[equipChoices[c.id]];
+          if (opt && needsWeaponPick(opt.name || '') && !weaponPicks[c.id]) return false;
+        }
+        return true;
       }
       case 'review':
         return true;
@@ -218,8 +232,34 @@ export function CharacterWizard({ onComplete, onCancel }: Props) {
       for (const fixed of pack.fixed || []) pushItem(fixed);
       for (const choice of pack.choices || []) {
         const idx = equipChoices[choice.id] ?? 0;
-        const opt = choice.options[idx];
-        if (opt) pushItem(opt);
+        let opt = choice.options[idx];
+        if (!opt) continue;
+        // Resolver "Arma marcial / simple" a un arma concreta
+        if (needsWeaponPick(opt.name || '')) {
+          const pickId = weaponPicks[choice.id];
+          const list = weaponsForChoice(opt.name || '');
+          const wp = list.find((w) => w.id === pickId) || list[0];
+          if (wp) {
+            const count = /dos |2 /i.test(opt.name || '') ? 2 : 1;
+            for (let i = 0; i < count; i++) {
+              pushItem({
+                name: wp.name,
+                quantity: 1,
+                damage: wp.damage !== '—' ? wp.damage : undefined,
+                damageType: wp.damageType !== '—' ? wp.damageType : undefined,
+                properties: wp.properties,
+                equipped: true,
+                proficient: true,
+              });
+            }
+            // Si la opción también implica escudo u otros (raro en genéricos)
+            if (/escudo/i.test(opt.name || '')) {
+              pushItem({ name: 'Escudo', quantity: 1, description: '+2 CA', equipped: true, armorClass: '2' });
+            }
+            continue;
+          }
+        }
+        pushItem(opt);
       }
       customInventory = items;
       startingGold = pack.gold || 0;
@@ -272,7 +312,25 @@ export function CharacterWizard({ onComplete, onCancel }: Props) {
         actionType: 'passive',
       });
     }
-    onComplete(char);
+    // CA desde armadura equipada
+    char.armorClass = computeArmorClass(char);
+    // Conjuros de Iniciado en la magia
+    if (miCantrips.length || miSpell) {
+      char.cantripsKnown = [...new Set([...(char.cantripsKnown || []), ...miCantrips])];
+      char.spells = [...(char.spells || [])];
+      for (const id of miCantrips) {
+        if (!char.spells.some((s) => s.spellId === id)) {
+          /* cantrips go in cantripsKnown */
+        }
+      }
+      if (miSpell && !char.spells.some((s) => s.spellId === miSpell)) {
+        char.spells.push({ spellId: miSpell, prepared: true, alwaysPrepared: true });
+      }
+      if (!char.spellcastingAbility) char.spellcastingAbility = 'int';
+    }
+    // Conjuros/espacios de dotes (Iniciado en la magia, etc.)
+    const withGrants = applyFeatureSpellGrants(char, spellCatalog);
+    onComplete(withGrants);
   };
 
   const setScore = (ability: AbilityScore, value: number) => {
@@ -732,6 +790,66 @@ export function CharacterWizard({ onComplete, onCancel }: Props) {
                 </div>
               );
             })()}
+            {(() => {
+              const bgPick = backgrounds.find(
+                (b) => b.name === background.trim() || b.id === background.trim()
+              );
+              const feat =
+                (bgPick?.originFeatChoices || []).find((f) => f.id === originFeatId) ||
+                bgPick?.originFeat;
+              const isMI =
+                feat && /iniciado en la magia|magic initiate/i.test(feat.name || '');
+              if (!isMI) return null;
+              const cantrips = spellCatalog.filter((s) => s.level === 0).slice(0, 80);
+              const leveled = spellCatalog.filter((s) => s.level === 1).slice(0, 80);
+              return (
+                <div className="mt-4 space-y-2 border-2 border-purple-300 rounded-lg p-3 bg-purple-50/50">
+                  <p className="text-sm font-bold text-purple-900">Iniciado en la magia — elige conjuros</p>
+                  <p className="text-xs text-ink-600">2 trucos y 1 conjuro de nivel 1 (siempre preparados; el de nivel 1 1/día sin espacio).</p>
+                  <div>
+                    <p className="text-xs font-bold mb-1">Trucos ({miCantrips.length}/2)</p>
+                    <div className="flex flex-wrap gap-1 max-h-28 overflow-y-auto">
+                      {cantrips.map((s) => {
+                        const on = miCantrips.includes(s.id);
+                        return (
+                          <button
+                            key={s.id}
+                            type="button"
+                            onClick={() => {
+                              setMiCantrips((prev) => {
+                                if (on) return prev.filter((x) => x !== s.id);
+                                if (prev.length >= 2) return prev;
+                                return [...prev, s.id];
+                              });
+                            }}
+                            className={`text-[10px] px-1.5 py-0.5 rounded border ${
+                              on ? 'bg-purple-700 text-white border-purple-800' : 'bg-white border-ink-200'
+                            }`}
+                          >
+                            {s.name}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                  <div>
+                    <p className="text-xs font-bold mb-1">Conjuro de nivel 1</p>
+                    <select
+                      className="w-full text-sm border-2 border-ink-300 rounded-lg px-2 py-1.5"
+                      value={miSpell}
+                      onChange={(e) => setMiSpell(e.target.value)}
+                    >
+                      <option value="">— Elegir —</option>
+                      {leveled.map((s) => (
+                        <option key={s.id} value={s.id}>
+                          {s.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+              );
+            })()}
           </div>
         )}
 
@@ -925,6 +1043,40 @@ export function CharacterWizard({ onComplete, onCancel }: Props) {
                             )}
                           </button>
                         ))}
+                        {(() => {
+                          const idx = equipChoices[choice.id];
+                          if (idx === undefined) return null;
+                          const sel = choice.options[idx];
+                          if (!sel || !needsWeaponPick(sel.name || '')) return null;
+                          const list = weaponsForChoice(sel.name || '');
+                          return (
+                            <div className="mt-2 p-2 bg-parchment-50 border border-ink-200 rounded-lg">
+                              <p className="text-xs font-bold mb-1">Elige el arma concreta</p>
+                              <div className="grid grid-cols-1 sm:grid-cols-2 gap-1 max-h-40 overflow-y-auto">
+                                {list.map((w: WeaponPick) => (
+                                  <button
+                                    key={w.id}
+                                    type="button"
+                                    onClick={() =>
+                                      setWeaponPicks((prev) => ({ ...prev, [choice.id]: w.id }))
+                                    }
+                                    className={`text-left text-xs px-2 py-1.5 rounded border ${
+                                      weaponPicks[choice.id] === w.id
+                                        ? 'border-crimson-600 bg-parchment-200'
+                                        : 'border-ink-200 bg-white'
+                                    }`}
+                                  >
+                                    <strong>{w.name}</strong>
+                                    <span className="text-ink-500">
+                                      {' '}
+                                      {w.damage} {w.damageType}
+                                    </span>
+                                  </button>
+                                ))}
+                              </div>
+                            </div>
+                          );
+                        })()}
                       </div>
                     </div>
                   ))}
