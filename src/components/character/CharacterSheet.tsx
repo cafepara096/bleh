@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import type { Character, AbilityScore, SkillId } from '../../types/dnd';
 import { ABILITY_LABELS } from '../../types/dnd';
 import {
@@ -38,6 +38,7 @@ import { exportCharacterPdf } from '../../utils/exportCharacterPdf';
 import { ALIGNMENTS, getAlignmentInfo } from '../../utils/alignments';
 import { CombatPanel } from './CombatPanel';
 import { ActionsPanel } from './ActionsPanel';
+import { computeArmorClass } from '../../utils/armorClass';
 
 interface Props {
   character: Character;
@@ -53,6 +54,24 @@ export function CharacterSheet({ character: initial, onSave, onBack, onExport }:
   const [showLevelUp, setShowLevelUp] = useState(false);
   const [showPendingChoices, setShowPendingChoices] = useState(false);
   const [pendingDrafts, setPendingDrafts] = useState<Record<string, string>>({});
+
+  // CA automática según armadura/escudo en mano (equipado)
+  useEffect(() => {
+    const ac = computeArmorClass(character);
+    if (ac !== character.armorClass) {
+      setCharacter((c) => ({ ...c, armorClass: ac }));
+      setDirty(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    character.inventory,
+    character.abilityScores.dex,
+    character.abilityScores.con,
+    character.abilityScores.wis,
+    character.classId,
+    character.class,
+  ]);
+
 
   const unresolvedPending = (character.pendingChoices || []).filter((p) => !p.resolution);
 
@@ -254,6 +273,7 @@ export function CharacterSheet({ character: initial, onSave, onBack, onExport }:
               type="number"
               value={character.armorClass}
               onChange={(e) => update({ armorClass: parseInt(e.target.value) || 10 })}
+              title="Se actualiza al equipar armadura/escudo; puedes sobrescribir"
               className="w-12 text-xl font-bold text-center bg-transparent focus:outline-none"
             />
           </div>

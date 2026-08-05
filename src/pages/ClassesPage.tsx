@@ -120,8 +120,28 @@ export function ClassesPage() {
         </button>
       </div>
 
+      {/* menu-movil-catalogo */}
+      <div className="lg:hidden mb-3">
+        <label className="block text-xs font-bold text-ink-600 mb-1">Clase</label>
+        <select
+          className="w-full px-3 py-2.5 border-2 border-ink-800 rounded-xl bg-parchment-100 text-sm font-medium"
+          value={current?.id || ''}
+          onChange={(e) => {
+            const c = classes.find((x) => x.id === e.target.value);
+            if (c) setSelected(c);
+          }}
+        >
+          <option value="">— Elegir clase —</option>
+          {classes.map((cls) => (
+            <option key={cls.id} value={cls.id}>
+              {cls.name}{cls.homebrew ? ' (HB)' : ''}
+            </option>
+          ))}
+        </select>
+      </div>
+
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
-        <div className="lg:col-span-2 bg-parchment-100 border-2 border-ink-800 rounded-xl overflow-hidden max-h-[70vh] overflow-y-auto">
+        <div className="hidden lg:block lg:col-span-2 bg-parchment-100 border-2 border-ink-800 rounded-xl overflow-hidden max-h-[70vh] overflow-y-auto">
           {classes.map((cls) => (
             <button
               key={cls.id}

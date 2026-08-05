@@ -66,6 +66,8 @@ export function ItemPicker({ items, onSelect, onClose, addLabel }: Props) {
       damage: selected.damage,
       damageType: selected.damageType,
       properties: selected.properties,
+      armorClass: selected.armorClass,
+      armorDexMod: selected.armorDexMod,
       equipped: false,
       proficient: !!selected.damage,
     };

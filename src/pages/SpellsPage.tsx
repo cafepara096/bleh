@@ -191,8 +191,28 @@ export function SpellsPage() {
         </select>
       </div>
 
+      {/* menu-movil-catalogo */}
+      <div className="lg:hidden mb-3">
+        <label className="block text-xs font-bold text-ink-600 mb-1">Conjuro</label>
+        <select
+          className="w-full px-3 py-2.5 border-2 border-ink-800 rounded-xl bg-parchment-100 text-sm font-medium"
+          value={selected?.id || ''}
+          onChange={(e) => {
+            const s = filtered.find((x) => x.id === e.target.value) || spells.find((x) => x.id === e.target.value);
+            if (s) setSelected(s);
+          }}
+        >
+          <option value="">— Elegir conjuro —</option>
+          {filtered.map((sp) => (
+            <option key={sp.id} value={sp.id}>
+              {sp.name}{sp.homebrew ? ' (HB)' : ''}
+            </option>
+          ))}
+        </select>
+      </div>
+
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
-        <div className="lg:col-span-2 bg-parchment-100 border-2 border-ink-800 rounded-xl overflow-hidden max-h-[70vh] overflow-y-auto">
+        <div className="hidden lg:block lg:col-span-2 bg-parchment-100 border-2 border-ink-800 rounded-xl overflow-hidden max-h-[70vh] overflow-y-auto">
           {filtered.map((spell) => (
             <button
               key={spell.id}

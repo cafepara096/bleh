@@ -65,6 +65,7 @@ export function CharacterWizard({ onComplete, onCancel }: Props) {
   const [chosenLanguages, setChosenLanguages] = useState<string[]>([]);
   const [chosenClassSkills, setChosenClassSkills] = useState<string[]>([]);
   const [equipChoices, setEquipChoices] = useState<Record<string, number>>({});
+  const [equipMode, setEquipMode] = useState<'gear' | 'gold'>('gear');
 
   const race = races.find((r) => r.id === raceId) || null;
   const classData = classes.find((c) => c.id === classId) || null;
@@ -129,6 +130,7 @@ export function CharacterWizard({ onComplete, onCancel }: Props) {
       }
       case 'equipment': {
         if (!classId) return true;
+        if (equipMode === 'gold') return true;
         const pack = (startingEquipment as any)[classId];
         if (!pack?.choices?.length) return true;
         return pack.choices.every((c: any) => equipChoices[c.id] !== undefined);
@@ -187,7 +189,11 @@ export function CharacterWizard({ onComplete, onCancel }: Props) {
     }
     const pack = (startingEquipment as any)[classData.id];
     let customInventory: InventoryItem[] | undefined;
-    if (pack) {
+    let startingGold = 0;
+    if (pack && equipMode === 'gold') {
+      customInventory = [];
+      startingGold = pack.goldAlternative ?? pack.gold ?? 0;
+    } else if (pack) {
       const items: InventoryItem[] = [];
       const pushItem = (raw: any) => {
         const expanded = expandPackItems(raw.name || '');
@@ -217,6 +223,7 @@ export function CharacterWizard({ onComplete, onCancel }: Props) {
         if (opt) pushItem(opt);
       }
       customInventory = items;
+      startingGold = pack.gold || 0;
     }
     const char = buildCharacterFromWizard({
       name: name.trim(),
@@ -245,6 +252,9 @@ export function CharacterWizard({ onComplete, onCancel }: Props) {
     if (alignment) char.alignment = alignment;
     if (classData.id === 'sorcerer') {
       char.sorceryPoints = { current: 1, max: 1 };
+    }
+    if (startingGold > 0) {
+      char.currency = { ...char.currency, gp: (char.currency?.gp || 0) + startingGold };
     }
     onComplete(char);
   };
@@ -783,15 +793,35 @@ export function CharacterWizard({ onComplete, onCancel }: Props) {
         {step === 'equipment' && classData && (
           <div className="space-y-4">
             <p className="text-sm text-ink-600">
-              Elige el equipo inicial de {classData.name} (opciones del PHB/SRD 5e).
+              Equipo inicial de {classData.name} (PHB 2024): paquete de equipo u oro.
             </p>
             {(() => {
               const pack = (startingEquipment as any)[classData.id];
               if (!pack) {
                 return <p className="text-sm text-ink-500">Sin paquete de equipo para esta clase.</p>;
               }
+              const goldAlt = pack.goldAlternative ?? pack.gold ?? 0;
               return (
                 <div className="space-y-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    <button type="button" onClick={() => setEquipMode('gear')}
+                      className={`p-3 rounded-lg border-2 text-left text-sm ${equipMode === 'gear' ? 'border-crimson-600 bg-parchment-200' : 'border-ink-200 bg-white'}`}>
+                      <strong>Paquete de equipo</strong>
+                      <span className="block text-xs text-ink-500 mt-0.5">Armas, armadura y equipo de viaje</span>
+                    </button>
+                    <button type="button" onClick={() => setEquipMode('gold')}
+                      className={`p-3 rounded-lg border-2 text-left text-sm ${equipMode === 'gold' ? 'border-crimson-600 bg-parchment-200' : 'border-ink-200 bg-white'}`}>
+                      <strong>Solo oro</strong>
+                      <span className="block text-xs text-ink-500 mt-0.5">{goldAlt} po (sin el paquete)</span>
+                    </button>
+                  </div>
+                  {equipMode === 'gold' && (
+                    <p className="text-sm bg-amber-50 border border-amber-300 rounded-lg p-3">
+                      Empezarás con <strong>{goldAlt} po</strong> y sin el equipo de clase.
+                    </p>
+                  )}
+                  {equipMode === 'gear' && (
+                  <>
                   {(pack.fixed || []).length > 0 && (
                     <div className="bg-ink-50 border border-ink-200 rounded-lg p-3 text-sm">
                       <strong>Equipo fijo:</strong>
@@ -844,6 +874,8 @@ export function CharacterWizard({ onComplete, onCancel }: Props) {
                       </div>
                     </div>
                   ))}
+                  </>
+                  )}
                 </div>
               );
             })()}

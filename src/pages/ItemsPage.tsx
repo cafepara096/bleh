@@ -87,6 +87,7 @@ export function ItemsPage() {
       damageType: form.damageType || undefined,
       properties: form.properties,
       armorClass: form.armorClass || undefined,
+      armorDexMod: form.armorDexMod || undefined,
       weight: form.weight,
       cost: form.cost || undefined,
       attunement: form.attunement,
@@ -182,9 +183,29 @@ export function ItemsPage() {
         </div>
       </div>
 
+      {/* menu-movil-catalogo */}
+      <div className="lg:hidden mb-3">
+        <label className="block text-xs font-bold text-ink-600 mb-1">Objeto</label>
+        <select
+          className="w-full px-3 py-2.5 border-2 border-ink-800 rounded-xl bg-parchment-100 text-sm font-medium"
+          value={selected?.id || ''}
+          onChange={(e) => {
+            const it = filtered.find((x) => x.id === e.target.value) || items.find((x) => x.id === e.target.value);
+            if (it) setSelected(it);
+          }}
+        >
+          <option value="">— Elegir objeto —</option>
+          {filtered.map((it) => (
+            <option key={it.id} value={it.id}>
+              {it.name}{it.homebrew ? ' (HB)' : ''}
+            </option>
+          ))}
+        </select>
+      </div>
+
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
         {/* List */}
-        <div className="lg:col-span-2 bg-parchment-100 border-2 border-ink-800 rounded-xl overflow-hidden max-h-[70vh] overflow-y-auto">
+        <div className="hidden lg:block lg:col-span-2 bg-parchment-100 border-2 border-ink-800 rounded-xl overflow-hidden max-h-[70vh] overflow-y-auto">
           {filtered.map((item) => (
             <button
               key={item.id}
@@ -401,15 +422,33 @@ export function ItemsPage() {
               </div>
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-sm font-bold mb-1">CA</label>
+                  <label className="block text-sm font-bold mb-1">CA base</label>
                   <input
                     value={form.armorClass || ''}
                     onChange={(e) => setForm({ ...form, armorClass: e.target.value })}
-                    placeholder="14 + Des"
+                    placeholder="11, 12, 14, 18…"
                     className="w-full px-3 py-2 border-2 border-ink-300 rounded-lg"
                   />
                 </div>
                 <div>
+                  <label className="block text-sm font-bold mb-1">Mod. Destreza a la CA</label>
+                  <select
+                    value={form.armorDexMod || 'none'}
+                    onChange={(e) =>
+                      setForm({
+                        ...form,
+                        armorDexMod: e.target.value as 'none' | 'full' | 'max2' | 'max3',
+                      })
+                    }
+                    className="w-full px-3 py-2 border-2 border-ink-300 rounded-lg"
+                  >
+                    <option value="none">Ninguno (pesada / escudo)</option>
+                    <option value="full">Des completa (ligera)</option>
+                    <option value="max2">Des máx. +2 (media)</option>
+                    <option value="max3">Des máx. +3</option>
+                  </select>
+                </div>
+                <div className="sm:col-span-2">
                   <label className="block text-sm font-bold mb-1">Coste</label>
                   <input
                     value={form.cost || ''}
