@@ -40,6 +40,7 @@ import { CombatPanel } from './CombatPanel';
 import { ActionsPanel } from './ActionsPanel';
 import { computeArmorClass } from '../../utils/armorClass';
 import { syncFeatureUsesFromCatalog, syncSpellsFromCatalog } from '../../utils/syncCharacterCatalog';
+import { applyFeatureSpellGrants } from '../../utils/featureSpellGrants';
 import { useClasses } from '../../hooks/useClasses';
 import { useRaces } from '../../hooks/useRaces';
 import { useSpells } from '../../hooks/useSpells';
@@ -70,6 +71,7 @@ export function CharacterSheet({ character: initial, onSave, onBack, onExport }:
       races.find((r) => r.id === character.raceId || r.name === character.race) || null;
     let next = syncFeatureUsesFromCatalog(character, classData, raceData);
     next = syncSpellsFromCatalog(next, classData, raceData, spellCatalog);
+    next = applyFeatureSpellGrants(next, spellCatalog);
     if (next !== character) {
       setCharacter(next);
       setDirty(true);

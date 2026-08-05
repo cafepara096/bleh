@@ -1,4 +1,5 @@
 import type { InventoryItem } from '../types/dnd';
+import { resolveArmorStats } from '../data/armorCatalog';
 
 /** Expand "Equipo de dungeoneer" etc. into individual inventory items (PHB-style). */
 export const EQUIPMENT_PACKS: Record<string, Omit<InventoryItem, 'id'>[]> = {
@@ -312,30 +313,54 @@ export function expandStartingOption(raw: {
   proficient?: boolean | null;
   items?: Omit<InventoryItem, 'id'>[];
 }): Omit<InventoryItem, 'id'>[] {
-  if (raw.items && raw.items.length) return raw.items;
+  if (raw.items && raw.items.length) return raw.items.map(enrichArmor);
 
-  const name = raw.name || '';
+  let name = (raw.name || '').trim();
+  // "Hacha de Mano (x2)" → quantity 2, nombre limpio
+  let qty = raw.quantity || 1;
+  const x2 = name.match(/^(.*?)\s*\(x\s*(\d+)\)\s*$/i) || name.match(/^(.*?)\s*x\s*(\d+)\s*$/i);
+  if (x2) {
+    name = x2[1].trim();
+    qty = parseInt(x2[2], 10) || qty;
+  }
+
   const pack = expandPackItems(name);
-  if (pack) return pack;
+  if (pack) return pack.map(enrichArmor);
 
   const composite = expandComposite(name);
-  if (composite) return composite;
+  if (composite) return composite.map(enrichArmor);
 
-  // Single item
-  return [
-    {
-      name: name || 'Objeto',
-      quantity: raw.quantity || 1,
-      description: raw.description,
-      damage: raw.damage,
-      damageType: raw.damageType,
-      properties: raw.properties,
-      armorClass: raw.armorClass,
-      armorDexMod: raw.armorDexMod,
-      equipped: raw.equipped,
-      proficient: raw.proficient ?? !!raw.damage,
-    },
-  ];
+  const base: Omit<InventoryItem, 'id'> = enrichArmor({
+    name: name || 'Objeto',
+    quantity: 1,
+    description: raw.description,
+    damage: raw.damage,
+    damageType: raw.damageType,
+    properties: raw.properties,
+    armorClass: raw.armorClass,
+    armorDexMod: raw.armorDexMod,
+    equipped: raw.equipped,
+    proficient: raw.proficient ?? !!raw.damage,
+  });
+
+  // Cantidad > 1 → una fila por unidad (armas) o una fila con quantity (munición/consumibles)
+  const isAmmo = /flecha|virote|racion|piton|antorcha|vela|dardo/i.test(name);
+  if (qty > 1 && !isAmmo) {
+    return Array.from({ length: qty }, () => ({ ...base, quantity: 1 }));
+  }
+  return [{ ...base, quantity: qty }];
+}
+
+function enrichArmor(item: Omit<InventoryItem, 'id'>): Omit<InventoryItem, 'id'> {
+  if (item.armorClass) return item;
+  const stats = resolveArmorStats(item.name, item.description);
+  if (!stats) return item;
+  return {
+    ...item,
+    armorClass: stats.armorClass,
+    armorDexMod: stats.armorDexMod,
+    equipped: item.equipped ?? /armadura|cota|cuero|escudo|placa|coraza/i.test(item.name),
+  };
 }
 
 export function toInventoryItems(
