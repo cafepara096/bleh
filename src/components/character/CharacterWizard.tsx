@@ -17,7 +17,7 @@ import {
 } from '../../utils/characterBuilder';
 import { ALIGNMENTS } from '../../utils/alignments';
 import { expandStartingOption, packSummary } from '../../utils/equipmentPacks';
-import { needsWeaponPick, weaponsForChoice, type WeaponPick } from '../../data/weaponCatalog';
+import { needsWeaponPick, weaponsForChoice, weaponPickCount, optionIncludesShield, type WeaponPick } from '../../data/weaponCatalog';
 import { computeArmorClass } from '../../utils/armorClass';
 import { applyFeatureSpellGrants } from '../../utils/featureSpellGrants';
 import { useSpells } from '../../hooks/useSpells';
@@ -73,7 +73,7 @@ export function CharacterWizard({ onComplete, onCancel }: Props) {
   const [equipMode, setEquipMode] = useState<'gear' | 'gold'>('gear');
   const [originFeatId, setOriginFeatId] = useState<string>('');
   /** choiceId -> weapon id elegido cuando la opción es genérica */
-  const [weaponPicks, setWeaponPicks] = useState<Record<string, string>>({});
+  const [weaponPicks, setWeaponPicks] = useState<Record<string, string[]>>({});
   const [miCantrips, setMiCantrips] = useState<string[]>([]);
   const [miSpell, setMiSpell] = useState<string>('');
 
@@ -146,7 +146,11 @@ export function CharacterWizard({ onComplete, onCancel }: Props) {
         if (!pack.choices.every((c: any) => equipChoices[c.id] !== undefined)) return false;
         for (const c of pack.choices) {
           const opt = c.options[equipChoices[c.id]];
-          if (opt && needsWeaponPick(opt.name || '') && !weaponPicks[c.id]) return false;
+          if (opt && needsWeaponPick(opt.name || '')) {
+            const need = weaponPickCount(opt.name || '');
+            const got = (weaponPicks[c.id] || []).filter(Boolean).length;
+            if (got < need) return false;
+          }
         }
         return true;
       }
@@ -234,30 +238,42 @@ export function CharacterWizard({ onComplete, onCancel }: Props) {
         const idx = equipChoices[choice.id] ?? 0;
         let opt = choice.options[idx];
         if (!opt) continue;
-        // Resolver "Arma marcial / simple" a un arma concreta
+        // Resolver "Arma marcial / simple / dos armas" a armas concretas del catálogo
         if (needsWeaponPick(opt.name || '')) {
-          const pickId = weaponPicks[choice.id];
           const list = weaponsForChoice(opt.name || '');
-          const wp = list.find((w) => w.id === pickId) || list[0];
-          if (wp) {
-            const count = /dos |2 /i.test(opt.name || '') ? 2 : 1;
-            for (let i = 0; i < count; i++) {
-              pushItem({
-                name: wp.name,
-                quantity: 1,
-                damage: wp.damage !== '—' ? wp.damage : undefined,
-                damageType: wp.damageType !== '—' ? wp.damageType : undefined,
-                properties: wp.properties,
-                equipped: true,
-                proficient: true,
-              });
-            }
-            // Si la opción también implica escudo u otros (raro en genéricos)
-            if (/escudo/i.test(opt.name || '')) {
-              pushItem({ name: 'Escudo', quantity: 1, description: '+2 CA', equipped: true, armorClass: '2' });
-            }
-            continue;
+          const need = weaponPickCount(opt.name || '');
+          let ids = (weaponPicks[choice.id] || []).filter(Boolean);
+          // completar si faltan (no debería pasar si validación OK)
+          while (ids.length < need && list.length) ids = [...ids, list[0].id];
+          ids = ids.slice(0, need);
+          for (const pid of ids) {
+            const wp = list.find((w) => w.id === pid);
+            if (!wp) continue;
+            pushItem({
+              name: wp.name,
+              quantity: 1,
+              damage: wp.damage !== '—' ? wp.damage : undefined,
+              damageType: wp.damageType !== '—' ? wp.damageType : undefined,
+              properties: wp.properties,
+              equipped: true,
+              proficient: true,
+            });
           }
+          if (optionIncludesShield(opt.name || '')) {
+            pushItem({
+              name: 'Escudo',
+              quantity: 1,
+              description: '+2 CA',
+              equipped: true,
+              armorClass: '2',
+              armorDexMod: 'none',
+            });
+          }
+          continue;
+        }
+        // No meter placeholders genéricos en el inventario
+        if (/^(arma marcial|arma simple|cualquier arma)/i.test(opt.name || '')) {
+          continue;
         }
         pushItem(opt);
       }
@@ -1049,30 +1065,56 @@ export function CharacterWizard({ onComplete, onCancel }: Props) {
                           const sel = choice.options[idx];
                           if (!sel || !needsWeaponPick(sel.name || '')) return null;
                           const list = weaponsForChoice(sel.name || '');
+                          const need = weaponPickCount(sel.name || '');
+                          const selected = weaponPicks[choice.id] || [];
                           return (
                             <div className="mt-2 p-2 bg-parchment-50 border border-ink-200 rounded-lg">
-                              <p className="text-xs font-bold mb-1">Elige el arma concreta</p>
-                              <div className="grid grid-cols-1 sm:grid-cols-2 gap-1 max-h-40 overflow-y-auto">
-                                {list.map((w: WeaponPick) => (
-                                  <button
-                                    key={w.id}
-                                    type="button"
-                                    onClick={() =>
-                                      setWeaponPicks((prev) => ({ ...prev, [choice.id]: w.id }))
-                                    }
-                                    className={`text-left text-xs px-2 py-1.5 rounded border ${
-                                      weaponPicks[choice.id] === w.id
-                                        ? 'border-crimson-600 bg-parchment-200'
-                                        : 'border-ink-200 bg-white'
-                                    }`}
-                                  >
-                                    <strong>{w.name}</strong>
-                                    <span className="text-ink-500">
-                                      {' '}
-                                      {w.damage} {w.damageType}
-                                    </span>
-                                  </button>
-                                ))}
+                              <p className="text-xs font-bold mb-1">
+                                Elige {need === 2 ? '2 armas concretas' : 'el arma concreta'}
+                                {optionIncludesShield(sel.name || '') ? ' (+ escudo incluido)' : ''}
+                                {' '}({selected.length}/{need})
+                              </p>
+                              <div className="grid grid-cols-1 sm:grid-cols-2 gap-1 max-h-48 overflow-y-auto">
+                                {list.map((w: WeaponPick) => {
+                                  const count = selected.filter((id) => id === w.id).length;
+                                  const on = count > 0;
+                                  return (
+                                    <button
+                                      key={w.id}
+                                      type="button"
+                                      onClick={() => {
+                                        setWeaponPicks((prev) => {
+                                          let cur = [...(prev[choice.id] || [])];
+                                          if (need === 1) {
+                                            return { ...prev, [choice.id]: [w.id] };
+                                          }
+                                          // need === 2: toggle add/remove
+                                          const idxW = cur.indexOf(w.id);
+                                          if (idxW >= 0) {
+                                            cur.splice(idxW, 1);
+                                          } else if (cur.length < need) {
+                                            cur.push(w.id);
+                                          } else {
+                                            cur = [...cur.slice(1), w.id];
+                                          }
+                                          return { ...prev, [choice.id]: cur };
+                                        });
+                                      }}
+                                      className={`text-left text-xs px-2 py-1.5 rounded border ${
+                                        on
+                                          ? 'border-crimson-600 bg-parchment-200'
+                                          : 'border-ink-200 bg-white'
+                                      }`}
+                                    >
+                                      <strong>{w.name}</strong>
+                                      {count > 1 ? ` ×${count}` : ''}
+                                      <span className="text-ink-500">
+                                        {' '}
+                                        {w.damage} {w.damageType}
+                                      </span>
+                                    </button>
+                                  );
+                                })}
                               </div>
                             </div>
                           );

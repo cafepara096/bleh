@@ -41,6 +41,7 @@ import { ActionsPanel } from './ActionsPanel';
 import { computeArmorClass } from '../../utils/armorClass';
 import { syncFeatureUsesFromCatalog, syncSpellsFromCatalog } from '../../utils/syncCharacterCatalog';
 import { applyFeatureSpellGrants } from '../../utils/featureSpellGrants';
+import { getEquippedPenalties } from '../../utils/equipmentEffects';
 import { useClasses } from '../../hooks/useClasses';
 import { useRaces } from '../../hooks/useRaces';
 import { useSpells } from '../../hooks/useSpells';
@@ -392,8 +393,26 @@ export function CharacterSheet({ character: initial, onSave, onBack, onExport }:
       <div className="bg-parchment-50 border-2 border-t-0 border-ink-800 rounded-b-xl p-3 sm:p-4">
         {activeTab === 'main' && (
           <>
-          <div className="mb-4">
+          <div className="mb-4 space-y-1">
             <ConditionsPanel character={character} onUpdate={(partial) => update(partial)} />
+            {(() => {
+              const pens = getEquippedPenalties(character);
+              if (!pens.length) return null;
+              return (
+                <div className="flex flex-wrap gap-1">
+                  {pens.map((pen) => (
+                    <span
+                      key={pen.id}
+                      className="text-[10px] px-1.5 py-0.5 rounded-full bg-red-100 text-red-900 border border-red-300"
+                      title={`Por llevar equipado: ${pen.sourceName}. Se quita al guardar el objeto.`}
+                    >
+                      ⚠ {pen.label}
+                      <span className="opacity-70"> ({pen.sourceName})</span>
+                    </span>
+                  ))}
+                </div>
+              );
+            })()}
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
             {/* Ability Scores */}

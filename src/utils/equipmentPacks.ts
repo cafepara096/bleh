@@ -1,5 +1,6 @@
 import type { InventoryItem } from '../types/dnd';
 import { resolveArmorStats } from '../data/armorCatalog';
+import { armorStealthNote } from './equipmentEffects';
 
 /** Expand "Equipo de dungeoneer" etc. into individual inventory items (PHB-style). */
 export const EQUIPMENT_PACKS: Record<string, Omit<InventoryItem, 'id'>[]> = {
@@ -248,6 +249,11 @@ const COMPOSITE_OPTIONS: Record<string, Omit<InventoryItem, 'id'>[]> = {
 
 function expandComposite(name: string): Omit<InventoryItem, 'id'>[] | null {
   const key = norm(name);
+  // Nunca expandir placeholders genéricos de arma — el wizard debe resolver el arma concreta
+  if (/arma marcial|armas marciales|arma simple|armas simples|cualquier arma/i.test(name) &&
+      !/espada|hacha|maza|arco|ballesta|estoque|daga|cimitarra/i.test(name)) {
+    return null;
+  }
   for (const [k, items] of Object.entries(COMPOSITE_OPTIONS)) {
     if (key === norm(k) || key.includes(norm(k)) || norm(k).includes(key)) return items;
   }
@@ -352,11 +358,17 @@ export function expandStartingOption(raw: {
 }
 
 function enrichArmor(item: Omit<InventoryItem, 'id'>): Omit<InventoryItem, 'id'> {
-  if (item.armorClass) return item;
+  const stealth = armorStealthNote(item as InventoryItem);
+  let description = item.description;
+  if (stealth && !(description || '').toLowerCase().includes('sigilo')) {
+    description = description ? `${description}. ${stealth}` : stealth;
+  }
+  if (item.armorClass) return { ...item, description };
   const stats = resolveArmorStats(item.name, item.description);
-  if (!stats) return item;
+  if (!stats) return { ...item, description };
   return {
     ...item,
+    description,
     armorClass: stats.armorClass,
     armorDexMod: stats.armorDexMod,
     equipped: item.equipped ?? /armadura|cota|cuero|escudo|placa|coraza/i.test(item.name),
