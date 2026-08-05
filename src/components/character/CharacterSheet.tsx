@@ -39,6 +39,10 @@ import { ALIGNMENTS, getAlignmentInfo } from '../../utils/alignments';
 import { CombatPanel } from './CombatPanel';
 import { ActionsPanel } from './ActionsPanel';
 import { computeArmorClass } from '../../utils/armorClass';
+import { syncFeatureUsesFromCatalog, syncSpellsFromCatalog } from '../../utils/syncCharacterCatalog';
+import { useClasses } from '../../hooks/useClasses';
+import { useRaces } from '../../hooks/useRaces';
+import { useSpells } from '../../hooks/useSpells';
 
 interface Props {
   character: Character;
@@ -54,6 +58,25 @@ export function CharacterSheet({ character: initial, onSave, onBack, onExport }:
   const [showLevelUp, setShowLevelUp] = useState(false);
   const [showPendingChoices, setShowPendingChoices] = useState(false);
   const [pendingDrafts, setPendingDrafts] = useState<Record<string, string>>({});
+  const { classes } = useClasses();
+  const { races } = useRaces();
+  const { spells: spellCatalog } = useSpells();
+
+  // Usos de rasgos (Oleada de acción, etc.) + conjuros de raza/clase homebrew
+  useEffect(() => {
+    const classData =
+      classes.find((c) => c.id === character.classId || c.name === character.class) || null;
+    const raceData =
+      races.find((r) => r.id === character.raceId || r.name === character.race) || null;
+    let next = syncFeatureUsesFromCatalog(character, classData, raceData);
+    next = syncSpellsFromCatalog(next, classData, raceData, spellCatalog);
+    if (next !== character) {
+      setCharacter(next);
+      setDirty(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [classes, races, spellCatalog, character.classId, character.raceId, character.level, character.class, character.race]);
+
 
   // CA automática según armadura/escudo en mano (equipado)
   useEffect(() => {

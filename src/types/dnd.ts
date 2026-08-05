@@ -213,6 +213,8 @@ export interface Character {
     gp: number;
     pp: number;
   };
+  /** Monedas ocultas en la UI (siguen en conversiones) */
+  disabledCoins?: Array<'cp' | 'sp' | 'ep' | 'gp' | 'pp'>;
 
   // Notes
   notes?: string;
@@ -365,6 +367,8 @@ export interface BackgroundData {
   languages?: { count: number; description: string };
   equipment?: string[];
   feature?: { name: string; description: string };
+  originFeat?: { name: string; description: string };
+  originFeatChoices?: { id: string; name: string; description: string }[];
   homebrew?: boolean;
 }
 
