@@ -20,6 +20,7 @@ import {
   maxSpellLevelAvailable,
   type CasterKind,
 } from '../../utils/spellLimits';
+import { CollapsibleSection } from '../ui/CollapsibleSection';
 import {
   Swords,
   Sparkles,
@@ -199,10 +200,13 @@ export function CombatPanel({ character, onUpdate, sections }: Props) {
   return (
     <div className="space-y-4">
       {/* Spell slots */}
-      {show('slots') && <div className="bg-purple-50 border-2 border-purple-400 rounded-lg p-3">
-        <h3 className="font-bold text-sm mb-2 flex items-center gap-2">
-          <Zap className="w-4 h-4 text-purple-700" /> Espacios de conjuro
-        </h3>
+      {show('slots') && <CollapsibleSection
+        title="Espacios de conjuro"
+        icon={<Zap className="w-4 h-4 text-purple-700" />}
+        defaultOpen
+        headerClassName="bg-purple-50 border-purple-400"
+        badge={slotLevels.length || undefined}
+      >
         {slotLevels.length === 0 ? (
           <p className="text-xs text-ink-600">
             {kind === 'none'
@@ -245,26 +249,33 @@ export function CombatPanel({ character, onUpdate, sections }: Props) {
             {spellAbility?.toUpperCase()})
           </div>
         )}
-      </div>}
+      </CollapsibleSection>}
 
       {(show('slots')) && onUpdate && (
-        <div className="space-y-1.5">
-          <SorceryPointsPanel character={character} onUpdate={onUpdate} />
-          <FeatureTablesPanel character={character} onUpdate={onUpdate} />
-        </div>
+        <CollapsibleSection
+          title="Hechicería / tablas de subclase"
+          defaultOpen
+          headerClassName="bg-fuchsia-50 border-fuchsia-400"
+        >
+          <div className="space-y-1.5">
+            <SorceryPointsPanel character={character} onUpdate={onUpdate} />
+            <FeatureTablesPanel character={character} onUpdate={onUpdate} />
+          </div>
+        </CollapsibleSection>
       )}
 
       {/* Cantrips + leveled spells */}
       {show('spells') && (
       <>
-      <div className="bg-parchment-100 border-2 border-ink-800 rounded-lg p-3">
-        <div className="flex items-center justify-between mb-2">
-          <h3 className="font-bold text-sm flex items-center gap-2">
-            <BookOpen className="w-4 h-4" /> Trucos (cantrips)
-            <span className="text-xs font-normal text-ink-500">
-              {cantripList.length}/{cantripLimit || '—'}
-            </span>
-          </h3>
+      <CollapsibleSection
+        title="Trucos (cantrips)"
+        icon={<BookOpen className="w-4 h-4" />}
+        defaultOpen
+        headerClassName="bg-parchment-100 border-ink-800"
+        badge={`${cantripList.length}/${cantripLimit || '—'}`}
+      >
+        <div className="flex items-center justify-end mb-2">
+          <span className="sr-only">Trucos</span>
           {kind !== 'none' && (
             <button
               onClick={() => {
@@ -322,13 +333,18 @@ export function CombatPanel({ character, onUpdate, sections }: Props) {
             ))}
           </div>
         )}
-      </div>
+      </CollapsibleSection>
 
       {/* Leveled spells */}
-      <div className="bg-parchment-100 border-2 border-ink-800 rounded-lg p-3">
+      <CollapsibleSection
+        title="Conjuros"
+        icon={<BookOpen className="w-4 h-4" />}
+        defaultOpen
+        headerClassName="bg-parchment-100 border-ink-800"
+      >
         <div className="flex items-center justify-between mb-2">
           <h3 className="font-bold text-sm flex items-center gap-2">
-            <BookOpen className="w-4 h-4" /> Conjuros
+            <span className="sr-only">Conjuros</span>
             <span className="text-xs font-normal text-ink-500">
               {leveledSpells.length}
               {typeof spellLimit === 'number' ? `/${spellLimit}` : spellLimit === 'prepared' ? ' (preparados)' : ''}
@@ -447,15 +463,17 @@ export function CombatPanel({ character, onUpdate, sections }: Props) {
           clases como clérigo/druida/mago suelen cambiar preparados; bardos/hechiceros/brujos cambian
           conocidos con menos frecuencia (reglas de cada clase).
         </p>
-      </div>
+      </CollapsibleSection>
       </>
       )}
 
       {/* Attacks */}
-      {show('weapons') && <div className="bg-parchment-100 border-2 border-ink-800 rounded-lg p-3">
-        <h3 className="font-bold text-sm mb-2 flex items-center gap-2">
-          <Swords className="w-4 h-4" /> Ataques y armas
-        </h3>
+      {show('weapons') && <CollapsibleSection
+        title="Ataques y armas"
+        icon={<Swords className="w-4 h-4" />}
+        defaultOpen
+        headerClassName="bg-parchment-100 border-ink-800"
+      >
         {weapons.length === 0 ? (
           <p className="text-sm text-ink-500 italic">Sin armas con daño o equipadas en el inventario.</p>
         ) : (
@@ -508,13 +526,15 @@ export function CombatPanel({ character, onUpdate, sections }: Props) {
         <p className="mt-2 text-xs text-ink-500">
           Desarmado: ataque {formatModifier(strMod + prof)} (Fue+comp) · daño 1{formatModifier(strMod)} contundente
         </p>
-      </div>}
+      </CollapsibleSection>}
 
       {/* Features */}
-      {show('features') && <div className="bg-parchment-100 border-2 border-ink-800 rounded-lg p-3">
-        <h3 className="font-bold text-sm mb-2 flex items-center gap-2">
-          <Sparkles className="w-4 h-4" /> Features &amp; Traits
-        </h3>
+      {show('features') && <CollapsibleSection
+        title="Features & Traits"
+        icon={<Sparkles className="w-4 h-4" />}
+        defaultOpen={false}
+        headerClassName="bg-parchment-100 border-ink-800"
+      >
         {character.features.length === 0 ? (
           <p className="text-sm text-ink-500 italic">Sin rasgos.</p>
         ) : (
@@ -534,10 +554,15 @@ export function CombatPanel({ character, onUpdate, sections }: Props) {
             ))}
           </div>
         )}
-      </div>}
+      </CollapsibleSection>}
 
       {/* Actions reminder */}
-      <div className="bg-ink-900 text-parchment-100 rounded-lg p-3 text-xs">
+      <CollapsibleSection
+        title="Recordatorio de acciones"
+        defaultOpen={false}
+        headerClassName="bg-ink-900 text-parchment-100 border-ink-700"
+      >
+        <div className="bg-ink-900 text-parchment-100 rounded-lg text-xs -m-3 p-3">
         <strong className="text-sm">Acciones en combate</strong>
         <ul className="mt-1.5 space-y-1 text-parchment-300 list-disc list-inside">
           <li>
@@ -557,7 +582,8 @@ export function CombatPanel({ character, onUpdate, sections }: Props) {
             {10 + calculateSkillBonus(character, 'perception')}
           </li>
         </ul>
-      </div>
+        </div>
+      </CollapsibleSection>
 
       {/* Spell picker modal */}
       {spellEditor && (
