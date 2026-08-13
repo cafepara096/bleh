@@ -1,0 +1,181 @@
+================================================================================
+GUÍA DE ARCHIVOS DE LISTAS — D&D Homebrew App
+================================================================================
+Edita estos archivos en el proyecto y vuelve a hacer build, O usa la UI
+homebrew de cada página (se guarda en localStorage del navegador).
+
+--------------------------------------------------------------------------------
+1) CONJUROS
+   Archivo: src/data/spells.json
+   Hook UI: src/hooks/useSpells.ts  ·  Página: src/pages/SpellsPage.tsx
+   Plantilla (añade un objeto al array JSON):
+
+{
+  "id": "mi-conjuro-id",
+  "name": "Nombre en español",
+  "nameEn": "English Name",
+  "level": 0,
+  "school": "evocación",
+  "castingTime": "1 acción",
+  "range": "9 m",
+  "components": "V, S",
+  "duration": "Instantáneo",
+  "description": "Descripción del efecto.",
+  "damage": "1d10",
+  "damageType": "fuego",
+  "concentration": false,
+  "ritual": false,
+  "classes": ["wizard", "sorcerer"]
+}
+
+--------------------------------------------------------------------------------
+2) OBJETOS / ARMAS / ARMADURAS
+   Archivo: src/data/items.json
+   Catálogo armas (elecciones): src/data/weaponCatalog.ts
+   Catálogo armaduras (CA): src/data/armorCatalog.ts
+   Hook UI: src/hooks/useItems.ts  ·  Página: src/pages/ItemsPage.tsx
+   Plantilla ítem:
+
+{
+  "id": "mi-objeto-id",
+  "name": "Nombre",
+  "nameEn": "English Name",
+  "type": "weapon",
+  "rarity": "common",
+  "description": "Descripción.",
+  "damage": "1d8",
+  "damageType": "cortante",
+  "properties": ["versátil (1d10)"],
+  "armorClass": "14",
+  "armorDexMod": "max2",
+  "weight": 1,
+  "cost": "15 gp",
+  "attunement": false
+}
+
+  type suele ser: weapon | armor | potion | wondrous | ring | gear | tool
+  armorDexMod: none | full | max2 | max3
+
+--------------------------------------------------------------------------------
+3) MONSTRUOS
+   Archivo: src/data/monsters.json
+   Hook UI: src/hooks/useMonsters.ts  ·  Página: src/pages/MonstersPage.tsx
+   Plantilla:
+
+{
+  "id": "mi-monstruo",
+  "name": "Nombre",
+  "nameEn": "English Name",
+  "size": "Mediano",
+  "type": "humanoide",
+  "alignment": "neutral",
+  "armorClass": 12,
+  "hitPoints": 22,
+  "hitDice": "4d8",
+  "speed": "9 m",
+  "abilityScores": { "str": 10, "dex": 14, "con": 12, "int": 10, "wis": 11, "cha": 10 },
+  "savingThrows": "",
+  "skills": "",
+  "senses": "Percepción pasiva 10",
+  "languages": "Común",
+  "challengeRating": "1/2",
+  "traits": [{ "name": "Rasgo", "description": "…" }],
+  "actions": [{ "name": "Ataque", "description": "…" }],
+  "reactions": [],
+  "legendaryActions": [],
+  "variants": []
+}
+
+--------------------------------------------------------------------------------
+4) RAZAS
+   Archivo: src/data/races.json
+   Hook UI: src/hooks/useRaces.ts  ·  Página: src/pages/RacesPage.tsx
+   Plantilla:
+
+{
+  "id": "mi-raza",
+  "name": "Nombre",
+  "description": "Descripción breve.",
+  "size": "Mediano",
+  "speed": 30,
+  "abilityScoreIncrease": "+2 Des, +1 Int",
+  "languages": ["Común", "Élfico"],
+  "traits": [
+    {
+      "id": "trait-1",
+      "name": "Rasgo",
+      "description": "Qué hace.",
+      "level": 1,
+      "source": "race"
+    }
+  ],
+  "spellIds": []
+}
+
+--------------------------------------------------------------------------------
+5) CLASES (y subclases)
+   Archivo principal: src/data/classes.json
+   Subclases extra 2024: src/data/subclasses2024.ts
+   Hook UI: src/hooks/useClasses.ts  ·  Página: src/pages/ClassesPage.tsx
+   Plantilla rasgo de clase:
+
+{
+  "id": "mi-rasgo",
+  "name": "Nombre del rasgo",
+  "level": 1,
+  "description": "Descripción.",
+  "actionType": "passive",
+  "uses": { "max": 1, "recovery": "short" }
+}
+
+  actionType: passive | action | bonus | reaction | special
+  recovery: short | long | dawn
+
+--------------------------------------------------------------------------------
+6) TRASFONDOS / ORÍGENES
+   Archivo: src/data/backgrounds.json
+   Hook UI: src/hooks/useBackgrounds.ts  ·  Página: src/pages/BackgroundsPage.tsx
+   Plantilla:
+
+{
+  "id": "mi-trasfondo",
+  "name": "Nombre",
+  "description": "Descripción del trasfondo.",
+  "skillProficiencies": ["Sigilo", "Engaño"],
+  "toolProficiencies": ["Kit de disfraz"],
+  "languages": { "count": 1, "description": "Un idioma a tu elección" },
+  "equipment": ["Ropa comunes", "Bolsa con 15 po"],
+  "feature": {
+    "name": "Nombre del rasgo",
+    "description": "Qué otorga el rasgo de trasfondo."
+  },
+  "originFeat": {
+    "name": "Alerta",
+    "description": "+2 a iniciativa; no sorprendido si estás consciente."
+  }
+}
+
+--------------------------------------------------------------------------------
+7) EQUIPO INICIAL POR CLASE
+   Archivo: src/data/starting-equipment.json
+   Expansión de paquetes: src/utils/equipmentPacks.ts
+
+--------------------------------------------------------------------------------
+8) CONDICIONES (estados)
+   Archivo: src/data/conditions.ts
+
+--------------------------------------------------------------------------------
+9) TABLAS DE RASGOS (metamagia, oleada salvaje, etc.)
+   Archivo: src/data/featureTables.ts
+
+--------------------------------------------------------------------------------
+10) PERSONAJE DE EJEMPLO
+    Archivo: src/data/sample-character.json
+
+================================================================================
+NOTAS
+- Los homebrew creados en la app se guardan en localStorage (claves dnd-homebrew-*).
+- Tras editar JSON a mano: guarda el archivo y ejecuta `npm run build` (o `npm run dev`).
+- Mantén IDs únicos (sin espacios; usa guiones).
+- nameEn es opcional pero útil para buscar en inglés.
+================================================================================

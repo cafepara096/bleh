@@ -38,6 +38,7 @@ import { exportCharacterPdf } from '../../utils/exportCharacterPdf';
 import { ALIGNMENTS, getAlignmentInfo } from '../../utils/alignments';
 import { CombatPanel } from './CombatPanel';
 import { ActionsPanel } from './ActionsPanel';
+import { CollapsibleSection } from '../ui/CollapsibleSection';
 import { computeArmorClass } from '../../utils/armorClass';
 import { syncFeatureUsesFromCatalog, syncSpellsFromCatalog } from '../../utils/syncCharacterCatalog';
 import { applyFeatureSpellGrants } from '../../utils/featureSpellGrants';
@@ -45,6 +46,7 @@ import { getEquippedPenalties } from '../../utils/equipmentEffects';
 import { useClasses } from '../../hooks/useClasses';
 import { useRaces } from '../../hooks/useRaces';
 import { useSpells } from '../../hooks/useSpells';
+import { useBackgrounds } from '../../hooks/useBackgrounds';
 
 interface Props {
   character: Character;
@@ -63,6 +65,7 @@ export function CharacterSheet({ character: initial, onSave, onBack, onExport }:
   const { classes } = useClasses();
   const { races } = useRaces();
   const { spells: spellCatalog } = useSpells();
+  const { backgrounds } = useBackgrounds();
 
   // Usos de rasgos (Oleada de acción, etc.) + conjuros de raza/clase homebrew
   useEffect(() => {
@@ -227,12 +230,34 @@ export function CharacterSheet({ character: initial, onSave, onBack, onExport }:
               className="w-12 bg-transparent border-b border-transparent hover:border-parchment-500 focus:border-parchment-400 focus:outline-none text-center"
             />
             <span>•</span>
-            <input
-              value={character.background}
-              onChange={(e) => update({ background: e.target.value })}
-              placeholder="Trasfondo"
-              className="bg-transparent border-b border-transparent hover:border-parchment-500 focus:border-parchment-400 focus:outline-none w-28"
-            />
+            <select
+              value={
+                backgrounds.some((b) => b.name === character.background || b.id === character.backgroundId)
+                  ? (backgrounds.find((b) => b.name === character.background || b.id === character.backgroundId)?.name || character.background)
+                  : character.background || ''
+              }
+              onChange={(e) => {
+                const name = e.target.value;
+                const bg = backgrounds.find((b) => b.name === name);
+                update({
+                  background: name,
+                  backgroundId: bg?.id,
+                });
+              }}
+              className="bg-ink-900/40 border border-parchment-600/40 rounded px-1 py-0.5 text-sm max-w-[9rem]"
+              title="Trasfondo (catálogo + homebrew)"
+            >
+              <option value="">Trasfondo…</option>
+              {backgrounds.map((b) => (
+                <option key={b.id} value={b.name}>
+                  {b.name}{b.homebrew ? ' (HB)' : ''}
+                </option>
+              ))}
+              {character.background &&
+                !backgrounds.some((b) => b.name === character.background) && (
+                  <option value={character.background}>{character.background} (custom)</option>
+                )}
+            </select>
             {character.alignment && (
               <>
                 <span>•</span>
@@ -628,28 +653,51 @@ export function CharacterSheet({ character: initial, onSave, onBack, onExport }:
         )}
 
         {activeTab === 'combat' && (
-          <div className="space-y-4">
-            {/* 1 acciones de rasgos · 2 espacios · 3 SP/metamagia · 4 conjuros · 5 armas · 6 comunes */}
-            <ActionsPanel
-              character={character}
-              onUpdate={(partial) => update(partial)}
-              sections={['rest', 'features']}
-            />
-            <CombatPanel
-              character={character}
-              onUpdate={(partial) => update(partial)}
-              sections={['slots', 'spells']}
-            />
-            <ActionsPanel
-              character={character}
-              onUpdate={(partial) => update(partial)}
-              sections={['weapons']}
-            />
-            <ActionsPanel
-              character={character}
-              onUpdate={(partial) => update(partial)}
-              sections={['common']}
-            />
+          <div className="space-y-3">
+            <CollapsibleSection
+              title="Rasgos y descansos"
+              defaultOpen
+              headerClassName="bg-amber-50 border-amber-400"
+            >
+              <ActionsPanel
+                character={character}
+                onUpdate={(partial) => update(partial)}
+                sections={['rest', 'features']}
+              />
+            </CollapsibleSection>
+            <CollapsibleSection
+              title="Espacios, hechicería y conjuros"
+              defaultOpen
+              headerClassName="bg-purple-50 border-purple-400"
+            >
+              <CombatPanel
+                character={character}
+                onUpdate={(partial) => update(partial)}
+                sections={['slots', 'spells']}
+              />
+            </CollapsibleSection>
+            <CollapsibleSection
+              title="Armas y ataques"
+              defaultOpen
+              headerClassName="bg-red-50 border-red-400"
+            >
+              <ActionsPanel
+                character={character}
+                onUpdate={(partial) => update(partial)}
+                sections={['weapons']}
+              />
+            </CollapsibleSection>
+            <CollapsibleSection
+              title="Acciones comunes"
+              defaultOpen={false}
+              headerClassName="bg-ink-100 border-ink-400"
+            >
+              <ActionsPanel
+                character={character}
+                onUpdate={(partial) => update(partial)}
+                sections={['common']}
+              />
+            </CollapsibleSection>
           </div>
         )}
 
