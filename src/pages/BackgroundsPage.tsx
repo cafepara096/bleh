@@ -210,8 +210,8 @@ export function BackgroundsPage() {
       </div>
 
       {showForm && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40">
-          <div className="bg-parchment-50 border-2 border-ink-800 rounded-xl max-w-lg w-full max-h-[90vh] overflow-y-auto p-4">
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-3 pb-24 sm:p-4 sm:pb-4 bg-black/40">
+          <div className="bg-parchment-50 border-2 border-ink-800 rounded-xl max-w-lg w-full max-h-[min(90dvh,calc(100dvh-7rem))] overflow-y-auto p-4">
             <div className="flex items-center justify-between mb-3">
               <h2 className="text-lg font-bold">Nuevo trasfondo homebrew</h2>
               <button type="button" onClick={() => setShowForm(false)}>

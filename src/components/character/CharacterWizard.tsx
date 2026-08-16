@@ -1165,17 +1165,17 @@ export function CharacterWizard({ onComplete, onCancel }: Props) {
         )}
       </div>
 
-      <div className="flex justify-between mt-4">
+      <div className="flex justify-between gap-2 mt-4 sticky bottom-0 z-10 bg-parchment-50/95 backdrop-blur border-t border-ink-200 -mx-1 px-1 pt-3 pb-3 sm:pb-0 mb-20 sm:mb-0">
         <button
           onClick={goBack}
-          className="flex items-center gap-1 px-4 py-2 bg-ink-200 hover:bg-ink-300 rounded-lg"
+          className="flex items-center gap-1 px-4 py-2.5 bg-ink-200 hover:bg-ink-300 rounded-lg"
         >
           <ChevronLeft className="w-4 h-4" /> {stepIndex === 0 ? 'Cancelar' : 'Atrás'}
         </button>
         <button
           onClick={goNext}
           disabled={!canNext()}
-          className="flex items-center gap-1 px-4 py-2 bg-crimson-600 hover:bg-crimson-700 disabled:opacity-40 text-white rounded-lg font-medium"
+          className="flex items-center gap-1 px-4 py-2.5 bg-crimson-600 hover:bg-crimson-700 disabled:opacity-40 text-white rounded-lg font-medium"
         >
           {step === 'review' ? (
             <>

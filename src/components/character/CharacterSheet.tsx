@@ -819,7 +819,7 @@ export function CharacterSheet({ character: initial, onSave, onBack, onExport }:
 
 
       {showPendingChoices && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-3 pb-24 sm:p-4 sm:pb-4">
           <div className="absolute inset-0 bg-black/50" onClick={() => setShowPendingChoices(false)} />
           <div className="relative bg-parchment-50 border-2 border-ink-900 rounded-xl p-5 w-full max-w-lg max-h-[85vh] overflow-y-auto shadow-2xl space-y-3">
             <div className="flex items-center justify-between">

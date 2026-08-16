@@ -77,12 +77,12 @@ export function ItemPicker({ items, onSelect, onClose, addLabel }: Props) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex justify-end">
+    <div className="fixed inset-0 z-50 flex justify-end items-stretch">
       {/* Backdrop */}
       <div className="absolute inset-0 bg-black/40" onClick={onClose} />
 
       {/* Panel */}
-      <div className="relative w-full max-w-md bg-parchment-50 border-l-4 border-ink-900 shadow-2xl flex flex-col h-full animate-slide-in">
+      <div className="relative w-full max-w-md bg-parchment-50 border-l-4 border-ink-900 shadow-2xl flex flex-col h-full max-h-[100dvh] pb-[env(safe-area-inset-bottom)] animate-slide-in">
         {/* Header */}
         <div className="bg-ink-900 text-parchment-50 p-4 flex items-center justify-between">
           <h2 className="font-display font-bold text-lg">Catálogo de Objetos</h2>
@@ -233,7 +233,7 @@ export function ItemPicker({ items, onSelect, onClose, addLabel }: Props) {
                 </div>
               )}
 
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 sticky bottom-0 bg-white pt-2 pb-2 sm:pb-0">
                 <label className="text-sm font-medium">Cantidad:</label>
                 <input
                   type="number"
@@ -244,7 +244,7 @@ export function ItemPicker({ items, onSelect, onClose, addLabel }: Props) {
                 />
                 <button
                   onClick={handleAdd}
-                  className="flex-1 flex items-center justify-center gap-1 px-3 py-2 bg-crimson-600 hover:bg-crimson-700 text-white rounded-lg text-sm font-medium"
+                  className="flex-1 flex items-center justify-center gap-1 px-3 py-2.5 bg-crimson-600 hover:bg-crimson-700 text-white rounded-lg text-sm font-medium"
                 >
                   <Plus className="w-4 h-4" /> {addLabel || 'Añadir al inventario'}
                 </button>

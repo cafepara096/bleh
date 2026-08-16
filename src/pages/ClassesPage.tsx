@@ -422,9 +422,9 @@ export function ClassesPage() {
 
       {/* Create class modal */}
       {showForm && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-3 pb-24 sm:p-4 sm:pb-4">
           <div className="absolute inset-0 bg-black/50" onClick={() => setShowForm(false)} />
-          <div className="relative bg-parchment-50 border-2 border-ink-900 rounded-xl p-6 w-full max-w-md space-y-3 max-h-[90vh] overflow-y-auto">
+          <div className="relative bg-parchment-50 border-2 border-ink-900 rounded-xl p-6 w-full max-w-md space-y-3 max-h-[min(90dvh,calc(100dvh-7rem))] overflow-y-auto">
             <h2 className="text-xl font-bold">Nueva clase homebrew</h2>
             <input placeholder="Nombre *" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className="w-full px-3 py-2 border-2 border-ink-300 rounded-lg" />
             <textarea placeholder="Descripción" value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} rows={2} className="w-full px-3 py-2 border-2 border-ink-300 rounded-lg" />
@@ -446,9 +446,9 @@ export function ClassesPage() {
       )}
 
       {showFeatForm && current && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-3 pb-24 sm:p-4 sm:pb-4">
           <div className="absolute inset-0 bg-black/50" onClick={() => setShowFeatForm(false)} />
-          <div className="relative bg-parchment-50 border-2 border-ink-900 rounded-xl p-6 w-full max-w-md space-y-3">
+          <div className="relative bg-parchment-50 border-2 border-ink-900 rounded-xl p-6 w-full max-w-md max-h-[min(90dvh,calc(100dvh-7rem))] overflow-y-auto space-y-3">
             <h2 className="text-xl font-bold">Añadir característica</h2>
             <input placeholder="Nombre *" value={featForm.name} onChange={(e) => setFeatForm({ ...featForm, name: e.target.value })} className="w-full px-3 py-2 border-2 border-ink-300 rounded-lg" />
             <input type="number" min={1} max={20} placeholder="Nivel" value={featForm.level} onChange={(e) => setFeatForm({ ...featForm, level: parseInt(e.target.value) || 1 })} className="w-full px-3 py-2 border-2 border-ink-300 rounded-lg" />
@@ -551,7 +551,7 @@ export function ClassesPage() {
       )}
 
       {showSpellPicker && current && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-3 pb-24 sm:p-4 sm:pb-4">
           <div className="absolute inset-0 bg-black/50" onClick={() => setShowSpellPicker(false)} />
           <div className="relative bg-parchment-50 border-2 border-ink-900 rounded-xl p-6 w-full max-w-lg max-h-[80vh] overflow-y-auto">
             <h2 className="text-xl font-bold mb-3">Vincular conjuro a {current.name}</h2>

@@ -24,7 +24,6 @@ export function RacesPage() {
     description: '',
     size: 'Mediano',
     speed: 30,
-    abilityScoreIncrease: '',
     languages: '',
   });
 
@@ -39,7 +38,7 @@ export function RacesPage() {
       description: form.description.trim() || 'Raza homebrew.',
       size: form.size,
       speed: form.speed,
-      abilityScoreIncrease: form.abilityScoreIncrease || '—',
+      abilityScoreIncrease: '—',
       languages: form.languages.split(',').map((s) => s.trim()).filter(Boolean),
       traits: [],
     });
@@ -244,9 +243,9 @@ export function RacesPage() {
       </div>
 
       {showForm && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-3 pb-24 sm:p-4 sm:pb-4">
           <div className="absolute inset-0 bg-black/50" onClick={() => setShowForm(false)} />
-          <div className="relative bg-parchment-50 border-2 border-ink-900 rounded-xl p-6 w-full max-w-md space-y-3">
+          <div className="relative bg-parchment-50 border-2 border-ink-900 rounded-xl p-4 sm:p-6 w-full max-w-md space-y-3 max-h-[min(90dvh,calc(100dvh-7rem))] overflow-y-auto shadow-2xl">
             <div className="flex justify-between items-center">
               <h2 className="text-xl font-bold">Nueva raza homebrew</h2>
               <button onClick={() => setShowForm(false)}><X className="w-5 h-5" /></button>
@@ -257,17 +256,17 @@ export function RacesPage() {
               <input placeholder="Tamaño" value={form.size} onChange={(e) => setForm({ ...form, size: e.target.value })} className="px-3 py-2 border-2 border-ink-300 rounded-lg" />
               <input type="number" placeholder="Velocidad (ft)" value={form.speed} onChange={(e) => setForm({ ...form, speed: parseInt(e.target.value) || 30 })} className="px-3 py-2 border-2 border-ink-300 rounded-lg" />
             </div>
-            <input placeholder="Aumento de características" value={form.abilityScoreIncrease} onChange={(e) => setForm({ ...form, abilityScoreIncrease: e.target.value })} className="w-full px-3 py-2 border-2 border-ink-300 rounded-lg" />
             <input placeholder="Idiomas (separados por coma)" value={form.languages} onChange={(e) => setForm({ ...form, languages: e.target.value })} className="w-full px-3 py-2 border-2 border-ink-300 rounded-lg" />
+            <p className="text-xs text-ink-500">Los aumentos de características se definen después (rasgos / creación de personaje).</p>
             <button onClick={handleCreate} className="w-full py-2 bg-crimson-600 text-white rounded-lg font-medium">Crear</button>
           </div>
         </div>
       )}
 
       {showTraitForm && current && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-3 pb-24 sm:p-4 sm:pb-4">
           <div className="absolute inset-0 bg-black/50" onClick={() => setShowTraitForm(false)} />
-          <div className="relative bg-parchment-50 border-2 border-ink-900 rounded-xl p-6 w-full max-w-md space-y-3">
+          <div className="relative bg-parchment-50 border-2 border-ink-900 rounded-xl p-4 sm:p-6 w-full max-w-md space-y-3 max-h-[min(90dvh,calc(100dvh-7rem))] overflow-y-auto shadow-2xl">
             <h2 className="text-xl font-bold">Añadir rasgo a {current.name}</h2>
             <input placeholder="Nombre del rasgo *" value={traitForm.name} onChange={(e) => setTraitForm({ ...traitForm, name: e.target.value })} className="w-full px-3 py-2 border-2 border-ink-300 rounded-lg" />
             <textarea placeholder="Descripción" value={traitForm.description} onChange={(e) => setTraitForm({ ...traitForm, description: e.target.value })} rows={3} className="w-full px-3 py-2 border-2 border-ink-300 rounded-lg" />
