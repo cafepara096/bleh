@@ -171,7 +171,7 @@ export function LevelUpModal({ character, onConfirm, onClose }: Props) {
 
   if (character.level >= 20) {
     return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+      <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-3 pb-24 sm:p-4 sm:pb-4">
         <div className="absolute inset-0 bg-black/50" onClick={onClose} />
         <div className="relative bg-parchment-50 border-2 border-ink-900 rounded-xl p-6 max-w-sm">
           <p className="font-bold">Nivel máximo (20) alcanzado.</p>
@@ -184,9 +184,9 @@ export function LevelUpModal({ character, onConfirm, onClose }: Props) {
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-3 pb-24 sm:p-4 sm:pb-4">
       <div className="absolute inset-0 bg-black/50" onClick={onClose} />
-      <div className="relative bg-parchment-50 border-2 border-ink-900 rounded-xl w-full max-w-lg max-h-[90vh] overflow-y-auto shadow-2xl">
+      <div className="relative bg-parchment-50 border-2 border-ink-900 rounded-xl w-full max-w-lg max-h-[min(90dvh,calc(100dvh-7rem))] overflow-y-auto shadow-2xl">
         <div className="bg-ink-900 text-parchment-50 p-4 flex items-center justify-between sticky top-0">
           <div className="flex items-center gap-2">
             <TrendingUp className="w-5 h-5" />

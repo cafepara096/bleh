@@ -353,9 +353,9 @@ export function SpellsPage() {
       </div>
 
       {showForm && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-3 pb-24 sm:p-4 sm:pb-4">
           <div className="absolute inset-0 bg-black/50" onClick={() => setShowForm(false)} />
-          <div className="relative bg-parchment-50 border-2 border-ink-900 rounded-xl p-6 w-full max-w-lg max-h-[90vh] overflow-y-auto shadow-2xl">
+          <div className="relative bg-parchment-50 border-2 border-ink-900 rounded-xl p-6 w-full max-w-lg max-h-[min(90dvh,calc(100dvh-7rem))] overflow-y-auto shadow-2xl">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-xl font-bold">Nuevo conjuro homebrew</h2>
               <button onClick={() => setShowForm(false)} className="p-1 hover:bg-ink-100 rounded">

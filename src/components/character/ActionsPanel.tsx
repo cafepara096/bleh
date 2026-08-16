@@ -95,7 +95,7 @@ export function ActionsPanel({ character, onUpdate, sections }: Props) {
   const spellAbilityLabel = spellAbility ? ABILITY_LABELS[spellAbility] : null;
 
   const resolvedInventory = character.inventory.map((i) => resolveInventoryItem(i, itemCatalog));
-  const weapons = resolvedInventory.filter((i) => i.damage || i.equipped);
+  const weapons = resolvedInventory.filter((i) => i.equipped && !!i.damage);
 
   const spendUse = (featureId: string) => {
     if (!onUpdate) return;

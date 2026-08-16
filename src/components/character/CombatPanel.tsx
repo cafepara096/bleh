@@ -69,7 +69,7 @@ export function CombatPanel({ character, onUpdate, sections }: Props) {
 
   const weapons = character.inventory
     .map((i) => resolveInventoryItem(i, itemCatalog))
-    .filter((i) => i.damage || i.equipped);
+    .filter((i) => i.equipped && !!i.damage);
 
   const cantripIds = useMemo(() => {
     const fromKnown = character.cantripsKnown || [];
@@ -587,7 +587,7 @@ export function CombatPanel({ character, onUpdate, sections }: Props) {
 
       {/* Spell picker modal */}
       {spellEditor && (
-        <div className="fixed inset-0 z-50 flex justify-end">
+        <div className="fixed inset-0 z-50 flex justify-end items-stretch">
           <div className="absolute inset-0 bg-black/40" onClick={() => setSpellEditor(null)} />
           <div className="relative w-full max-w-md bg-parchment-50 border-l-4 border-ink-900 h-full flex flex-col shadow-2xl">
             <div className="bg-ink-900 text-parchment-50 p-3 flex items-center justify-between">
